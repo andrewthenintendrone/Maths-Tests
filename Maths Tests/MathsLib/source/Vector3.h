@@ -42,6 +42,7 @@ public:
 	Vector3 operator - (const Vector3& rhs);
 	void operator -= (const Vector3& rhs);
 	Vector3 operator * (const float& scalar);
+	friend Vector3 operator * (const float& scalar, Vector3& vector);
 	void operator *= (const float& scalar);
 	Vector3 operator / (const float& scalar);
 	void operator /= (const float& scalar);

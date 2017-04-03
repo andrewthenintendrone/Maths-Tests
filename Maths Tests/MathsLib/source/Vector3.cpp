@@ -155,6 +155,11 @@ Vector3 Vector3::operator * (const float& scalar)
 	return temp;
 }
 
+Vector3 operator * (const float& scalar, Vector3& vector)
+{
+	return vector * scalar;
+}
+
 void Vector3::operator *= (const float& scalar)
 {
 	x *= scalar;
