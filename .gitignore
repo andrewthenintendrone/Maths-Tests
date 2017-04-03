@@ -115,6 +115,7 @@ ipch/
 *.sdf
 *.cachefile
 *.VC.db
+Maths Tests/*.VC.db
 *.VC.VC.opendb
 
 # Visual Studio profiler
