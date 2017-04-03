@@ -1,4 +1,5 @@
 #pragma once
+#include <math.h>
 #include <iostream>
 
 class Vector3
@@ -15,11 +16,14 @@ public:
 	~Vector3();
 
 	// functions
-	float getMagnitude();
-    float getSquaredMagnitude();
-	void Normalize();
+	float dot(Vector3& rhs);
+	Vector3 cross(Vector3& rhs);
+	float magnitude();
+	float squaremagnitude();
+	void normalise();
 	Vector3 normalized();
-	static Vector3 crossProduct(Vector3& lhs, Vector3& rhs);
+	float angle(Vector3& rhs);
+	Vector3 perpendicular();
 
 	// static Vector3 shortcuts
 	static Vector3 Up();
@@ -32,10 +36,14 @@ public:
 
 	// operator overloads
 	bool operator == (const Vector3& rhs);
-	void operator = (const Vector3& vec);
+	void operator = (const Vector3& rhs);
 	Vector3 operator + (const Vector3& rhs);
+	void operator += (const Vector3& rhs);
 	Vector3 operator - (const Vector3& rhs);
-	void operator += (const Vector3& vec);
-	void operator -= (const Vector3& vec);
+	void operator -= (const Vector3& rhs);
+	Vector3 operator * (const float& scalar);
+	void operator *= (const float& scalar);
+	Vector3 operator / (const float& scalar);
+	void operator /= (const float& scalar);
 	friend std::ostream& operator << (std::ostream& stream, const Vector3& vector);
 };

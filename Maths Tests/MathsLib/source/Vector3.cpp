@@ -7,7 +7,6 @@ Vector3::Vector3()
 {
 	x = 0.0f;
 	y = 0.0f;
-	z = 0.0f;
 }
 
 Vector3::Vector3(float newX, float newY, float newZ)
@@ -25,35 +24,50 @@ Vector3::~Vector3()
 /*##################################################
 Vector3 Functions
 ##################################################*/
-float Vector3::getMagnitude()
+float Vector3::dot(Vector3& rhs)
 {
-	return (float)sqrt(x * x + y * y + z * z);
+	return(x * rhs.x + y * rhs.y);
 }
 
-float Vector3::getSquaredMagnitude()
+Vector3 Vector3::cross(Vector3& rhs)
 {
-    return(x * x + y * y + z * z);
+	return Vector3(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
 }
 
-void Vector3::Normalize()
+float Vector3::magnitude()
 {
-	float magnitude = getMagnitude();
-	x /= magnitude;
-	y /= magnitude;
-	z /= magnitude;
+	return sqrt(x * x + y * y + z * z);
+}
+
+float Vector3::squaremagnitude()
+{
+	return(x * x + y * y + z * z);
+}
+
+void Vector3::normalise()
+{
+	float mag = magnitude();
+	x /= mag;
+	y /= mag;
+	z /= mag;
 }
 
 Vector3 Vector3::normalized()
 {
 	Vector3 temp = *this;
-	float magnitude = getMagnitude();
-	temp.Normalize();
+	float magnitude = temp.magnitude();
+	temp.normalise();
 	return temp;
 }
 
-Vector3 Vector3::crossProduct(Vector3& lhs, Vector3& rhs)
+float Vector3::angle(Vector3& rhs)
 {
-	return Vector3(lhs.y * rhs.z - lhs.z * rhs.y, lhs.x * rhs.z - lhs.z * rhs.x, lhs.x * rhs.y - lhs.y * rhs.x);
+	return acosf(Vector3::dot(rhs.normalized()));
+}
+
+Vector3 Vector3::perpendicular()
+{
+	return Vector3(-y, x, 0);
 }
 
 /*##################################################
@@ -61,37 +75,37 @@ Vector3 shortcuts for commonly used Vector3s
 ##################################################*/
 Vector3 Vector3::Up()
 {
-	return{ 0.0f, 1.0f, 0.0f };
+	return{ 0, 1, 0 };
 }
 
 Vector3 Vector3::Down()
 {
-	return{ 0.0f, -1.0f, 0.0f };
+	return{ 0, -1, 0 };
 }
 
 Vector3 Vector3::Left()
 {
-	return{ -1.0f, 0.0f, 0.0f };
+	return{ -1, 0, 0 };
 }
 
 Vector3 Vector3::Right()
 {
-	return{ -1.0f, 0.0f, 0.0f };
+	return{ -1, 0, 0 };
 }
 
 Vector3 Vector3::Forward()
 {
-	return{ 0.0f, 0.0f, 1.0f };
+	return{ 0, 0, 1 };
 }
 
 Vector3 Vector3::Back()
 {
-	return{ 0.0f, 0.0f, -1.0f };
+	return{ 0, 0, -1 };
 }
 
 Vector3 Vector3::Zero()
 {
-	return{ 0.0f, 0.0f, 0.0f };
+	return{ 0, 0, 0 };
 }
 
 /*##################################################
@@ -99,27 +113,19 @@ Vector3 overloaded operators
 ##################################################*/
 bool Vector3::operator == (const Vector3& rhs)
 {
-	return (x == rhs.x && y == rhs.y && z == rhs.z);
+	return (x == rhs.x && y == rhs.y);
 }
 
 void Vector3::operator = (const Vector3& vec)
 {
 	x = vec.x;
 	y = vec.y;
-	z = vec.z;
 }
 
 Vector3 Vector3::operator + (const Vector3& rhs)
 {
-	Vector3 temp = { x, y, z };
+	Vector3 temp = *this;
 	temp += rhs;
-	return temp;
-}
-
-Vector3 Vector3::operator - (const Vector3& rhs)
-{
-	Vector3 temp = { x, y, z };
-	temp -= rhs;
 	return temp;
 }
 
@@ -127,14 +133,45 @@ void Vector3::operator += (const Vector3& vec)
 {
 	x += vec.x;
 	y += vec.y;
-	z += vec.z;
+}
+
+Vector3 Vector3::operator - (const Vector3& rhs)
+{
+	Vector3 temp = *this;
+	temp -= rhs;
+	return temp;
 }
 
 void Vector3::operator -= (const Vector3& vec)
 {
 	x -= vec.x;
 	y -= vec.y;
-	z -= vec.z;
+}
+
+Vector3 Vector3::operator * (const float& scalar)
+{
+	Vector3 temp = *this;
+	temp *= scalar;
+	return temp;
+}
+
+void Vector3::operator *= (const float& scalar)
+{
+	x *= scalar;
+	y *= scalar;
+}
+
+Vector3 Vector3::operator / (const float& scalar)
+{
+	Vector3 temp = *this;
+	temp /= scalar;
+	return temp;
+}
+
+void Vector3::operator /= (const float& scalar)
+{
+	x /= scalar;
+	y /= scalar;
 }
 
 std::ostream& operator << (std::ostream& stream, const Vector3& vector)

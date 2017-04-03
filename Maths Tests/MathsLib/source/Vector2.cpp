@@ -5,8 +5,8 @@ Vector2 constructor and destructor
 ##################################################*/
 Vector2::Vector2()
 {
-    x = 0.0f;
-    y = 0.0f;
+	x = 0;
+	y = 0;
 }
 
 Vector2::Vector2(float newX, float newY)
@@ -30,7 +30,7 @@ float Vector2::dot(Vector2& rhs)
 
 float Vector2::magnitude()
 {
-    return (float)sqrt(x * x + y * y);
+    return sqrt(x * x + y * y);
 }
 
 float Vector2::squaremagnitude()
@@ -68,27 +68,27 @@ Vector2 shortcuts for commonly used Vector2s
 ##################################################*/
 Vector2 Vector2::Up()
 {
-    return{ 0.0f, 1.0f };
+    return{ 0, 1 };
 }
 
 Vector2 Vector2::Down()
 {
-    return{ 0.0f, -1.0f };
+    return{ 0, -1 };
 }
 
 Vector2 Vector2::Left()
 {
-    return{ -1.0f, 0.0f };
+    return{ -1, 0 };
 }
 
 Vector2 Vector2::Right()
 {
-    return{ -1.0f, 0.0f };
+    return{ -1, 0 };
 }
 
 Vector2 Vector2::Zero()
 {
-    return{ 0.0f, 0.0f };
+    return{ 0, 0 };
 }
 
 /*##################################################
@@ -107,7 +107,7 @@ void Vector2::operator = (const Vector2& vec)
 
 Vector2 Vector2::operator + (const Vector2& rhs)
 {
-    Vector2 temp = { x, y };
+    Vector2 temp = *this;
     temp += rhs;
     return temp;
 }
@@ -120,7 +120,7 @@ void Vector2::operator += (const Vector2& vec)
 
 Vector2 Vector2::operator - (const Vector2& rhs)
 {
-    Vector2 temp = { x, y };
+    Vector2 temp = *this;
     temp -= rhs;
     return temp;
 }
