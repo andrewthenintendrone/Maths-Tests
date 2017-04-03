@@ -1,15 +1,14 @@
 #include <iostream>
 #include <time.h>
-#include "Vector3.h"
 #include <vector>
 #include <iostream>
 #include "MathsLib.h"
 
 int main()
 {
-	Vector3 a(12, 5, 7.8f);
-	Vector3 b(6.5f, 7, 14);
-	Vector3 c = a.cross(b);
+    Vector4 a(1, 2, 3, 4);
+    Vector4 b(5, 6, 7, 8);
+    Vector4 c = a * 5 - b * 2;
 
 	std::cout << c << std::endl;
 

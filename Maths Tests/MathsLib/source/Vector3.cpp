@@ -122,7 +122,6 @@ void Vector3::operator = (const Vector3& rhs)
 	x = rhs.x;
 	y = rhs.y;
 	z = rhs.z;
-	w = rhs.w;
 }
 
 Vector3 Vector3::operator + (const Vector3& rhs)
@@ -132,11 +131,11 @@ Vector3 Vector3::operator + (const Vector3& rhs)
 	return temp;
 }
 
-void Vector3::operator += (const Vector3& vec)
+void Vector3::operator += (const Vector3& rhs)
 {
-	x += vec.x;
-	y += vec.y;
-	z += vec.z;
+	x += rhs.x;
+	y += rhs.y;
+	z += rhs.z;
 }
 
 Vector3 Vector3::operator - (const Vector3& rhs)
@@ -146,11 +145,11 @@ Vector3 Vector3::operator - (const Vector3& rhs)
 	return temp;
 }
 
-void Vector3::operator -= (const Vector3& vec)
+void Vector3::operator -= (const Vector3& rhs)
 {
-	x -= vec.x;
-	y -= vec.y;
-	z -= vec.z;
+	x -= rhs.x;
+	y -= rhs.y;
+	z -= rhs.z;
 }
 
 Vector3 Vector3::operator * (const float& scalar)

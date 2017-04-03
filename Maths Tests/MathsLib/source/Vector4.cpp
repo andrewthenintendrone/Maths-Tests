@@ -90,10 +90,12 @@ bool Vector4::operator == (const Vector4& rhs)
 	return (x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w);
 }
 
-void Vector4::operator = (const Vector4& vec)
+void Vector4::operator = (const Vector4& rhs)
 {
-	x = vec.x;
-	y = vec.y;
+	x = rhs.x;
+	y = rhs.y;
+    z = rhs.z;
+    w = rhs.w;
 }
 
 Vector4 Vector4::operator + (const Vector4& rhs)
@@ -103,10 +105,12 @@ Vector4 Vector4::operator + (const Vector4& rhs)
 	return temp;
 }
 
-void Vector4::operator += (const Vector4& vec)
+void Vector4::operator += (const Vector4& rhs)
 {
-	x += vec.x;
-	y += vec.y;
+	x += rhs.x;
+	y += rhs.y;
+    z += rhs.z;
+    w += rhs.w;
 }
 
 Vector4 Vector4::operator - (const Vector4& rhs)
@@ -116,10 +120,12 @@ Vector4 Vector4::operator - (const Vector4& rhs)
 	return temp;
 }
 
-void Vector4::operator -= (const Vector4& vec)
+void Vector4::operator -= (const Vector4& rhs)
 {
-	x -= vec.x;
-	y -= vec.y;
+    x -= rhs.x;
+    y -= rhs.y;
+    z -= rhs.z;
+    w -= rhs.w;
 }
 
 Vector4 Vector4::operator * (const float& scalar)
@@ -138,6 +144,8 @@ void Vector4::operator *= (const float& scalar)
 {
 	x *= scalar;
 	y *= scalar;
+    z *= scalar;
+    w *= scalar;
 }
 
 Vector4 Vector4::operator / (const float& scalar)
@@ -151,10 +159,12 @@ void Vector4::operator /= (const float& scalar)
 {
 	x /= scalar;
 	y /= scalar;
+    z /= scalar;
+    w /= scalar;
 }
 
 std::ostream& operator << (std::ostream& stream, const Vector4& vector)
 {
-	stream << "(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
+	stream << "(" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << ")";
 	return stream;
 }
