@@ -7,11 +7,10 @@
 
 int main()
 {
-	Vector2 vecA(-1, -1);
-	Vector2 vecB(-5, -6);
+	Vector3 vecA(14, 5, -5);
+	Vector3 vecB(-2, 1, 43);
 
-	std::cout << "The Vector2 perpendicular to " << vecA << " is " << vecA.getPerpendicular() << std::endl;
-	std::cout << "The Vector2 perpendicular to " << vecB << " is " << vecB.getPerpendicular() << std::endl;
+	std::cout << "The cross product of " << vecA << " and " << vecB << " is " << Vector3::crossProduct(vecA, vecB) << std::endl;
 
 	system("pause");
 	return 0;

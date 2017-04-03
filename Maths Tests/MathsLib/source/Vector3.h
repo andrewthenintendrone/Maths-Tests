@@ -20,6 +20,7 @@ public:
     float getSquaredMagnitude();
 	void Normalize();
 	Vector3 normalized();
+	static Vector3 crossProduct(Vector3& lhs, Vector3& rhs);
 
 	// static Vector3 shortcuts
 	static Vector3 Up();

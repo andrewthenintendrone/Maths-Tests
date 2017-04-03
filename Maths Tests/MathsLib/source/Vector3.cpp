@@ -58,6 +58,11 @@ Vector3 Vector3::normalized()
 	return temp;
 }
 
+Vector3 Vector3::crossProduct(Vector3& lhs, Vector3& rhs)
+{
+	return Vector3(lhs.y * rhs.z - lhs.z * rhs.y, lhs.x * rhs.z - lhs.z * rhs.x, lhs.x * rhs.y - lhs.y * rhs.x);
+}
+
 /*##################################################
 Vector3 shortcuts for commonly used Vector3s
 ##################################################*/
