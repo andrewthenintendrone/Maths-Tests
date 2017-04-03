@@ -49,17 +49,19 @@ void Vector2::Normalize()
 Vector2 Vector2::normalized()
 {
     Vector2 temp = *this;
-    float magnitude = getMagnitude();
+    float magnitude = temp.getMagnitude();
     temp.Normalize();
     return temp;
 }
 
-float Vector2::getAngle(const Vector2& lhs, const Vector2& rhs)
+float Vector2::dotProduct(Vector2& lhs, Vector2& rhs)
 {
-    float dx = rhs.x - lhs.x;
-    float dy = rhs.y - lhs.y;
+	return(lhs.x * rhs.x + lhs.y * rhs.y);
+}
 
-    return atan(dy / dx) * 57.2958f;
+float Vector2::Angle(Vector2& lhs, Vector2& rhs)
+{
+	return acosf(Vector2::dotProduct(lhs.normalized(), rhs.normalized()));
 }
 
 /*##################################################

@@ -1,4 +1,5 @@
 #pragma once
+#include <math.h>
 #include <iostream>
 
 class Vector2
@@ -19,7 +20,8 @@ public:
     float getSquaredMagnitude();
     void Normalize();
     Vector2 normalized();
-    static float getAngle(const Vector2& lhs, const Vector2& rhs);
+	static float dotProduct(Vector2& lhs, Vector2& rhs);
+	static float Angle(Vector2& lhs, Vector2& rhs);
 
     // static Vector3 shortcuts
     static Vector2 Up();

@@ -7,17 +7,13 @@
 
 int main()
 {
-	std::cout << "30 degrees is " << degreesToRadians(30) << " radians" << std::endl;
-	std::cout << "45 degrees is " << degreesToRadians(45) << " radians" << std::endl;
-	std::cout << "72 degrees is " << degreesToRadians(72) << " radians" << std::endl;
+	Vector2 vecA(-1, -1);
+	Vector2 vecB(-5, -6);
 
-	std::cout << std::endl;
+	float angle = Vector2::Angle(vecA, vecB);
 
-	std::cout << "1.5 radians is " << radiansToDegrees(1.5f) << " degrees" << std::endl;
-	std::cout << "3PI/2 radians is " << radiansToDegrees(3.0f * PI / 2.0f) << " degrees" << std::endl;
-	std::cout << "2 radians is " << radiansToDegrees(2) << " degrees" << std::endl;
-
-	std::cout << std::endl;
+	std::cout << "The angle between " << vecA << " and " << vecB << " is " << angle << " radians" << std::endl;
+	std::cout << "or " << radiansToDegrees(angle) << " degrees" << std::endl;
 
 	system("pause");
 	return 0;
