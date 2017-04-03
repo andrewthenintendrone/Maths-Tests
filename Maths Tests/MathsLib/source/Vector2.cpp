@@ -15,12 +15,6 @@ Vector2::Vector2(float newX, float newY)
     y = newY;
 }
 
-Vector2::Vector2(int newX, int newY)
-{
-    x = (float)newX;
-    y = (float)newY;
-}
-
 Vector2::~Vector2()
 {
 
@@ -29,42 +23,42 @@ Vector2::~Vector2()
 /*##################################################
 Vector2 Functions
 ##################################################*/
-float Vector2::getMagnitude()
+float Vector2::dot(Vector2& rhs)
+{
+	return(x * rhs.x + y * rhs.y);
+}
+
+float Vector2::magnitude()
 {
     return (float)sqrt(x * x + y * y);
 }
 
-float Vector2::getSquaredMagnitude()
+float Vector2::squaremagnitude()
 {
     return(x * x + y * y);
 }
 
-void Vector2::Normalize()
+void Vector2::normalise()
 {
-    float magnitude = getMagnitude();
-    x /= magnitude;
-    y /= magnitude;
+    float mag = magnitude();
+    x /= mag;
+    y /= mag;
 }
 
 Vector2 Vector2::normalized()
 {
     Vector2 temp = *this;
-    float magnitude = temp.getMagnitude();
-    temp.Normalize();
+    float magnitude = temp.magnitude();
+    temp.normalise();
     return temp;
 }
 
-float Vector2::dotProduct(Vector2& lhs, Vector2& rhs)
+float Vector2::angle(Vector2& rhs)
 {
-	return(lhs.x * rhs.x + lhs.y * rhs.y);
+	return acosf(Vector2::dot(rhs.normalized()));
 }
 
-float Vector2::Angle(Vector2& lhs, Vector2& rhs)
-{
-	return acosf(Vector2::dotProduct(lhs.normalized(), rhs.normalized()));
-}
-
-Vector2 Vector2::getPerpendicular()
+Vector2 Vector2::perpendicular()
 {
 	return Vector2(-y, x);
 }
@@ -118,6 +112,12 @@ Vector2 Vector2::operator + (const Vector2& rhs)
     return temp;
 }
 
+void Vector2::operator += (const Vector2& vec)
+{
+	x += vec.x;
+	y += vec.y;
+}
+
 Vector2 Vector2::operator - (const Vector2& rhs)
 {
     Vector2 temp = { x, y };
@@ -125,16 +125,36 @@ Vector2 Vector2::operator - (const Vector2& rhs)
     return temp;
 }
 
-void Vector2::operator += (const Vector2& vec)
-{
-    x += vec.x;
-    y += vec.y;
-}
-
 void Vector2::operator -= (const Vector2& vec)
 {
     x -= vec.x;
     y -= vec.y;
+}
+
+Vector2 Vector2::operator * (const float& scalar)
+{
+	Vector2 temp = *this;
+	temp *= scalar;
+	return temp;
+}
+
+void Vector2::operator *= (const float& scalar)
+{
+	x *= scalar;
+	y *= scalar;
+}
+
+Vector2 Vector2::operator / (const float& scalar)
+{
+	Vector2 temp = *this;
+	temp /= scalar;
+	return temp;
+}
+
+void Vector2::operator /= (const float& scalar)
+{
+	x /= scalar;
+	y /= scalar;
 }
 
 std::ostream& operator << (std::ostream& stream, const Vector2& vector)

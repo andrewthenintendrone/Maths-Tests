@@ -9,12 +9,12 @@ public:
 	float x;
 	float y;
 	float z;
-	float w;
+	float t;
 
 	// constructors and destructor
 	Vector4();
-	Vector4(float newX, float newY, float newZ, float newW);
-	Vector4(int newX, int newY, int newZ, int newW);
+	Vector4(float newX, float newY, float newZ, float newT);
+	Vector4(int newX, int newY, int newZ, int newT);
 	~Vector4();
 
 	// operator overloads

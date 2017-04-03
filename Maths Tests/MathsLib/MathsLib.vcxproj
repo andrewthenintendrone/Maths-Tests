@@ -139,11 +139,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\MathsLib.h" />
+    <ClInclude Include="source\Matrix2.h" />
     <ClInclude Include="source\Vector2.h" />
     <ClInclude Include="source\Vector3.h" />
     <ClInclude Include="source\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Matrix2.cpp" />
     <ClCompile Include="source\radians.cpp" />
     <ClCompile Include="source\Vector2.cpp" />
     <ClCompile Include="source\Vector3.cpp" />

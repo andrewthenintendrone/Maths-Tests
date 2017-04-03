@@ -12,7 +12,6 @@ public:
 	// constructors and destructor
 	Vector3();
 	Vector3(float newX, float newY, float newZ);
-	Vector3(int newX, int newY, int newZ);
 	~Vector3();
 
 	// functions

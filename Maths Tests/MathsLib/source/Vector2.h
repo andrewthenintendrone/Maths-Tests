@@ -12,17 +12,16 @@ public:
     // constructors and destructor
     Vector2();
     Vector2(float newX, float newY);
-    Vector2(int newX, int newY);
     ~Vector2();
 
     // functions
-    float getMagnitude();
-    float getSquaredMagnitude();
-    void Normalize();
-    Vector2 normalized();
-	static float dotProduct(Vector2& lhs, Vector2& rhs);
-	static float Angle(Vector2& lhs, Vector2& rhs);
-	Vector2 getPerpendicular();
+	float dot(Vector2& rhs);
+    float magnitude();
+	float squaremagnitude();
+	void normalise();
+	Vector2 normalized();
+	float angle(Vector2& rhs);
+	Vector2 perpendicular();
 
     // static Vector3 shortcuts
     static Vector2 Up();
@@ -33,10 +32,14 @@ public:
 
     // operator overloads
     bool operator == (const Vector2& rhs);
-    void operator = (const Vector2& vec);
+    void operator = (const Vector2& rhs);
     Vector2 operator + (const Vector2& rhs);
+	void operator += (const Vector2& rhs);
     Vector2 operator - (const Vector2& rhs);
-    void operator += (const Vector2& vec);
-    void operator -= (const Vector2& vec);
+    void operator -= (const Vector2& rhs);
+	Vector2 operator * (const float& scalar);
+	void operator *= (const float& scalar);
+	Vector2 operator / (const float& scalar);
+	void operator /= (const float& scalar);
     friend std::ostream& operator << (std::ostream& stream, const Vector2& vector);
 };

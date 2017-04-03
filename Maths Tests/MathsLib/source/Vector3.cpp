@@ -17,13 +17,6 @@ Vector3::Vector3(float newX, float newY, float newZ)
 	z = newZ;
 }
 
-Vector3::Vector3(int newX, int newY, int newZ)
-{
-	x = (float)newX;
-	y = (float)newY;
-	z = (float)newZ;
-}
-
 Vector3::~Vector3()
 {
 
