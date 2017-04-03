@@ -7,16 +7,11 @@
 
 int main()
 {
-	std::vector<Vector2>vectors;
-	vectors.push_back(Vector2(1, 2));
-	vectors.push_back(Vector2(3, 4));
-	vectors.push_back(Vector2(5, 6));
+	Vector3 a(12, 5, 7.8f);
+	Vector3 b(6.5f, 7, 14);
+	Vector3 c = a.cross(b);
 
-	for (unsigned int i = 0; i < vectors.size(); i++)
-	{
-		std::cout << vectors[i] << " * 5 = " << vectors[i] * 5 << std::endl;
-		std::cout << "5 * " << vectors[i] << " = " << 5 * vectors[i] << std::endl << std::endl;
-	}
+	std::cout << c << std::endl;
 
 	system("pause");
 	return 0;

@@ -5,8 +5,9 @@ Vector3 constructor and destructor
 ##################################################*/
 Vector3::Vector3()
 {
-	x = 0.0f;
-	y = 0.0f;
+	x = 0;
+	y = 0;
+	z = 0;
 }
 
 Vector3::Vector3(float newX, float newY, float newZ)
@@ -26,7 +27,7 @@ Vector3 Functions
 ##################################################*/
 float Vector3::dot(Vector3& rhs)
 {
-	return(x * rhs.x + y * rhs.y);
+	return(x * rhs.x + y * rhs.y + z * rhs.z);
 }
 
 Vector3 Vector3::cross(Vector3& rhs)
@@ -113,13 +114,15 @@ Vector3 overloaded operators
 ##################################################*/
 bool Vector3::operator == (const Vector3& rhs)
 {
-	return (x == rhs.x && y == rhs.y);
+	return (x == rhs.x && y == rhs.y && z == rhs.z);
 }
 
-void Vector3::operator = (const Vector3& vec)
+void Vector3::operator = (const Vector3& rhs)
 {
-	x = vec.x;
-	y = vec.y;
+	x = rhs.x;
+	y = rhs.y;
+	z = rhs.z;
+	w = rhs.w;
 }
 
 Vector3 Vector3::operator + (const Vector3& rhs)
@@ -133,6 +136,7 @@ void Vector3::operator += (const Vector3& vec)
 {
 	x += vec.x;
 	y += vec.y;
+	z += vec.z;
 }
 
 Vector3 Vector3::operator - (const Vector3& rhs)
@@ -146,6 +150,7 @@ void Vector3::operator -= (const Vector3& vec)
 {
 	x -= vec.x;
 	y -= vec.y;
+	z -= vec.z;
 }
 
 Vector3 Vector3::operator * (const float& scalar)
@@ -164,6 +169,7 @@ void Vector3::operator *= (const float& scalar)
 {
 	x *= scalar;
 	y *= scalar;
+	z *= scalar;
 }
 
 Vector3 Vector3::operator / (const float& scalar)
@@ -177,6 +183,7 @@ void Vector3::operator /= (const float& scalar)
 {
 	x /= scalar;
 	y /= scalar;
+	z /= scalar;
 }
 
 std::ostream& operator << (std::ostream& stream, const Vector3& vector)
