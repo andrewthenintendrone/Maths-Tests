@@ -10,10 +10,8 @@ int main()
 	Vector2 vecA(-1, -1);
 	Vector2 vecB(-5, -6);
 
-	float angle = Vector2::Angle(vecA, vecB);
-
-	std::cout << "The angle between " << vecA << " and " << vecB << " is " << angle << " radians" << std::endl;
-	std::cout << "or " << radiansToDegrees(angle) << " degrees" << std::endl;
+	std::cout << "The Vector2 perpendicular to " << vecA << " is " << vecA.getPerpendicular() << std::endl;
+	std::cout << "The Vector2 perpendicular to " << vecB << " is " << vecB.getPerpendicular() << std::endl;
 
 	system("pause");
 	return 0;

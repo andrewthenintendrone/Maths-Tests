@@ -22,6 +22,7 @@ public:
     Vector2 normalized();
 	static float dotProduct(Vector2& lhs, Vector2& rhs);
 	static float Angle(Vector2& lhs, Vector2& rhs);
+	Vector2 getPerpendicular();
 
     // static Vector3 shortcuts
     static Vector2 Up();

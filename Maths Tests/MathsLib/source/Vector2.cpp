@@ -64,6 +64,11 @@ float Vector2::Angle(Vector2& lhs, Vector2& rhs)
 	return acosf(Vector2::dotProduct(lhs.normalized(), rhs.normalized()));
 }
 
+Vector2 Vector2::getPerpendicular()
+{
+	return Vector2(-y, x);
+}
+
 /*##################################################
 Vector2 shortcuts for commonly used Vector2s
 ##################################################*/
