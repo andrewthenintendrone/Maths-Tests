@@ -7,10 +7,16 @@
 
 int main()
 {
-	Vector3 vecA(14, 5, -5);
-	Vector3 vecB(-2, 1, 43);
+	std::vector<Vector2>vectors;
+	vectors.push_back(Vector2(1, 2));
+	vectors.push_back(Vector2(3, 4));
+	vectors.push_back(Vector2(5, 6));
 
-	std::cout << "The cross product of " << vecA << " and " << vecB << " is " << vecA.cross(vecB) << std::endl;
+	for (unsigned int i = 0; i < vectors.size(); i++)
+	{
+		std::cout << vectors[i] << " * 5 = " << vectors[i] * 5 << std::endl;
+		std::cout << "5 * " << vectors[i] << " = " << 5 * vectors[i] << std::endl << std::endl;
+	}
 
 	system("pause");
 	return 0;

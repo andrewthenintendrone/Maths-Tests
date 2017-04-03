@@ -99,10 +99,10 @@ bool Vector2::operator == (const Vector2& rhs)
     return (x == rhs.x && y == rhs.y);
 }
 
-void Vector2::operator = (const Vector2& vec)
+void Vector2::operator = (const Vector2& rhs)
 {
-    x = vec.x;
-    y = vec.y;
+    x = rhs.x;
+    y = rhs.y;
 }
 
 Vector2 Vector2::operator + (const Vector2& rhs)
@@ -112,10 +112,10 @@ Vector2 Vector2::operator + (const Vector2& rhs)
     return temp;
 }
 
-void Vector2::operator += (const Vector2& vec)
+void Vector2::operator += (const Vector2& rhs)
 {
-	x += vec.x;
-	y += vec.y;
+	x += rhs.x;
+	y += rhs.y;
 }
 
 Vector2 Vector2::operator - (const Vector2& rhs)
@@ -125,10 +125,10 @@ Vector2 Vector2::operator - (const Vector2& rhs)
     return temp;
 }
 
-void Vector2::operator -= (const Vector2& vec)
+void Vector2::operator -= (const Vector2& rhs)
 {
-    x -= vec.x;
-    y -= vec.y;
+    x -= rhs.x;
+    y -= rhs.y;
 }
 
 Vector2 Vector2::operator * (const float& scalar)
@@ -136,6 +136,11 @@ Vector2 Vector2::operator * (const float& scalar)
 	Vector2 temp = *this;
 	temp *= scalar;
 	return temp;
+}
+
+Vector2 operator * (const float& scalar, Vector2& vector)
+{
+	return vector * scalar;
 }
 
 void Vector2::operator *= (const float& scalar)
