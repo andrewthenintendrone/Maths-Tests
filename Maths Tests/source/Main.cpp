@@ -7,10 +7,17 @@
 
 int main()
 {
-    Vector2 vecA(-6.5f, -8.12f);
-    Vector2 vecB(7.8f, 1.36f);
+	std::cout << "30 degrees is " << degreesToRadians(30) << " radians" << std::endl;
+	std::cout << "45 degrees is " << degreesToRadians(45) << " radians" << std::endl;
+	std::cout << "72 degrees is " << degreesToRadians(72) << " radians" << std::endl;
 
-    std::cout << Vector2::getAngle(vecA, vecB) << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "1.5 radians is " << radiansToDegrees(1.5f) << " degrees" << std::endl;
+	std::cout << "3PI/2 radians is " << radiansToDegrees(3.0f * PI / 2.0f) << " degrees" << std::endl;
+	std::cout << "2 radians is " << radiansToDegrees(2) << " degrees" << std::endl;
+
+	std::cout << std::endl;
 
 	system("pause");
 	return 0;
