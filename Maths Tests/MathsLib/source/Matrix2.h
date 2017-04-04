@@ -1,23 +1,16 @@
 #pragma once
 #include <iostream>
+#include "Vector2.h"
 
 class Matrix2
 {
 public:
-	// use union for easier access
-	union
-	{
-		struct
-		{
-			float xAxis[2];
-			float yAxis[2];
-		};
-		float m[2][2];
-	};
+	float m[4];
 
 	// constructors and destructor
 	Matrix2();
-	Matrix2(const float newM[2][2]);
+	Matrix2(const float newM[4]);
+	Matrix2(const Vector2& column1, const Vector2& column2);
 	Matrix2(const float& newM);
 	~Matrix2();
 
@@ -29,6 +22,7 @@ public:
 	static Matrix2 identity();
 
 	// overloaded operators
+	void operator = (const Matrix2& rhs);
 	void operator += (const Matrix2& rhs);
 	Matrix2 operator + (const Matrix2& rhs);
 	void operator -= (const Matrix2& rhs);
