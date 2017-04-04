@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Vector2.cpp"
-#include "Vector3.cpp"
-#include "Vector4.cpp"
-#include "radians.cpp"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Vector4.h"
+
+#include "Matrix2.h"
+
+#include "radians.h"
