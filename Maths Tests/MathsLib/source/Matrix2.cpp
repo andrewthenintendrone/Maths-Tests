@@ -11,12 +11,12 @@ Matrix2::Matrix2()
 	}
 }
 
-Matrix2::Matrix2(const float newM[4])
+Matrix2::Matrix2(const float x0, const float x1, const float y0, const float y1)
 {
-	for (unsigned int i = 0; i < 4; i++)
-	{
-		m[i] = newM[i];
-	}
+	m[0] = x0;
+	m[1] = x1;
+	m[2] = y0;
+	m[3] = y1;
 }
 
 Matrix2::Matrix2(const float& newM)
@@ -27,9 +27,10 @@ Matrix2::Matrix2(const float& newM)
 	}
 }
 
-Matrix2::Matrix2(const Vector2& column1, const Vector2& column2)
+Matrix2::Matrix2(const Vector2& row1, const Vector2& row2)
 {
-
+	vecs[0] = row1;
+	vecs[1] = row2;
 }
 
 Matrix2::~Matrix2()
@@ -59,12 +60,11 @@ Matrix2 Matrix2::dot(const Matrix2& rhs)
 
 Matrix2 Matrix2::identity()
 {
-	float temp[4] = { 1, 0, 0, 1 };
-	return Matrix2(temp);
+	return Matrix2(1, 0, 0, 1);
 }
 
 /*##################################################
-Vector2 overloaded operators
+Matrix2 overloaded operators
 ##################################################*/
 void Matrix2::operator = (const Matrix2& rhs)
 {
@@ -84,7 +84,7 @@ void Matrix2::operator += (const Matrix2& rhs)
 
 Matrix2 Matrix2::operator + (const Matrix2& rhs)
 {
-	Matrix2 temp = m;
+	Matrix2 temp;
 	temp += rhs;
 	return temp;
 }
@@ -99,7 +99,7 @@ void Matrix2::operator -= (const Matrix2& rhs)
 
 Matrix2 Matrix2::operator - (const Matrix2& rhs)
 {
-	Matrix2 temp = m;
+	Matrix2 temp = *this;
 	temp -= rhs;
 	return temp;
 }
@@ -114,7 +114,7 @@ void Matrix2::operator *= (const float& scalar)
 
 Matrix2 Matrix2::operator * (const float& scalar)
 {
-	Matrix2 temp = m;
+	Matrix2 temp = *this;
 	temp *= scalar;
 	return temp;
 }
@@ -129,21 +129,17 @@ void Matrix2::operator /= (const float& scalar)
 
 Matrix2 Matrix2::operator / (const float& scalar)
 {
-	Matrix2 temp = m;
+	Matrix2 temp = *this;
 	temp /= scalar;
 	return temp;
 }
 
 std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
 {
-	for (unsigned int x = 0; x < 2; x++)
+	for (unsigned int i = 0; i < 2; i++)
 	{
-		for (unsigned int y = 0; y < 2; y++)
-		{
-			stream << matrix.m[2 * y + x] << ", ";
-		}
+		stream << matrix.vecs[i];
 		stream << std::endl;
 	}
-	stream << std::endl;
 	return stream;
 }
