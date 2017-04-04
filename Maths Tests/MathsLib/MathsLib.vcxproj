@@ -141,6 +141,7 @@
     <ClInclude Include="source\MathsLib.h" />
     <ClInclude Include="source\Matrix2.h" />
     <ClInclude Include="source\Matrix3.h" />
+    <ClInclude Include="source\Matrix4.h" />
     <ClInclude Include="source\radians.h" />
     <ClInclude Include="source\Vector2.h" />
     <ClInclude Include="source\Vector3.h" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="source\Matrix2.cpp" />
     <ClCompile Include="source\Matrix3.cpp" />
+    <ClCompile Include="source\Matrix4.cpp" />
     <ClCompile Include="source\radians.cpp" />
     <ClCompile Include="source\Vector2.cpp" />
     <ClCompile Include="source\Vector3.cpp" />
