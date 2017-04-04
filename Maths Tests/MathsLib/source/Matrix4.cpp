@@ -65,7 +65,7 @@ Matrix4 Functions
 ##################################################*/
 float Matrix4::determinant()
 {
-	return (x0 * y1 * z2 + x1 * y2 * z0 + x2 * y0 * z1) - (z0 * y1 * x2 + z1 * y2 * x0 + z2 * y0 * x1);
+    return(x0 * y1 * z2 * w3 + x1 * y2 * z3 * w0 + x2 * y3 * z0 * w1 + x3 * y0 * z1 * w2) - (w0 * z1 * y2 * x3 + w1 * z2 * y3 * x0 + w2 * z3 * y0 * x1 + w3 * z0 * y1 * x2);
 }
 
 Matrix4 Matrix4::dot(const Matrix4& rhs)

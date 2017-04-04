@@ -31,7 +31,7 @@ public:
 
 	// constructors and destructor
 	Matrix3();
-	Matrix3(const float newx0, const float newx1, const float newx2, const float newy0, const float newy1, const float newy2, const float newz0, const float newz1, const float newz2);
+    Matrix3(const float& newx0, const float& newx1, const float& newx2, const float& newy0, const float& newy1, const float& newy2, const float& newz0, const float& newz1, const float& newz2);
 	Matrix3(const Vector3& row1, const Vector3& row2, const Vector3& row3);
 	Matrix3(const float& newM);
 	Matrix3(const Matrix3& newM);

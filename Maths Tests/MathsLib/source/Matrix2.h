@@ -26,7 +26,7 @@ public:
 
 	// constructors and destructor
 	Matrix2();
-	Matrix2(const float newx0, const float newx1, const float newy0, const float newy1);
+    Matrix2(const float& newx0, const float& newx1, const float& newy0, const float& newy1);
 	Matrix2(const Vector2& row1, const Vector2& row2);
 	Matrix2(const float& newM);
 	Matrix2(const Matrix2& newM);

@@ -11,7 +11,7 @@ Matrix2::Matrix2()
 	}
 }
 
-Matrix2::Matrix2(const float newx0, const float newx1, const float newy0, const float newy1)
+Matrix2::Matrix2(const float& newx0, const float& newx1, const float& newy0, const float& newy1)
 {
 	x0 = newx0;
 	x1 = newx1;
