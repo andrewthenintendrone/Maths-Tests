@@ -58,10 +58,18 @@ Matrix2 Matrix2::dot(const Matrix2& rhs)
 {
 	Matrix2 temp;
 
-	temp.m[0] = m[0] * rhs.m[0] + m[1] * rhs.m[2];
-	temp.m[1] = m[0] * rhs.m[1] + m[1] * rhs.m[3];
-	temp.m[2] = m[2] * rhs.m[0] + m[3] * rhs.m[2];
-	temp.m[3] = m[2] * rhs.m[1] + m[3] * rhs.m[3];
+	for (unsigned int i = 0; i < 2; i++)
+	{
+		for (unsigned int j = 0; j < 2; j++)
+		{
+			int sum = 0;
+			for (unsigned int k = 0; k < 2; k++)
+			{
+				sum += m[i * 2 + j] * rhs.m[i * 2 + j];
+			}
+			temp.m[i * 2 + j] = sum;
+		}
+	}
 
 	return temp;
 }
