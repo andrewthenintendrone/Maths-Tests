@@ -1,4 +1,5 @@
 #include "Matrix3.h"
+#include "Matrix2.h"
 
 /*##################################################
 Matrix3 constructor and destructor
@@ -57,7 +58,11 @@ Matrix3 Functions
 ##################################################*/
 float Matrix3::determinant()
 {
-	return (x0 * y1 * z2 + x1 * y2 * z0 + x2 * y0 * z1) - (z0 * y1 * x2 + z1 * y2 * x0 + z2 * y0 * x1);
+    Matrix2 block1(y1, y2, z1, z2);
+    Matrix2 block2(y0, y2, z0, z2);
+    Matrix2 block3(y0, y1, z0, z1);
+
+    return (x0 * block1.determinant() - x1 * block2.determinant() + x2 * block3.determinant());
 }
 
 Matrix3 Matrix3::dot(const Matrix3& rhs)

@@ -51,7 +51,7 @@ Matrix2 Functions
 ##################################################*/
 float Matrix2::determinant()
 {
-	return (x0 * y1) - (y0 * x1);
+    return (x0 * y1 - x1 * y0);
 }
 
 Matrix2 Matrix2::dot(const Matrix2& rhs)

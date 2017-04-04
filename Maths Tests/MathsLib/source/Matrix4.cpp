@@ -1,4 +1,5 @@
 #include "Matrix4.h"
+#include "Matrix3.h"
 
 /*##################################################
 Matrix4 constructor and destructor
@@ -65,7 +66,12 @@ Matrix4 Functions
 ##################################################*/
 float Matrix4::determinant()
 {
-    return(x0 * y1 * z2 * w3 + x1 * y2 * z3 * w0 + x2 * y3 * z0 * w1 + x3 * y0 * z1 * w2) - (w0 * z1 * y2 * x3 + w1 * z2 * y3 * x0 + w2 * z3 * y0 * x1 + w3 * z0 * y1 * x2);
+    Matrix3 block1(y1, y2, y3, z1, z2, z3, w1, w2, w3);
+    Matrix3 block2(y0, y2, y3, z0, z2, z3, w0, w2, w3);
+    Matrix3 block3(y0, y1, y3, z0, z1, z3, w0, w1, w3);
+    Matrix3 block4(y0, y1, y2, z0, z1, z2, w0, w1, w2);
+
+    return (x0 * block1.determinant() - x1 * block2.determinant() + x2 * block3.determinant() - x3 * block4.determinant());
 }
 
 Matrix4 Matrix4::dot(const Matrix4& rhs)
