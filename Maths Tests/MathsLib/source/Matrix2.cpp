@@ -56,22 +56,22 @@ float Matrix2::determinant()
 
 Matrix2 Matrix2::dot(const Matrix2& rhs)
 {
-	Matrix2 temp;
+    Matrix2 temp;
 
-	for (unsigned int i = 0; i < 2; i++)
-	{
-		for (unsigned int j = 0; j < 2; j++)
-		{
-			int sum = 0;
-			for (unsigned int k = 0; k < 2; k++)
-			{
-				sum += m[i * 2 + j] * rhs.m[i * 2 + j];
-			}
-			temp.m[i * 2 + j] = sum;
-		}
-	}
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        for (unsigned int j = 0; j < 2; j++)
+        {
+            float sum = 0;
+            for (unsigned int k = 0; k < 2; k++)
+            {
+                sum += m[i * 2 + k] * rhs.m[k * 2 + j];
+            }
+            temp.m[i * 2 + j] = sum;
+        }
+    }
 
-	return temp;
+    return temp;
 }
 
 Matrix2 Matrix2::identity()

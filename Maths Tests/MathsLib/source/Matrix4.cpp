@@ -70,19 +70,22 @@ float Matrix4::determinant()
 
 Matrix4 Matrix4::dot(const Matrix4& rhs)
 {
-	Matrix4 temp;
+    Matrix4 temp;
 
-	temp.x0 = x0 * rhs.x0 + x1 * rhs.y0 + x2 * rhs.z0;
-	temp.x1 = x0 * rhs.x1 + x1 * rhs.y1 + x2 * rhs.z1;
-	temp.x2 = x0 * rhs.x2 + x1 * rhs.y2 + x2 * rhs.z2;
-	temp.y0 = y0 * rhs.x0 + y1 * rhs.y0 + y2 * rhs.z0;
-	temp.y1 = y0 * rhs.x1 + y1 * rhs.y1 + y2 * rhs.z1;
-	temp.y2 = y0 * rhs.x2 + y1 * rhs.y2 + y2 * rhs.z2;
-	temp.z0 = z0 * rhs.x0 + z1 * rhs.y0 + z2 * rhs.z0;
-	temp.z1 = z0 * rhs.x1 + z1 * rhs.y1 + z2 * rhs.z1;
-	temp.z2 = z0 * rhs.x2 + z1 * rhs.y2 + z2 * rhs.z2;
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            float sum = 0;
+            for (unsigned int k = 0; k < 4; k++)
+            {
+                sum += m[i * 4 + k] * rhs.m[k * 4 + j];
+            }
+            temp.m[i * 4 + j] = sum;
+        }
+    }
 
-	return temp;
+    return temp;
 }
 
 Matrix4 Matrix4::identity()
