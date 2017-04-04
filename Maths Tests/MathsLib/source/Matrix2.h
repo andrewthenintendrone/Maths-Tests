@@ -22,7 +22,12 @@ public:
 	~Matrix2();
 
 	// functions
-	
+	float determinant();
+	Matrix2 dot(const Matrix2& rhs);
+
+	// static Matrix2 shortcuts
+	static Matrix2 identity();
+
 	// overloaded operators
 	void operator += (const Matrix2& rhs);
 	Matrix2 operator + (const Matrix2& rhs);

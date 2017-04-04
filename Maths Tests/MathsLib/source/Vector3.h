@@ -23,7 +23,6 @@ public:
 	void normalise();
 	Vector3 normalized();
 	float angle(Vector3& rhs);
-	Vector3 perpendicular();
 
 	// static Vector3 shortcuts
 	static Vector3 Up();

@@ -41,6 +41,53 @@ Matrix2::~Matrix2()
 
 }
 
+/*##################################################
+Matrix2 Functions
+##################################################*/
+float Matrix2::determinant()
+{
+	return (m[0][0] * m[1][1] - m[0][1] * m[1][0]);
+}
+
+Matrix2 Matrix2::dot(const Matrix2& rhs)
+{
+	Matrix2 temp;
+
+	float a = m[0][0];
+	float b = m[0][1];
+	float c = m[1][0];
+	float d = m[1][1];
+	float e = rhs.m[0][0];
+	float f = rhs.m[0][1];
+	float g = rhs.m[1][0];
+	float h = rhs.m[1][1];
+
+	temp.m[0][0] = a * e + b * g;
+	temp.m[0][1] = a * f + b * h;
+	temp.m[1][0] = c * e + d * g;
+	temp.m[1][1] = c * f + d * h;
+
+	return temp;
+}
+
+Matrix2 Matrix2::identity()
+{
+	Matrix2 temp;
+	for (unsigned int x = 0; x < 2; x++)
+	{
+		for (unsigned int y = 0; y < 2; y++)
+		{
+			if (x == y)
+			{
+				temp.m[x][y] = 0;
+			}
+		}
+	}
+}
+
+/*##################################################
+Vector2 overloaded operators
+##################################################*/
 void Matrix2::operator += (const Matrix2& rhs)
 {
 	for (unsigned int x = 0; x < 2; x++)

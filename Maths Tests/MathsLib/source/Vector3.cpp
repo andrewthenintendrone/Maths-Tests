@@ -66,11 +66,6 @@ float Vector3::angle(Vector3& rhs)
 	return acosf(Vector3::dot(rhs.normalized()));
 }
 
-Vector3 Vector3::perpendicular()
-{
-	return Vector3(-y, x, 0);
-}
-
 /*##################################################
 Vector3 shortcuts for commonly used Vector3s
 ##################################################*/
