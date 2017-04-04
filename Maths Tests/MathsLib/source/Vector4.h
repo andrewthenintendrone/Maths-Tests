@@ -13,7 +13,9 @@ public:
 
 	// constructors and destructor
 	Vector4();
+	Vector4(const float& newValue);
 	Vector4(float newX, float newY, float newZ, float newW);
+	Vector4(const Vector4& newVector);
 	~Vector4();
 
 	// functions

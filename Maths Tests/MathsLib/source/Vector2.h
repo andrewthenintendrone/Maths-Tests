@@ -11,7 +11,9 @@ public:
 
     // constructors and destructor
     Vector2();
+	Vector2(const float& value);
     Vector2(float newX, float newY);
+	Vector2(const Vector2& vector);
     ~Vector2();
 
     // functions

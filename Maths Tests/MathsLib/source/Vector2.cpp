@@ -9,11 +9,22 @@ Vector2::Vector2()
 	y = 0;
 }
 
+Vector2::Vector2(const float& value)
+{
+	x = value;
+	y = value;
+}
+
 Vector2::Vector2(float newX, float newY)
 {
     x = newX;
     y = newY;
+}
 
+Vector2::Vector2(const Vector2& vector)
+{
+	x = vector.x;
+	y = vector.y;
 }
 
 Vector2::~Vector2()
@@ -48,7 +59,7 @@ void Vector2::normalise()
 
 Vector2 Vector2::normalized()
 {
-    Vector2 temp = *this;
+	Vector2 temp(*this);
     float magnitude = temp.magnitude();
     temp.normalise();
     return temp;
@@ -108,7 +119,7 @@ void Vector2::operator = (const Vector2& rhs)
 
 Vector2 Vector2::operator + (const Vector2& rhs)
 {
-    Vector2 temp = *this;
+	Vector2 temp(*this);
     temp += rhs;
     return temp;
 }
@@ -121,7 +132,7 @@ void Vector2::operator += (const Vector2& rhs)
 
 Vector2 Vector2::operator - (const Vector2& rhs)
 {
-    Vector2 temp = *this;
+	Vector2 temp(*this);
     temp -= rhs;
     return temp;
 }
@@ -134,7 +145,7 @@ void Vector2::operator -= (const Vector2& rhs)
 
 Vector2 Vector2::operator * (const float& scalar)
 {
-	Vector2 temp = *this;
+	Vector2 temp(*this);
 	temp *= scalar;
 	return temp;
 }
@@ -152,7 +163,7 @@ void Vector2::operator *= (const float& scalar)
 
 Vector2 Vector2::operator / (const float& scalar)
 {
-	Vector2 temp = *this;
+	Vector2 temp(*this);
 	temp /= scalar;
 	return temp;
 }

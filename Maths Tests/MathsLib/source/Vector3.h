@@ -12,7 +12,9 @@ public:
 
 	// constructors and destructor
 	Vector3();
+	Vector3(const float& newValue);
 	Vector3(float newX, float newY, float newZ);
+	Vector3(const Vector3& newVector);
 	~Vector3();
 
 	// functions

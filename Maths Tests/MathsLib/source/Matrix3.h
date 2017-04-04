@@ -11,14 +11,30 @@ public:
 		{
 			Vector3 vecs[3];
 		};
-		float m[9];
+		struct
+		{
+			float m[9];
+		};
+		struct
+		{
+			float x0;
+			float x1;
+			float x2;
+			float y0;
+			float y1;
+			float y2;
+			float z0;
+			float z1;
+			float z2;
+		};
 	};
 
 	// constructors and destructor
 	Matrix3();
-	Matrix3(const float x0, const float x1, const float x2, const float y0, const float y1, const float y2, const float z0, const float z1, const float z2);
+	Matrix3(const float newx0, const float newx1, const float newx2, const float newy0, const float newy1, const float newy2, const float newz0, const float newz1, const float newz2);
 	Matrix3(const Vector3& row1, const Vector3& row2, const Vector3& row3);
 	Matrix3(const float& newM);
+	Matrix3(const Matrix3& newM);
 	~Matrix3();
 
 	// functions

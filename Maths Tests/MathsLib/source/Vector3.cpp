@@ -10,11 +10,25 @@ Vector3::Vector3()
 	z = 0;
 }
 
+Vector3::Vector3(const float& newValue)
+{
+	x = newValue;
+	y = newValue;
+	z = newValue;
+}
+
 Vector3::Vector3(float newX, float newY, float newZ)
 {
 	x = newX;
 	y = newY;
 	z = newZ;
+}
+
+Vector3::Vector3(const Vector3& newVector)
+{
+	x = newVector.x;
+	y = newVector.y;
+	z = newVector.z;
 }
 
 Vector3::~Vector3()
@@ -55,7 +69,7 @@ void Vector3::normalise()
 
 Vector3 Vector3::normalized()
 {
-	Vector3 temp = *this;
+	Vector3 temp(*this);
 	float magnitude = temp.magnitude();
 	temp.normalise();
 	return temp;
@@ -121,7 +135,7 @@ void Vector3::operator = (const Vector3& rhs)
 
 Vector3 Vector3::operator + (const Vector3& rhs)
 {
-	Vector3 temp = *this;
+	Vector3 temp(*this);
 	temp += rhs;
 	return temp;
 }
@@ -135,7 +149,7 @@ void Vector3::operator += (const Vector3& rhs)
 
 Vector3 Vector3::operator - (const Vector3& rhs)
 {
-	Vector3 temp = *this;
+	Vector3 temp(*this);
 	temp -= rhs;
 	return temp;
 }
@@ -149,7 +163,7 @@ void Vector3::operator -= (const Vector3& rhs)
 
 Vector3 Vector3::operator * (const float& scalar)
 {
-	Vector3 temp = *this;
+	Vector3 temp(*this);
 	temp *= scalar;
 	return temp;
 }
@@ -168,7 +182,7 @@ void Vector3::operator *= (const float& scalar)
 
 Vector3 Vector3::operator / (const float& scalar)
 {
-	Vector3 temp = *this;
+	Vector3 temp(*this);
 	temp /= scalar;
 	return temp;
 }

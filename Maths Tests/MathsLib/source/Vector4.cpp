@@ -11,12 +11,28 @@ Vector4::Vector4()
 	w = 0;
 }
 
+Vector4::Vector4(const float& newValue)
+{
+	x = newValue;
+	y = newValue;
+	z = newValue;
+	w = newValue;
+}
+
 Vector4::Vector4(float newX, float newY, float newZ, float newW)
 {
 	x = newX;
 	y = newY;
 	z = newZ;
 	w = newW;
+}
+
+Vector4::Vector4(const Vector4& newVector)
+{
+	x = newVector.x;
+	y = newVector.y;
+	z = newVector.z;
+	w = newVector.w;
 }
 
 Vector4::~Vector4()
@@ -58,7 +74,7 @@ void Vector4::normalise()
 
 Vector4 Vector4::normalized()
 {
-	Vector4 temp = *this;
+	Vector4 temp(*this);
 	float magnitude = temp.magnitude();
 	temp.normalise();
 	return temp;
@@ -100,7 +116,7 @@ void Vector4::operator = (const Vector4& rhs)
 
 Vector4 Vector4::operator + (const Vector4& rhs)
 {
-	Vector4 temp = *this;
+	Vector4 temp(*this);
 	temp += rhs;
 	return temp;
 }
@@ -115,7 +131,7 @@ void Vector4::operator += (const Vector4& rhs)
 
 Vector4 Vector4::operator - (const Vector4& rhs)
 {
-	Vector4 temp = *this;
+	Vector4 temp(*this);
 	temp -= rhs;
 	return temp;
 }
@@ -130,7 +146,7 @@ void Vector4::operator -= (const Vector4& rhs)
 
 Vector4 Vector4::operator * (const float& scalar)
 {
-	Vector4 temp = *this;
+	Vector4 temp(*this);
 	temp *= scalar;
 	return temp;
 }
@@ -150,7 +166,7 @@ void Vector4::operator *= (const float& scalar)
 
 Vector4 Vector4::operator / (const float& scalar)
 {
-	Vector4 temp = *this;
+	Vector4 temp(*this);
 	temp /= scalar;
 	return temp;
 }

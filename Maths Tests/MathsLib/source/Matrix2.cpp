@@ -11,12 +11,18 @@ Matrix2::Matrix2()
 	}
 }
 
-Matrix2::Matrix2(const float x0, const float x1, const float y0, const float y1)
+Matrix2::Matrix2(const float newx0, const float newx1, const float newy0, const float newy1)
 {
-	m[0] = x0;
-	m[1] = x1;
-	m[2] = y0;
-	m[3] = y1;
+	x0 = newx0;
+	x1 = newx1;
+	y0 = newy0;
+	y1 = newy1;
+}
+
+Matrix2::Matrix2(const Vector2& row1, const Vector2& row2)
+{
+	vecs[0] = row1;
+	vecs[1] = row2;
 }
 
 Matrix2::Matrix2(const float& newM)
@@ -27,10 +33,12 @@ Matrix2::Matrix2(const float& newM)
 	}
 }
 
-Matrix2::Matrix2(const Vector2& row1, const Vector2& row2)
+Matrix2::Matrix2(const Matrix2& newM)
 {
-	vecs[0] = row1;
-	vecs[1] = row2;
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		m[i] = newM.m[i];
+	}
 }
 
 Matrix2::~Matrix2()
@@ -43,7 +51,7 @@ Matrix2 Functions
 ##################################################*/
 float Matrix2::determinant()
 {
-	return (m[0] * m[3] - m[1] * m[2]);
+	return (x0 * y1) - (y0 * x1);
 }
 
 Matrix2 Matrix2::dot(const Matrix2& rhs)
@@ -84,7 +92,7 @@ void Matrix2::operator += (const Matrix2& rhs)
 
 Matrix2 Matrix2::operator + (const Matrix2& rhs)
 {
-	Matrix2 temp;
+	Matrix2 temp(*this);
 	temp += rhs;
 	return temp;
 }
@@ -99,7 +107,7 @@ void Matrix2::operator -= (const Matrix2& rhs)
 
 Matrix2 Matrix2::operator - (const Matrix2& rhs)
 {
-	Matrix2 temp = *this;
+	Matrix2 temp(*this);
 	temp -= rhs;
 	return temp;
 }
@@ -114,7 +122,7 @@ void Matrix2::operator *= (const float& scalar)
 
 Matrix2 Matrix2::operator * (const float& scalar)
 {
-	Matrix2 temp = *this;
+	Matrix2 temp(*this);
 	temp *= scalar;
 	return temp;
 }
@@ -129,7 +137,7 @@ void Matrix2::operator /= (const float& scalar)
 
 Matrix2 Matrix2::operator / (const float& scalar)
 {
-	Matrix2 temp = *this;
+	Matrix2 temp(*this);
 	temp /= scalar;
 	return temp;
 }
