@@ -54,6 +54,7 @@ public:
 	Matrix3 operator - (const Matrix3& rhs);
 	void operator *= (const float& scalar);
 	Matrix3 operator * (const float& scalar);
+	Matrix3 operator * (const Matrix3& rhs);
 	void operator /= (const float& scalar);
 	Matrix3 operator / (const float& scalar);
 	friend std::ostream& operator << (std::ostream& stream, const Matrix3& matrix);

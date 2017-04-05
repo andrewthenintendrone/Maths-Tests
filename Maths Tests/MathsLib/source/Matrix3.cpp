@@ -156,6 +156,26 @@ Matrix3 Matrix3::operator * (const float& scalar)
 	return temp;
 }
 
+Matrix3 Matrix3::operator * (const Matrix3& rhs)
+{
+	Matrix3 temp;
+
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		for (unsigned int j = 0; j < 3; j++)
+		{
+			float sum = 0;
+			for (unsigned int k = 0; k < 3; k++)
+			{
+				sum += m[i * 3 + k] * rhs.m[k * 3 + j];
+			}
+			temp.m[i * 3 + j] = sum;
+		}
+	}
+
+	return temp;
+}
+
 void Matrix3::operator /= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 9; i++)
