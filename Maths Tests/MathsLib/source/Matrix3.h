@@ -45,6 +45,7 @@ public:
 	static Matrix3 identity();
 
 	// overloaded operators
+	operator float* ();
 	Vector3& operator [] (const int& index);
 	void operator = (const Matrix3& rhs);
 	void operator += (const Matrix3& rhs);

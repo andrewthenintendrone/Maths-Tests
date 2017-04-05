@@ -102,6 +102,11 @@ Matrix4 Matrix4::identity()
 /*##################################################
 Matrix4 overloaded operators
 ##################################################*/
+Matrix4::operator float* ()
+{
+	return &x1;
+}
+
 Vector4 Matrix4::operator [] (const int& index)
 {
 	return vecs[index];

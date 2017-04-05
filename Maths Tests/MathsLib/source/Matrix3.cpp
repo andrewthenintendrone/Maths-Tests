@@ -93,6 +93,11 @@ Matrix3 Matrix3::identity()
 /*##################################################
 Matrix3 overloaded operators
 ##################################################*/
+Matrix3::operator float* ()
+{
+	return &x1;
+}
+
 Vector3& Matrix3::operator [] (const int& index)
 {
 	return vecs[index];

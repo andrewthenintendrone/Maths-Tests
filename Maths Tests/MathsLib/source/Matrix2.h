@@ -40,6 +40,7 @@ public:
 	static Matrix2 identity();
 
 	// overloaded operators
+	operator float* ();
 	Vector2& operator [] (const int& index);
 	void operator = (const Matrix2& rhs);
 	void operator += (const Matrix2& rhs);

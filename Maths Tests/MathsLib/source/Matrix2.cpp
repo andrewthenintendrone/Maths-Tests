@@ -82,6 +82,11 @@ Matrix2 Matrix2::identity()
 /*##################################################
 Matrix2 overloaded operators
 ##################################################*/
+Matrix2::operator float* ()
+{
+	return &x1;
+}
+
 Vector2& Matrix2::operator [] (const int& index)
 {
 	return vecs[index];
