@@ -106,6 +106,11 @@ Vector2 Vector2::Zero()
 /*##################################################
 Vector2 overloaded operators
 ##################################################*/
+Vector2::operator float* ()
+{
+	return &x;
+}
+
 float& Vector2::operator [] (const int& index)
 {
 	return v[index];

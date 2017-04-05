@@ -101,6 +101,11 @@ Vector4 Vector4::Zero()
 /*##################################################
 Vector4 overloaded operators
 ##################################################*/
+Vector4::operator float* ()
+{
+	return &x;
+}
+
 float& Vector4::operator [] (const int& index)
 {
 	return v[index];

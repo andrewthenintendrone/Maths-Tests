@@ -121,6 +121,11 @@ Vector3 Vector3::Zero()
 /*##################################################
 Vector3 overloaded operators
 ##################################################*/
+Vector3::operator float* ()
+{
+	return &x;
+}
+
 float& Vector3::operator [] (const int& index)
 {
 	return v[index];
