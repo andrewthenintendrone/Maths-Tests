@@ -17,30 +17,30 @@ public:
 		};
 		struct
 		{
-			float x0;
 			float x1;
-			float x2;
-			float x3;
-			float y0;
 			float y1;
-			float y2;
-			float y3;
-			float z0;
 			float z1;
-			float z2;
-			float z3;
-			float w0;
 			float w1;
+			float x2;
+			float y2;
+			float z2;
 			float w2;
+			float x3;
+			float y3;
+			float z3;
 			float w3;
+			float x4;
+			float y4;
+			float z4;
+			float w4;
 		};
 	};
 
 	// constructors and destructor
 	Matrix4();
-	Matrix4(const float& newx0, const float& newx1, const float& newx2, const float& newx3, const float& newy0, const float& newy1, const float& newy2, const float& newy3, const float& newz0, const float& newz1, const float& newz2, const float& newz3, const float& neww0, const float& neww1, const float& neww2, const float& neww3);
-	Matrix4(const Vector4& row1, const Vector4& row2, const Vector4& row3, const Vector4& row4);
-	Matrix4(const float& newM);
+	Matrix4(const float& newx1, const float& newy1, const float& newz1, const float& neww1, const float& newx2, const float& newy2, const float& newz2, const float& neww2, const float& newx3, const float& newy3, const float& newz3, const float& neww3, const float& newx4, const float& newy4, const float& newz4, const float& neww4);
+	Matrix4(const Vector4& newVec1, const Vector4& newVec2, const Vector4& newVec3, const Vector4& newVec4);
+	Matrix4(const float& newValue);
 	Matrix4(const Matrix4& newM);
 	~Matrix4();
 
@@ -52,6 +52,7 @@ public:
 	static Matrix4 identity();
 
 	// overloaded operators
+	Vector4 operator [] (const int& index);
 	void operator = (const Matrix4& rhs);
 	void operator += (const Matrix4& rhs);
 	Matrix4 operator + (const Matrix4& rhs);

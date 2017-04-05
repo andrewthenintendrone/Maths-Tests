@@ -12,31 +12,31 @@ Matrix3::Matrix3()
 	}
 }
 
-Matrix3::Matrix3(const float& newx0, const float& newx1, const float& newx2, const float& newy0, const float& newy1, const float& newy2, const float& newz0, const float& newz1, const float& newz2)
+Matrix3::Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float& newz2, const float& newx3, const float& newy3, const float& newz3)
 {
-	x0 = newx0;
 	x1 = newx1;
-	x2 = newx2;
-	y0 = newy0;
 	y1 = newy1;
-	y2 = newy2;
-	z0 = newz0;
 	z1 = newz1;
+	x2 = newx2;
+	y2 = newy2;
 	z2 = newz2;
+	x3 = newx3;
+	y3 = newy3;
+	z3 = newz3;
 }
 
-Matrix3::Matrix3(const Vector3& row1, const Vector3& row2, const Vector3& row3)
+Matrix3::Matrix3(const Vector3& newVec1, const Vector3& newVec2, const Vector3& newVec3)
 {
-	vecs[0] = row1;
-	vecs[1] = row2;
-	vecs[2] = row3;
+	vecs[0] = newVec1;
+	vecs[1] = newVec2;
+	vecs[2] = newVec3;
 }
 
-Matrix3::Matrix3(const float& newM)
+Matrix3::Matrix3(const float& newValue)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
-		m[i] = newM;
+		m[i] = newValue;
 	}
 }
 
@@ -58,11 +58,11 @@ Matrix3 Functions
 ##################################################*/
 float Matrix3::determinant()
 {
-    Matrix2 block1(y1, y2, z1, z2);
-    Matrix2 block2(y0, y2, z0, z2);
-    Matrix2 block3(y0, y1, z0, z1);
+    Matrix2 block1(y2, z2, y3, z3);
+    Matrix2 block2(x2, z2, x3, z3);
+    Matrix2 block3(x2, y2, x3, y3);
 
-    return (x0 * block1.determinant() - x1 * block2.determinant() + x2 * block3.determinant());
+    return (x1 * block1.determinant() - y1 * block2.determinant() + z1 * block3.determinant());
 }
 
 Matrix3 Matrix3::dot(const Matrix3& rhs)
@@ -93,6 +93,11 @@ Matrix3 Matrix3::identity()
 /*##################################################
 Matrix3 overloaded operators
 ##################################################*/
+Vector3& Matrix3::operator [] (const int& index)
+{
+	return vecs[index];
+}
+
 void Matrix3::operator = (const Matrix3& rhs)
 {
 	for (unsigned int i = 0; i < 9; i++)

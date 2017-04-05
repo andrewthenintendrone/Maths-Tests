@@ -17,23 +17,23 @@ public:
 		};
 		struct
 		{
-			float x0;
 			float x1;
-			float x2;
-			float y0;
 			float y1;
-			float y2;
-			float z0;
 			float z1;
+			float x2;
+			float y2;
 			float z2;
+			float x3;
+			float y3;
+			float z3;
 		};
 	};
 
 	// constructors and destructor
 	Matrix3();
-    Matrix3(const float& newx0, const float& newx1, const float& newx2, const float& newy0, const float& newy1, const float& newy2, const float& newz0, const float& newz1, const float& newz2);
-	Matrix3(const Vector3& row1, const Vector3& row2, const Vector3& row3);
-	Matrix3(const float& newM);
+    Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float& newz2, const float& newx3, const float& newy3, const float& newz3);
+	Matrix3(const Vector3& newVec1, const Vector3& newVec2, const Vector3& newVec3);
+	Matrix3(const float& newValue);
 	Matrix3(const Matrix3& newM);
 	~Matrix3();
 
@@ -45,6 +45,7 @@ public:
 	static Matrix3 identity();
 
 	// overloaded operators
+	Vector3& operator [] (const int& index);
 	void operator = (const Matrix3& rhs);
 	void operator += (const Matrix3& rhs);
 	Matrix3 operator + (const Matrix3& rhs);

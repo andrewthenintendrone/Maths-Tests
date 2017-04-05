@@ -17,18 +17,18 @@ public:
 		};
 		struct
 		{
-			float x0;
 			float x1;
-			float y0;
 			float y1;
+			float x2;
+			float y2;
 		};
 	};
 
 	// constructors and destructor
 	Matrix2();
-    Matrix2(const float& newx0, const float& newx1, const float& newy0, const float& newy1);
-	Matrix2(const Vector2& row1, const Vector2& row2);
-	Matrix2(const float& newM);
+    Matrix2(const float& newx1, const float& newy1, const float& newx2, const float& newy2);
+	Matrix2(const Vector2& newVec1, const Vector2& newVec2);
+	Matrix2(const float& newValue);
 	Matrix2(const Matrix2& newM);
 	~Matrix2();
 
@@ -40,6 +40,7 @@ public:
 	static Matrix2 identity();
 
 	// overloaded operators
+	Vector2& operator [] (const int& index);
 	void operator = (const Matrix2& rhs);
 	void operator += (const Matrix2& rhs);
 	Matrix2 operator + (const Matrix2& rhs);

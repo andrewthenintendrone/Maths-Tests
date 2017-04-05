@@ -11,25 +11,25 @@ Matrix2::Matrix2()
 	}
 }
 
-Matrix2::Matrix2(const float& newx0, const float& newx1, const float& newy0, const float& newy1)
+Matrix2::Matrix2(const float& newx1, const float& newy1, const float& newx2, const float& newy2)
 {
-	x0 = newx0;
 	x1 = newx1;
-	y0 = newy0;
 	y1 = newy1;
+	x2 = newx2;
+	y2 = newy2;
 }
 
-Matrix2::Matrix2(const Vector2& row1, const Vector2& row2)
+Matrix2::Matrix2(const Vector2& newVec1, const Vector2& newVec2)
 {
-	vecs[0] = row1;
-	vecs[1] = row2;
+	vecs[0] = newVec1;;
+	vecs[1] = newVec2;
 }
 
-Matrix2::Matrix2(const float& newM)
+Matrix2::Matrix2(const float& newValue)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		m[i] = newM;
+		m[i] = newValue;
 	}
 }
 
@@ -51,7 +51,7 @@ Matrix2 Functions
 ##################################################*/
 float Matrix2::determinant()
 {
-    return (x0 * y1 - x1 * y0);
+    return (x1 * y2 - x2 * y1);
 }
 
 Matrix2 Matrix2::dot(const Matrix2& rhs)
@@ -82,6 +82,11 @@ Matrix2 Matrix2::identity()
 /*##################################################
 Matrix2 overloaded operators
 ##################################################*/
+Vector2& Matrix2::operator [] (const int& index)
+{
+	return vecs[index];
+}
+
 void Matrix2::operator = (const Matrix2& rhs)
 {
 	for (unsigned int i = 0; i < 4; i++)
