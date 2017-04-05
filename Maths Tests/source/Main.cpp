@@ -6,10 +6,10 @@
 
 int main()
 {
-	Matrix3 m3b(1, 0, 0, 0, 1, 0, 0, 0, 1);
-	m3b[2] = Vector3(55, 44, 1);
+	Vector3 vec(1, 2, 3);
+	float* fp = (float*)vec;
 
-	std::cout << m3b << std::endl;
+	std::cout << *fp << std::endl;
 	system("pause");
 	return 0;
 }
