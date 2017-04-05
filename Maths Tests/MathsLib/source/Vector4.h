@@ -6,10 +6,20 @@ class Vector4
 {
 public:
 	// variables
-	float x;
-	float y;
-	float z;
-	float w;
+	union
+	{
+		struct
+		{
+			float v[4];
+		};
+		struct
+		{
+			float x;
+			float y;
+			float z;
+			float w;
+		};
+	};
 
 	// constructors and destructor
 	Vector4();
@@ -32,6 +42,7 @@ public:
 	static Vector4 Zero();
 
 	// operator overloads
+	float& operator [] (const int& index);
 	bool operator == (const Vector4& rhs);
 	void operator = (const Vector4& rhs);
 	Vector4 operator + (const Vector4& rhs);

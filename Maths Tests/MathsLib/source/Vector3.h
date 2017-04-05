@@ -6,9 +6,19 @@ class Vector3
 {
 public:
 	// variables
-	float x;
-	float y;
-	float z;
+	union
+	{
+		struct
+		{
+			float v[3];
+		};
+		struct
+		{
+			float x;
+			float y;
+			float z;
+		};
+	};
 
 	// constructors and destructor
 	Vector3();
@@ -36,6 +46,7 @@ public:
 	static Vector3 Zero();
 
 	// operator overloads
+	float& operator [] (const int& index);
 	bool operator == (const Vector3& rhs);
 	void operator = (const Vector3& rhs);
 	Vector3 operator + (const Vector3& rhs);

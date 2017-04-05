@@ -101,6 +101,11 @@ Vector4 Vector4::Zero()
 /*##################################################
 Vector4 overloaded operators
 ##################################################*/
+float& Vector4::operator [] (const int& index)
+{
+	return v[index];
+}
+
 bool Vector4::operator == (const Vector4& rhs)
 {
 	return (x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w);

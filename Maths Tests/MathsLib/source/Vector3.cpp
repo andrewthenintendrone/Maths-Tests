@@ -121,6 +121,11 @@ Vector3 Vector3::Zero()
 /*##################################################
 Vector3 overloaded operators
 ##################################################*/
+float& Vector3::operator [] (const int& index)
+{
+	return v[index];
+}
+
 bool Vector3::operator == (const Vector3& rhs)
 {
 	return (x == rhs.x && y == rhs.y && z == rhs.z);

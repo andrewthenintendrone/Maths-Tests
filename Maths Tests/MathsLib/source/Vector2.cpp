@@ -106,6 +106,11 @@ Vector2 Vector2::Zero()
 /*##################################################
 Vector2 overloaded operators
 ##################################################*/
+float& Vector2::operator [] (const int& index)
+{
+	return v[index];
+}
+
 bool Vector2::operator == (const Vector2& rhs)
 {
     return (x == rhs.x && y == rhs.y);

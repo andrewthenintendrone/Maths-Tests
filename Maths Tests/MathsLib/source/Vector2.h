@@ -6,8 +6,18 @@ class Vector2
 {
 public:
     // variables
-    float x;
-    float y;
+	union
+	{
+		struct
+		{
+			float v[2];
+		};
+		struct
+		{
+			float x;
+			float y;
+		};
+	};
 
     // constructors and destructor
     Vector2();
@@ -33,6 +43,7 @@ public:
     static Vector2 Zero();
 
     // operator overloads
+	float& operator [] (const int& index);
     bool operator == (const Vector2& rhs);
     void operator = (const Vector2& rhs);
     Vector2 operator + (const Vector2& rhs);
