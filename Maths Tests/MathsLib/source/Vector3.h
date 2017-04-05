@@ -46,7 +46,7 @@ public:
 	static Vector3 Zero();
 
 	// operator overloads
-	operator float* ();
+	operator float *();
 	float& operator [] (const int& index);
 	bool operator == (const Vector3& rhs);
 	void operator = (const Vector3& rhs);

@@ -40,7 +40,7 @@ public:
 	static Matrix2 identity();
 
 	// overloaded operators
-	operator float* ();
+	operator float *();
 	Vector2& operator [] (const int& index);
 	void operator = (const Matrix2& rhs);
 	void operator += (const Matrix2& rhs);
@@ -49,6 +49,7 @@ public:
 	Matrix2 operator - (const Matrix2& rhs);
 	void operator *= (const float& scalar);
 	Matrix2 operator * (const float& scalar);
+	Matrix2 operator * (const Matrix2& rhs);
 	void operator /= (const float& scalar);
 	Matrix2 operator / (const float& scalar);
 	friend std::ostream& operator << (std::ostream& stream, const Matrix2& matrix);

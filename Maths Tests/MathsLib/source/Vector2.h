@@ -43,7 +43,7 @@ public:
     static Vector2 Zero();
 
     // operator overloads
-	operator float* ();
+	operator float *();
 	float& operator [] (const int& index);
     bool operator == (const Vector2& rhs);
     void operator = (const Vector2& rhs);
@@ -52,7 +52,7 @@ public:
     Vector2 operator - (const Vector2& rhs);
     void operator -= (const Vector2& rhs);
 	Vector2 operator * (const float& scalar);
-	friend Vector2 operator * (const float& scalar, const Vector2& vector);
+	friend Vector2 operator * (const float& scalar, Vector2& vector);
 	void operator *= (const float& scalar);
 	Vector2 operator / (const float& scalar);
 	void operator /= (const float& scalar);
