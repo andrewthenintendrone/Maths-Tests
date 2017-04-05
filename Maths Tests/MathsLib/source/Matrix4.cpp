@@ -74,26 +74,6 @@ float Matrix4::determinant()
     return (x1 * block1.determinant() - y1 * block2.determinant() + z1 * block3.determinant() - w1 * block4.determinant());
 }
 
-Matrix4 Matrix4::dot(const Matrix4& rhs)
-{
-    Matrix4 temp;
-
-    for (unsigned int i = 0; i < 4; i++)
-    {
-        for (unsigned int j = 0; j < 4; j++)
-        {
-            float sum = 0;
-            for (unsigned int k = 0; k < 4; k++)
-            {
-                sum += m[i * 4 + k] * rhs.m[k * 4 + j];
-            }
-            temp.m[i * 4 + j] = sum;
-        }
-    }
-
-    return temp;
-}
-
 Matrix4 Matrix4::identity()
 {
 	return Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);

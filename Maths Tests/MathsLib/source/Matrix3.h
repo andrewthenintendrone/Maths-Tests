@@ -39,7 +39,6 @@ public:
 
 	// functions
 	float determinant();
-	Matrix3 dot(const Matrix3& rhs);
 
 	// static Matrix3 shortcuts
 	static Matrix3 identity();

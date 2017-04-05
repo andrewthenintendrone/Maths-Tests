@@ -46,7 +46,6 @@ public:
 
 	// functions
 	float determinant();
-	Matrix4 dot(const Matrix4& rhs);
 
 	// static Matrix4 shortcuts
 	static Matrix4 identity();

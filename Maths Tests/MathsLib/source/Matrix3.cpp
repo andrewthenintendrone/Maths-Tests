@@ -65,26 +65,6 @@ float Matrix3::determinant()
     return (x1 * block1.determinant() - y1 * block2.determinant() + z1 * block3.determinant());
 }
 
-Matrix3 Matrix3::dot(const Matrix3& rhs)
-{
-    Matrix3 temp;
-
-    for (unsigned int i = 0; i < 3; i++)
-    {
-        for (unsigned int j = 0; j < 3; j++)
-        {
-            float sum = 0;
-            for (unsigned int k = 0; k < 3; k++)
-            {
-                sum += m[i * 3 + k] * rhs.m[k * 3 + j];
-            }
-            temp.m[i * 3 + j] = sum;
-        }
-    }
-
-    return temp;
-}
-
 Matrix3 Matrix3::identity()
 {
 	return Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1);

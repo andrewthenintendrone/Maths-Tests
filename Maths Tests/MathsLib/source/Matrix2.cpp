@@ -54,26 +54,6 @@ float Matrix2::determinant()
     return (x1 * y2 - x2 * y1);
 }
 
-Matrix2 Matrix2::dot(const Matrix2& rhs)
-{
-    Matrix2 temp;
-
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            float sum = 0;
-            for (unsigned int k = 0; k < 2; k++)
-            {
-                sum += m[i * 2 + k] * rhs.m[k * 2 + j];
-            }
-            temp.m[i * 2 + j] = sum;
-        }
-    }
-
-    return temp;
-}
-
 Matrix2 Matrix2::identity()
 {
 	return Matrix2(1, 0, 0, 1);
