@@ -53,7 +53,9 @@ public:
 	Matrix3 operator - (const Matrix3& rhs);
 	void operator *= (const float& scalar);
 	Matrix3 operator * (const float& scalar);
-	Matrix3 operator * (const Matrix3& rhs);
+    void operator *= (const Matrix3& rhs);
+    Matrix3 operator * (const Matrix3& rhs);
+    void operator *= (Vector3& rhs);
     Vector3 operator * (Vector3& rhs);
 	void operator /= (const float& scalar);
 	Matrix3 operator / (const float& scalar);

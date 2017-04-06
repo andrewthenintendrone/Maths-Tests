@@ -136,36 +136,45 @@ Matrix3 Matrix3::operator * (const float& scalar)
 	return temp;
 }
 
+void Matrix3::operator *= (const Matrix3& rhs)
+{
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        for (unsigned int j = 0; j < 3; j++)
+        {
+            float sum = 0;
+            for (unsigned int k = 0; k < 3; k++)
+            {
+                sum += m[i * 3 + k] * rhs.m[k * 3 + j];
+            }
+            m[i * 3 + j] = sum;
+        }
+    }
+}
+
 Matrix3 Matrix3::operator * (const Matrix3& rhs)
 {
-	Matrix3 temp;
+    Matrix3 temp(*this);
+    temp *= rhs;
+    return temp;
+}
 
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		for (unsigned int j = 0; j < 3; j++)
-		{
-			float sum = 0;
-			for (unsigned int k = 0; k < 3; k++)
-			{
-				sum += m[i * 3 + k] * rhs.m[k * 3 + j];
-			}
-			temp.m[i * 3 + j] = sum;
-		}
-	}
-
-	return temp;
+void Matrix3::operator *= (Vector3& rhs)
+{
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        rhs[i] = rhs.dot(vecs[i]);
+    }
 }
 
 Vector3 Matrix3::operator * (Vector3& rhs)
 {
-    Vector3 temp;
+    Matrix3 tempMatrix(*this);
+    Vector3 tempVector(*rhs);
 
-    for (unsigned int i = 0; i < 3; i++)
-    {
-        temp[i] = rhs.dot(vecs[i]);
-    }
+    tempMatrix *= tempVector;
 
-    return temp;
+    return tempVector;
 }
 
 void Matrix3::operator /= (const float& scalar)

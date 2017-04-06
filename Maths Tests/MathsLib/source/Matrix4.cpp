@@ -145,36 +145,45 @@ Matrix4 Matrix4::operator * (const float& scalar)
 	return temp;
 }
 
+void Matrix4::operator *= (const Matrix4& rhs)
+{
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            float sum = 0;
+            for (unsigned int k = 0; k < 4; k++)
+            {
+                sum += m[i * 4 + k] * rhs.m[k * 4 + j];
+            }
+            m[i * 4 + j] = sum;
+        }
+    }
+}
+
 Matrix4 Matrix4::operator * (const Matrix4& rhs)
 {
-	Matrix4 temp;
+    Matrix4 temp(*this);
+    temp *= rhs;
+    return temp;
+}
 
-	for (unsigned int i = 0; i < 4; i++)
-	{
-		for (unsigned int j = 0; j < 4; j++)
-		{
-			float sum = 0;
-			for (unsigned int k = 0; k < 4; k++)
-			{
-				sum += m[i * 4 + k] * rhs.m[k * 4 + j];
-			}
-			temp.m[i * 4 + j] = sum;
-		}
-	}
-
-	return temp;
+void Matrix4::operator *= (Vector4& rhs)
+{
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        rhs[i] = rhs.dot(vecs[i]);
+    }
 }
 
 Vector4 Matrix4::operator * (Vector4& rhs)
 {
-    Vector4 temp;
+    Matrix4 tempMatrix(*this);
+    Vector4 tempVector(*rhs);
 
-    for (unsigned int i = 0; i < 4; i++)
-    {
-        temp[i] = rhs.dot(vecs[i]);
-    }
+    tempMatrix *= tempVector;
 
-    return temp;
+    return tempVector;
 }
 
 void Matrix4::operator /= (const float& scalar)

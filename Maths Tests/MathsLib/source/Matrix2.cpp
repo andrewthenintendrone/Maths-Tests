@@ -54,6 +54,14 @@ float Matrix2::determinant()
     return (x1 * y2 - x2 * y1);
 }
 
+void Matrix2::setRotate(const float& angle)
+{
+    Matrix2 rotationMatrix(cosf(x1 * angle), sinf(y1 * angle), -sinf(x2 * angle), cosf(y2 * angle));
+}
+
+/*##################################################
+Matrix2 shortcuts for commonly used Matrix2s
+##################################################*/
 Matrix2 Matrix2::identity()
 {
 	return Matrix2(1, 0, 0, 1);
@@ -125,36 +133,45 @@ Matrix2 Matrix2::operator * (const float& scalar)
 	return temp;
 }
 
+void Matrix2::operator *= (const Matrix2& rhs)
+{
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        for (unsigned int j = 0; j < 2; j++)
+        {
+            float sum = 0;
+            for (unsigned int k = 0; k < 2; k++)
+            {
+                sum += m[i * 2 + k] * rhs.m[k * 2 + j];
+            }
+            m[i * 2 + j] = sum;
+        }
+    }
+}
+
 Matrix2 Matrix2::operator * (const Matrix2& rhs)
 {
-	Matrix2 temp;
-
-	for (unsigned int i = 0; i < 2; i++)
-	{
-		for (unsigned int j = 0; j < 2; j++)
-		{
-			float sum = 0;
-			for (unsigned int k = 0; k < 2; k++)
-			{
-				sum += m[i * 2 + k] * rhs.m[k * 2 + j];
-			}
-			temp.m[i * 2 + j] = sum;
-		}
-	}
-
+	Matrix2 temp(*this);
+    temp *= rhs;
 	return temp;
+}
+
+void Matrix2::operator *= (Vector2& rhs)
+{
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        rhs[i] = rhs.dot(vecs[i]);
+    }
 }
 
 Vector2 Matrix2::operator * (Vector2& rhs)
 {
-    Vector2 temp;
+    Matrix2 tempMatrix(*this);
+    Vector2 tempVector(*rhs);
 
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        temp[i] = rhs.dot(vecs[i]);
-    }
+    tempMatrix *= tempVector;
 
-    return temp;
+    return tempVector;
 }
 
 void Matrix2::operator /= (const float& scalar)
