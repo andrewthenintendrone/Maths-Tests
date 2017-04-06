@@ -1,17 +1,13 @@
 #include "Matrix4.h"
 #include "Matrix3.h"
 #include <math.h>
-#include "radians.h"
 
 /*##################################################
 Matrix4 constructor and destructor
 ##################################################*/
 Matrix4::Matrix4()
 {
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		m[i] = Matrix4::identity().m[i];
-	}
+    *this = Matrix4::identity();
 }
 
 Matrix4::Matrix4(const float& newx1, const float& newy1, const float& newz1, const float& neww1, const float& newx2, const float& newy2, const float& newz2, const float& neww2, const float& newx3, const float& newy3, const float& newz3, const float& neww3, const float& newx4, const float& newy4, const float& newz4, const float& neww4)
@@ -76,6 +72,27 @@ float Matrix4::determinant()
     return (x1 * block1.determinant() - y1 * block2.determinant() + z1 * block3.determinant() - w1 * block4.determinant());
 }
 
+void Matrix4::setRotateX(const float& angle)
+{
+    Matrix4 rotationMatrix(1, 0, 0, 0, 0, cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 0);
+    *this *= rotationMatrix;
+}
+
+void Matrix4::setRotateY(const float& angle)
+{
+    Matrix4 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 0, 1, 0, -sinf(angle), 0, 0, cosf(angle), 0, 0, 0, 0, 0);
+    *this *= rotationMatrix;
+}
+
+void Matrix4::setRotateZ(const float& angle)
+{
+    Matrix4 rotationMatrix(cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+    *this *= rotationMatrix;
+}
+
+/*##################################################
+Matrix4 shortcuts for commonly used Matrix4s
+##################################################*/
 Matrix4 Matrix4::identity()
 {
 	return Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);

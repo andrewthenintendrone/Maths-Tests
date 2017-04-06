@@ -1,17 +1,13 @@
 #include "Matrix3.h"
 #include "Matrix2.h"
 #include <math.h>
-#include "radians.h"
 
 /*##################################################
 Matrix3 constructor and destructor
 ##################################################*/
 Matrix3::Matrix3()
 {
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		m[i] = Matrix3::identity().m[i];
-	}
+    *this = Matrix3::identity();
 }
 
 Matrix3::Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float& newz2, const float& newx3, const float& newy3, const float& newz3)
@@ -69,22 +65,19 @@ float Matrix3::determinant()
 
 void Matrix3::setRotateX(const float& angle)
 {
-    float a = degreesToRadians(angle);
-    Matrix3 rotationMatrix(1, 0, 0, 0, cosf(a), sinf(a), 0, -sinf(a), cosf(a));
+    Matrix3 rotationMatrix(1, 0, 0, 0, cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle));
     *this *= rotationMatrix;
 }
 
 void Matrix3::setRotateY(const float& angle)
 {
-    float a = degreesToRadians(angle);
-    Matrix3 rotationMatrix(cosf(a), 0, sinf(a), 0, 1, 0, -sinf(a), 0, cosf(a));
+    Matrix3 rotationMatrix(cosf(angle), 0, -sinf(angle), 0, 1, 0, sinf(angle), 0, cosf(angle));
     *this *= rotationMatrix;
 }
 
 void Matrix3::setRotateZ(const float& angle)
 {
-    float a = degreesToRadians(angle);
-    Matrix3 rotationMatrix(cosf(a), sinf(a), 0, -sinf(a), cosf(a), 0, 0, 0, 1);
+    Matrix3 rotationMatrix(cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle), 0, 0, 0, 1);
     *this *= rotationMatrix;
 }
 
