@@ -27,7 +27,7 @@ Matrix2::Matrix2(const float& newValue)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		m[i] = newValue;
+		f[i] = newValue;
 	}
 }
 
@@ -35,7 +35,7 @@ Matrix2::Matrix2(const Matrix2& newM)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		m[i] = newM.m[i];
+		f[i] = newM.f[i];
 	}
 }
 
@@ -83,7 +83,7 @@ void Matrix2::operator = (const Matrix2& rhs)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		m[i] = rhs.m[i];
+		f[i] = rhs.f[i];
 	}
 }
 
@@ -91,7 +91,7 @@ void Matrix2::operator += (const Matrix2& rhs)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		m[i] += rhs.m[i];
+		f[i] += rhs.f[i];
 	}
 }
 
@@ -106,7 +106,7 @@ void Matrix2::operator -= (const Matrix2& rhs)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		m[i] -= rhs.m[i];
+		f[i] -= rhs.f[i];
 	}
 }
 
@@ -121,7 +121,7 @@ void Matrix2::operator *= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		m[i] *= scalar;
+		f[i] *= scalar;
 	}
 }
 
@@ -142,9 +142,9 @@ void Matrix2::operator *= (const Matrix2& rhs)
             float sum = 0;
             for (unsigned int k = 0; k < 2; k++)
             {
-                sum += m[i * 2 + k] * rhs.m[k * 2 + j];
+                sum += f[i * 2 + k] * rhs.f[k * 2 + j];
             }
-            temp.m[i * 2 + j] = sum;
+            temp.f[i * 2 + j] = sum;
         }
     }
     *this = temp;
@@ -179,7 +179,7 @@ void Matrix2::operator /= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		m[i] /= scalar;
+		f[i] /= scalar;
 	}
 }
 
@@ -196,7 +196,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
     {
         for (unsigned int j = 0; j < 2; j++)
         {
-            stream << matrix.m[j * 2 + i] << " ";
+            stream << matrix.f[j * 2 + i] << " ";
         }
         std::cout << std::endl;
     }

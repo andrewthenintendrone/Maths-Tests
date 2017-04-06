@@ -34,7 +34,7 @@ Matrix3::Matrix3(const float& newValue)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
-		m[i] = newValue;
+		f[i] = newValue;
 	}
 }
 
@@ -42,7 +42,7 @@ Matrix3::Matrix3(const Matrix3& newM)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
-		m[i] = newM.m[i];
+		f[i] = newM.f[i];
 	}
 }
 
@@ -106,7 +106,7 @@ void Matrix3::operator = (const Matrix3& rhs)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
-		m[i] = rhs.m[i];
+		f[i] = rhs.f[i];
 	}
 }
 
@@ -114,7 +114,7 @@ void Matrix3::operator += (const Matrix3& rhs)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
-		m[i] += rhs.m[i];
+		f[i] += rhs.f[i];
 	}
 }
 
@@ -129,7 +129,7 @@ void Matrix3::operator -= (const Matrix3& rhs)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
-		m[i] -= rhs.m[i];
+		f[i] -= rhs.f[i];
 	}
 }
 
@@ -144,7 +144,7 @@ void Matrix3::operator *= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
-		m[i] *= scalar;
+		f[i] *= scalar;
 	}
 }
 
@@ -165,9 +165,9 @@ void Matrix3::operator *= (const Matrix3& rhs)
             float sum = 0;
             for (unsigned int k = 0; k < 3; k++)
             {
-                sum += m[i * 3 + k] * rhs.m[k * 3 + j];
+                sum += f[i * 3 + k] * rhs.f[k * 3 + j];
             }
-            temp.m[i * 3 + j] = sum;
+            temp.f[i * 3 + j] = sum;
         }
     }
     *this = temp;
@@ -202,7 +202,7 @@ void Matrix3::operator /= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 9; i++)
 	{
-		m[i] /= scalar;
+		f[i] /= scalar;
 	}
 }
 
@@ -219,7 +219,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix3& matrix)
 	{
         for (unsigned int j = 0; j < 3; j++)
         {
-            stream << matrix.m[j * 3 + i] << " ";
+            stream << matrix.f[j * 3 + i] << " ";
         }
 		stream << std::endl;
 	}

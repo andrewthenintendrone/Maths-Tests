@@ -42,7 +42,7 @@ Matrix4::Matrix4(const float& newValue)
 {
 	for (unsigned int i = 0; i < 16; i++)
 	{
-		m[i] = newValue;
+		f[i] = newValue;
 	}
 }
 
@@ -50,7 +50,7 @@ Matrix4::Matrix4(const Matrix4& newM)
 {
 	for (unsigned int i = 0; i < 16; i++)
 	{
-		m[i] = newM.m[i];
+		f[i] = newM.f[i];
 	}
 }
 
@@ -115,7 +115,7 @@ void Matrix4::operator = (const Matrix4& rhs)
 {
 	for (unsigned int i = 0; i < 16; i++)
 	{
-		m[i] = rhs.m[i];
+		f[i] = rhs.f[i];
 	}
 }
 
@@ -123,7 +123,7 @@ void Matrix4::operator += (const Matrix4& rhs)
 {
 	for (unsigned int i = 0; i < 16; i++)
 	{
-		m[i] += rhs.m[i];
+		f[i] += rhs.f[i];
 	}
 }
 
@@ -138,7 +138,7 @@ void Matrix4::operator -= (const Matrix4& rhs)
 {
 	for (unsigned int i = 0; i < 16; i++)
 	{
-		m[i] -= rhs.m[i];
+		f[i] -= rhs.f[i];
 	}
 }
 
@@ -153,7 +153,7 @@ void Matrix4::operator *= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 16; i++)
 	{
-		m[i] *= scalar;
+		f[i] *= scalar;
 	}
 }
 
@@ -174,9 +174,9 @@ void Matrix4::operator *= (const Matrix4& rhs)
             float sum = 0;
             for (unsigned int k = 0; k < 4; k++)
             {
-                sum += m[i * 4 + k] * rhs.m[k * 4 + j];
+                sum += f[i * 4 + k] * rhs.f[k * 4 + j];
             }
-            temp.m[i * 4 + j] = sum;
+            temp.f[i * 4 + j] = sum;
         }
     }
     *this = temp;
@@ -211,7 +211,7 @@ void Matrix4::operator /= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 16; i++)
 	{
-		m[i] /= scalar;
+		f[i] /= scalar;
 	}
 }
 
@@ -228,7 +228,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix4& matrix)
 	{
         for (unsigned int j = 0; j < 4; j++)
         {
-            stream << matrix.m[j * 4 + i] << " ";
+            stream << matrix.f[j * 4 + i] << " ";
         }
         stream << std::endl;
 	}
