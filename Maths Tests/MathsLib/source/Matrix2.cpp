@@ -57,6 +57,7 @@ float Matrix2::determinant()
 void Matrix2::setRotate(const float& angle)
 {
     Matrix2 rotationMatrix(cosf(x1 * angle), sinf(y1 * angle), -sinf(x2 * angle), cosf(y2 * angle));
+    *this *= rotationMatrix;
 }
 
 /*##################################################
@@ -135,6 +136,7 @@ Matrix2 Matrix2::operator * (const float& scalar)
 
 void Matrix2::operator *= (const Matrix2& rhs)
 {
+    Matrix2 temp;
     for (unsigned int i = 0; i < 2; i++)
     {
         for (unsigned int j = 0; j < 2; j++)
@@ -144,9 +146,10 @@ void Matrix2::operator *= (const Matrix2& rhs)
             {
                 sum += m[i * 2 + k] * rhs.m[k * 2 + j];
             }
-            m[i * 2 + j] = sum;
+            temp.m[i * 2 + j] = sum;
         }
     }
+    *this = temp;
 }
 
 Matrix2 Matrix2::operator * (const Matrix2& rhs)

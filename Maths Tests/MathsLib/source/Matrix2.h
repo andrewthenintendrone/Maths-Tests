@@ -12,6 +12,10 @@ public:
 		{
 			Vector2 vecs[2];
 		};
+        struct
+        {
+            float f[2][2];
+        };
 		struct
 		{
 			float m[4];

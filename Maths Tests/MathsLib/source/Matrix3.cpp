@@ -138,6 +138,7 @@ Matrix3 Matrix3::operator * (const float& scalar)
 
 void Matrix3::operator *= (const Matrix3& rhs)
 {
+    Matrix3 temp;
     for (unsigned int i = 0; i < 3; i++)
     {
         for (unsigned int j = 0; j < 3; j++)
@@ -147,9 +148,10 @@ void Matrix3::operator *= (const Matrix3& rhs)
             {
                 sum += m[i * 3 + k] * rhs.m[k * 3 + j];
             }
-            m[i * 3 + j] = sum;
+            temp.m[i * 3 + j] = sum;
         }
     }
+    *this = temp;
 }
 
 Matrix3 Matrix3::operator * (const Matrix3& rhs)

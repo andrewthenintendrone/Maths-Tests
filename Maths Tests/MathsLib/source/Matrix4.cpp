@@ -147,6 +147,7 @@ Matrix4 Matrix4::operator * (const float& scalar)
 
 void Matrix4::operator *= (const Matrix4& rhs)
 {
+    Matrix4 temp;
     for (unsigned int i = 0; i < 4; i++)
     {
         for (unsigned int j = 0; j < 4; j++)
@@ -156,9 +157,10 @@ void Matrix4::operator *= (const Matrix4& rhs)
             {
                 sum += m[i * 4 + k] * rhs.m[k * 4 + j];
             }
-            m[i * 4 + j] = sum;
+            temp.m[i * 4 + j] = sum;
         }
     }
+    *this = temp;
 }
 
 Matrix4 Matrix4::operator * (const Matrix4& rhs)
