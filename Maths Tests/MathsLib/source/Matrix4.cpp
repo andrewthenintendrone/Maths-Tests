@@ -71,19 +71,19 @@ float Matrix4::determinant()
 
 void Matrix4::setRotateX(const float& angle)
 {
-    Matrix4 rotationMatrix(1, 0, 0, 0, 0, cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 0);
+    Matrix4 rotationMatrix(1, 0, 0, 0, 0, cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1);
     *this *= rotationMatrix;
 }
 
 void Matrix4::setRotateY(const float& angle)
 {
-    Matrix4 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 0, 1, 0, -sinf(angle), 0, 0, cosf(angle), 0, 0, 0, 0, 0);
+    Matrix4 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 0, 1, 0, 0, -sinf(angle), 0, cosf(angle), 0, 0, 0, 0, 1);
     *this *= rotationMatrix;
 }
 
 void Matrix4::setRotateZ(const float& angle)
 {
-    Matrix4 rotationMatrix(cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+    Matrix4 rotationMatrix(cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
     *this *= rotationMatrix;
 }
 
@@ -166,7 +166,7 @@ void Matrix4::operator *= (const Matrix4& rhs)
     Matrix4 temp;
     for (unsigned int i = 0; i < 4; i++)
     {
-        for (unsigned int j = 0; j < 4; i++)
+        for (unsigned int j = 0; j < 4; j++)
         {
             float sum = 0;
             for (unsigned int k = 0; k < 4; k++)

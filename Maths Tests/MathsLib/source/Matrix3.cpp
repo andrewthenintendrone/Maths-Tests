@@ -157,7 +157,7 @@ void Matrix3::operator *= (const Matrix3& rhs)
     Matrix3 temp;
     for (unsigned int i = 0; i < 3; i++)
     {
-        for (unsigned int j = 0; j < 3; i++)
+        for (unsigned int j = 0; j < 3; j++)
         {
             float sum = 0;
             for (unsigned int k = 0; k < 3; k++)
