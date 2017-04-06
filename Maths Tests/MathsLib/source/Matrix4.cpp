@@ -165,6 +165,18 @@ Matrix4 Matrix4::operator * (const Matrix4& rhs)
 	return temp;
 }
 
+Vector4 Matrix4::operator * (Vector4& rhs)
+{
+    Vector4 temp;
+
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        temp[i] = rhs.dot(vecs[i]);
+    }
+
+    return temp;
+}
+
 void Matrix4::operator /= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 16; i++)

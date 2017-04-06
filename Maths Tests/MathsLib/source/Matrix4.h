@@ -61,6 +61,7 @@ public:
 	void operator *= (const float& scalar);
 	Matrix4 operator * (const float& scalar);
 	Matrix4 operator * (const Matrix4& rhs);
+    Vector4 operator * (Vector4& rhs);
 	void operator /= (const float& scalar);
 	Matrix4 operator / (const float& scalar);
 	friend std::ostream& operator << (std::ostream& stream, const Matrix4& matrix);

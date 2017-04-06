@@ -145,6 +145,18 @@ Matrix2 Matrix2::operator * (const Matrix2& rhs)
 	return temp;
 }
 
+Vector2 Matrix2::operator * (Vector2& rhs)
+{
+    Vector2 temp;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        temp[i] = rhs.dot(vecs[i]);
+    }
+
+    return temp;
+}
+
 void Matrix2::operator /= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 4; i++)

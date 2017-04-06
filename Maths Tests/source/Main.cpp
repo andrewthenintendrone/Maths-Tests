@@ -6,10 +6,13 @@
 
 int main()
 {
-	Vector3 vec(1, 2, 3);
-	float* fp = (float*)vec;
+    Matrix2 mat(1, 2, 3, 4);
+    Matrix2 mat2(5, 6, 7, 8);
 
-	std::cout << *fp << std::endl;
+    Matrix2 mat3 = mat * mat2;
+
+    std::cout << mat3;
+
 	system("pause");
 	return 0;
 }
