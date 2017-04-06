@@ -33,10 +33,7 @@ Matrix2::Matrix2(const float& newValue)
 
 Matrix2::Matrix2(const Matrix2& newM)
 {
-	for (unsigned int i = 0; i < 4; i++)
-	{
-		f[i] = newM.f[i];
-	}
+    *this = newM;
 }
 
 Matrix2::~Matrix2()
@@ -49,7 +46,7 @@ Matrix2 Functions
 ##################################################*/
 float Matrix2::determinant()
 {
-    return (x1 * y2 - x2 * y1);
+    return (x1 * y2 - y1 * x2);
 }
 
 void Matrix2::setRotate(const float& angle)
@@ -137,14 +134,14 @@ void Matrix2::operator *= (const Matrix2& rhs)
     Matrix2 temp;
     for (unsigned int i = 0; i < 2; i++)
     {
-        for (unsigned int j = 0; j < 2; j++)
+        for (unsigned int j = 0; j < 2; i++)
         {
             float sum = 0;
             for (unsigned int k = 0; k < 2; k++)
             {
-                sum += f[i * 2 + k] * rhs.f[k * 2 + j];
+                sum += m[i][k] * rhs.m[k][j];
             }
-            temp.f[i * 2 + j] = sum;
+            temp.m[i][j] = sum;
         }
     }
     *this = temp;

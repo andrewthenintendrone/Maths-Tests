@@ -40,10 +40,7 @@ Matrix3::Matrix3(const float& newValue)
 
 Matrix3::Matrix3(const Matrix3& newM)
 {
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		f[i] = newM.f[i];
-	}
+    *this = newM;
 }
 
 Matrix3::~Matrix3()
@@ -160,14 +157,14 @@ void Matrix3::operator *= (const Matrix3& rhs)
     Matrix3 temp;
     for (unsigned int i = 0; i < 3; i++)
     {
-        for (unsigned int j = 0; j < 3; j++)
+        for (unsigned int j = 0; j < 3; i++)
         {
             float sum = 0;
             for (unsigned int k = 0; k < 3; k++)
             {
-                sum += f[i * 3 + k] * rhs.f[k * 3 + j];
+                sum += m[i][k] * rhs.m[k][j];
             }
-            temp.f[i * 3 + j] = sum;
+            temp.m[i][j] = sum;
         }
     }
     *this = temp;

@@ -48,10 +48,7 @@ Matrix4::Matrix4(const float& newValue)
 
 Matrix4::Matrix4(const Matrix4& newM)
 {
-	for (unsigned int i = 0; i < 16; i++)
-	{
-		f[i] = newM.f[i];
-	}
+    *this = newM;
 }
 
 Matrix4::~Matrix4()
@@ -169,14 +166,14 @@ void Matrix4::operator *= (const Matrix4& rhs)
     Matrix4 temp;
     for (unsigned int i = 0; i < 4; i++)
     {
-        for (unsigned int j = 0; j < 4; j++)
+        for (unsigned int j = 0; j < 4; i++)
         {
             float sum = 0;
             for (unsigned int k = 0; k < 4; k++)
             {
-                sum += f[i * 4 + k] * rhs.f[k * 4 + j];
+                sum += m[i][k] * rhs.m[k][j];
             }
-            temp.f[i * 4 + j] = sum;
+            temp.m[i][j] = sum;
         }
     }
     *this = temp;
