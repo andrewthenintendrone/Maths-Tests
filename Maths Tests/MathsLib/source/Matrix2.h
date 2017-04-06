@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include "Vector2.h"
-#include <math.h>
 
 class Matrix2
 {

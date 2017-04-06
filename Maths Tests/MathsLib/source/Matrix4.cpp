@@ -1,5 +1,7 @@
 #include "Matrix4.h"
 #include "Matrix3.h"
+#include <math.h>
+#include "radians.h"
 
 /*##################################################
 Matrix4 constructor and destructor

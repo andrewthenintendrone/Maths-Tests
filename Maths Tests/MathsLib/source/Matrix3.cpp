@@ -1,5 +1,7 @@
 #include "Matrix3.h"
 #include "Matrix2.h"
+#include <math.h>
+#include "radians.h"
 
 /*##################################################
 Matrix3 constructor and destructor
@@ -65,6 +67,30 @@ float Matrix3::determinant()
     return (x1 * block1.determinant() - y1 * block2.determinant() + z1 * block3.determinant());
 }
 
+void Matrix3::setRotateX(const float& angle)
+{
+    float a = degreesToRadians(angle);
+    Matrix3 rotationMatrix(1, 0, 0, 0, cosf(a), sinf(a), 0, -sinf(a), cosf(a));
+    *this *= rotationMatrix;
+}
+
+void Matrix3::setRotateY(const float& angle)
+{
+    float a = degreesToRadians(angle);
+    Matrix3 rotationMatrix(cosf(a), 0, sinf(a), 0, 1, 0, -sinf(a), 0, cosf(a));
+    *this *= rotationMatrix;
+}
+
+void Matrix3::setRotateZ(const float& angle)
+{
+    float a = degreesToRadians(angle);
+    Matrix3 rotationMatrix(cosf(a), sinf(a), 0, -sinf(a), cosf(a), 0, 0, 0, 1);
+    *this *= rotationMatrix;
+}
+
+/*##################################################
+Matrix3 shortcuts for commonly used Matrix3s
+##################################################*/
 Matrix3 Matrix3::identity()
 {
 	return Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1);

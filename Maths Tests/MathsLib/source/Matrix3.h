@@ -39,6 +39,9 @@ public:
 
 	// functions
 	float determinant();
+    void setRotateX(const float& angle);
+    void setRotateY(const float& angle);
+    void setRotateZ(const float& angle);
 
 	// static Matrix3 shortcuts
 	static Matrix3 identity();

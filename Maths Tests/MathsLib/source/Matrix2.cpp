@@ -1,4 +1,6 @@
 #include "Matrix2.h"
+#include <math.h>
+#include "radians.h"
 
 /*##################################################
 Matrix2 constructor and destructor
@@ -56,7 +58,8 @@ float Matrix2::determinant()
 
 void Matrix2::setRotate(const float& angle)
 {
-    Matrix2 rotationMatrix(cosf(x1 * angle), sinf(y1 * angle), -sinf(x2 * angle), cosf(y2 * angle));
+    float a = degreesToRadians(angle);
+    Matrix2 rotationMatrix(cosf(a), sinf(a), -sinf(a), cosf(a));
     *this *= rotationMatrix;
 }
 
