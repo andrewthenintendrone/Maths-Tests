@@ -175,7 +175,10 @@ std::ostream& operator << (std::ostream& stream, const Matrix3& matrix)
 {
 	for (unsigned int i = 0; i < 3; i++)
 	{
-		stream << matrix.vecs[i];
+        for (unsigned int j = 0; j < 3; j++)
+        {
+            stream << matrix.m[j * 3 + i] << " ";
+        }
 		stream << std::endl;
 	}
 	return stream;

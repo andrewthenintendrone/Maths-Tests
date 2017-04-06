@@ -184,8 +184,11 @@ std::ostream& operator << (std::ostream& stream, const Matrix4& matrix)
 {
 	for (unsigned int i = 0; i < 4; i++)
 	{
-		stream << matrix.vecs[i];
-		stream << std::endl;
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            stream << matrix.m[j * 4 + i] << " ";
+        }
+        stream << std::endl;
 	}
 	return stream;
 }

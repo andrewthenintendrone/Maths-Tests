@@ -162,10 +162,13 @@ Matrix2 Matrix2::operator / (const float& scalar)
 
 std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
 {
-	for (unsigned int i = 0; i < 2; i++)
-	{
-		stream << matrix.vecs[i];
-		stream << std::endl;
-	}
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        for (unsigned int j = 0; j < 2; j++)
+        {
+            stream << matrix.m[j * 2 + i] << " ";
+        }
+        std::cout << std::endl;
+    }
 	return stream;
 }
