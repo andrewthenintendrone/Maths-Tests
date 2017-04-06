@@ -11,9 +11,13 @@ public:
 		{
 			Vector3 vecs[3];
 		};
+        struct
+        {
+            float m[3][3];
+        };
 		struct
 		{
-			float m[9];
+			float f[9];
 		};
 		struct
 		{

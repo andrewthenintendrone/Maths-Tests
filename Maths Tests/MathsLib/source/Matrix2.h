@@ -13,11 +13,11 @@ public:
 		};
         struct
         {
-            float f[2][2];
+            float m[2][2];
         };
 		struct
 		{
-			float m[4];
+			float f[4];
 		};
 		struct
 		{
