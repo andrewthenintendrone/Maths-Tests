@@ -91,6 +91,12 @@ Matrix2::operator float* ()
     return &Xx;
 }
 
+// [] operator that returns vector
+Vector2 Matrix2::operator [] (const int& index)
+{
+    return axis[index];
+}
+
 // = operator with a matrix
 void Matrix2::operator = (const Matrix2& newMatrix)
 {
@@ -119,20 +125,10 @@ Matrix2 Matrix2::operator + (const Matrix2& rhs)
     return temp;
 }
 
-// + operator with a scalar
-Matrix2 Matrix2::operator + (const float& scalar)
+// += operator with a matrix
+void Matrix2::operator += (const Matrix2& rhs)
 {
-    Matrix2 temp;
-
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            temp.m[i][j] = m[i][j] + scalar;
-        }
-    }
-
-    return temp;
+    *this = *this + rhs;
 }
 
 // - operator with a matrix
@@ -151,20 +147,10 @@ Matrix2 Matrix2::operator - (const Matrix2& rhs)
     return temp;
 }
 
-// - operator with a scalar
-Matrix2 Matrix2::operator - (const float& scalar)
+// -= operator with a matrix
+void Matrix2::operator -= (const Matrix2& rhs)
 {
-    Matrix2 temp;
-
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            temp.m[i][j] = m[i][j] - scalar;
-        }
-    }
-
-    return temp;
+    *this = *this - rhs;
 }
 
 // * operator with a matrix
@@ -191,11 +177,51 @@ Matrix2 Matrix2::operator * (const Matrix2& rhs)
 // *= operator with a matrix
 void Matrix2::operator *= (const Matrix2& rhs)
 {
-    Matrix2 temp(*this);
+    *this = *this * rhs;
+}
 
-    temp = temp * rhs;
+// + operator with a scalar
+Matrix2 Matrix2::operator + (const float& scalar)
+{
+    Matrix2 temp;
 
-    *this = temp;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        for (unsigned int j = 0; j < 2; j++)
+        {
+            temp.m[i][j] = m[i][j] + scalar;
+        }
+    }
+
+    return temp;
+}
+
+// += operator with a scalar
+void Matrix2::operator += (const float& scalar)
+{
+    *this = *this * scalar;
+}
+
+// - operator with a scalar
+Matrix2 Matrix2::operator - (const float& scalar)
+{
+    Matrix2 temp;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        for (unsigned int j = 0; j < 2; j++)
+        {
+            temp.m[i][j] = m[i][j] - scalar;
+        }
+    }
+
+    return temp;
+}
+
+// -= operator with a scalar
+void Matrix2::operator -= (const float& scalar)
+{
+    *this = *this - scalar;
 }
 
 // * operator with a scalar
@@ -214,6 +240,12 @@ Matrix2 Matrix2::operator * (const float& scalar)
     return temp;
 }
 
+// *= operator with a scalar
+void Matrix2::operator *= (const float& scalar)
+{
+    *this = *this * scalar;
+}
+
 // / operator with a scalar
 Matrix2 Matrix2::operator / (const float& scalar)
 {
@@ -228,4 +260,10 @@ Matrix2 Matrix2::operator / (const float& scalar)
     }
 
     return temp;
+}
+
+// /= operator with a scalar
+void Matrix2::operator /= (const float& scalar)
+{
+    *this = *this / scalar;
 }

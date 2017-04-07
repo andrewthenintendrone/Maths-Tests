@@ -14,6 +14,10 @@ public:
         };
         struct
         {
+            Vector2 axis[2];
+        };
+        struct
+        {
             float m[2][2];
         };
         struct
@@ -40,13 +44,20 @@ public:
     // overloads
     friend std::ostream& operator << (std::ostream& stream, const Matrix2& matrix);
     operator float *();
+    Vector2 operator [] (const int& index);
     void operator = (const Matrix2& newMatrix);
     Matrix2 operator + (const Matrix2& rhs);
-    Matrix2 operator + (const float& scalar);
+    void operator += (const Matrix2& rhs);
     Matrix2 operator - (const Matrix2& rhs);
-    Matrix2 operator - (const float& scalar);
+    void operator -= (const Matrix2& rhs);
     Matrix2 operator * (const Matrix2& rhs);
     void operator *= (const Matrix2& rhs);
+    Matrix2 operator + (const float& scalar);
+    void operator += (const float& scalar);
+    Matrix2 operator - (const float& scalar);
+    void operator -= (const float& scalar);
     Matrix2 operator * (const float& scalar);
+    void operator *= (const float& scalar);
     Matrix2 operator / (const float& scalar);
+    void operator /= (const float& scalar);
 };
