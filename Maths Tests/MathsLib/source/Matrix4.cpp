@@ -77,7 +77,7 @@ void Matrix4::setRotateX(const float& angle)
 
 void Matrix4::setRotateY(const float& angle)
 {
-    Matrix4 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 0, 1, 0, 0, -sinf(angle), 0, cosf(angle), 0, 0, 0, 0, 1);
+    Matrix4 rotationMatrix(cosf(angle), 0, -sinf(angle), 0, 0, 1, 0, 0, sinf(angle), 0, cosf(angle), 0, 0, 0, 0, 1);
     *this *= rotationMatrix;
 }
 
@@ -184,24 +184,6 @@ Matrix4 Matrix4::operator * (const Matrix4& rhs)
     Matrix4 temp(*this);
     temp *= rhs;
     return temp;
-}
-
-void Matrix4::operator *= (Vector4& rhs)
-{
-    for (unsigned int i = 0; i < 4; i++)
-    {
-        rhs[i] = rhs.dot(vecs[i]);
-    }
-}
-
-Vector4 Matrix4::operator * (Vector4& rhs)
-{
-    Matrix4 tempMatrix(*this);
-    Vector4 tempVector(*rhs);
-
-    tempMatrix *= tempVector;
-
-    return tempVector;
 }
 
 void Matrix4::operator /= (const float& scalar)

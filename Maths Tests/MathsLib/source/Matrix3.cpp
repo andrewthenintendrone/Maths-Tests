@@ -177,24 +177,6 @@ Matrix3 Matrix3::operator * (const Matrix3& rhs)
     return temp;
 }
 
-void Matrix3::operator *= (Vector3& rhs)
-{
-    for (unsigned int i = 0; i < 3; i++)
-    {
-        rhs[i] = rhs.dot(vecs[i]);
-    }
-}
-
-Vector3 Matrix3::operator * (Vector3& rhs)
-{
-    Matrix3 tempMatrix(*this);
-    Vector3 tempVector(*rhs);
-
-    tempMatrix *= tempVector;
-
-    return tempVector;
-}
-
 void Matrix3::operator /= (const float& scalar)
 {
 	for (unsigned int i = 0; i < 9; i++)
