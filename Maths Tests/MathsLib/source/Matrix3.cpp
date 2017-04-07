@@ -81,7 +81,7 @@ void Matrix3::setRotateX(const float& angle)
 // rotates the matrix on the y axis by a given angle
 void Matrix3::setRotateY(const float& angle)
 {
-    Matrix3 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 1, 0, -sinf(angle), 0, cosf(angle));
+    Matrix3 rotationMatrix(cosf(angle), 0, -sinf(angle), 0, 1, 0, sinf(angle), 0, cosf(angle));
     *this *= rotationMatrix;
 }
 
@@ -210,10 +210,9 @@ Vector3 Matrix3::operator * (Vector3& rhs)
 {
     Vector3 temp;
 
-    for (unsigned int i = 0; i < 3; i++)
-    {
-        temp[i] = axis[i].dot(rhs);
-    }
+    temp.x = Vector3(Xx, Yx, Zx).dot(rhs);
+    temp.y = Vector3(Xy, Yy, Zy).dot(rhs);
+    temp.z = Vector3(Xz, Yz, Zz).dot(rhs);
 
     return temp;
 }

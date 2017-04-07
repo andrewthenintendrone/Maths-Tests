@@ -5,71 +5,77 @@
 class Matrix4
 {
 public:
-	union
-	{
-		struct
-		{
-			Vector4 vecs[4];
-		};
+    union
+    {
+        struct
+        {
+            Vector4 xAxis;
+            Vector4 yAxis;
+            Vector4 zAxis;
+            Vector4 wAxis;
+        };
+        struct
+        {
+            Vector4 axis[4];
+        };
         struct
         {
             float m[4][4];
         };
-		struct
-		{
-			float f[16];
-		};
-		struct
-		{
-			float x1;
-			float y1;
-			float z1;
-			float w1;
-			float x2;
-			float y2;
-			float z2;
-			float w2;
-			float x3;
-			float y3;
-			float z3;
-			float w3;
-			float x4;
-			float y4;
-			float z4;
-			float w4;
-		};
-	};
+        struct
+        {
+            float Xx;
+            float Xy;
+            float Xz;
+            float Xw;
+            float Yx;
+            float Yy;
+            float Yz;
+            float Yw;
+            float Zx;
+            float Zy;
+            float Zz;
+            float Zw;
+            float Wx;
+            float Wy;
+            float Wz;
+            float Ww;
+        };
+    };
 
-	// constructors and destructor
-	Matrix4();
-	Matrix4(const float& newx1, const float& newy1, const float& newz1, const float& neww1, const float& newx2, const float& newy2, const float& newz2, const float& neww2, const float& newx3, const float& newy3, const float& newz3, const float& neww3, const float& newx4, const float& newy4, const float& newz4, const float& neww4);
-	Matrix4(const Vector4& newVec1, const Vector4& newVec2, const Vector4& newVec3, const Vector4& newVec4);
-	Matrix4(const float& newValue);
-	Matrix4(const Matrix4& newM);
-	~Matrix4();
+    // constructors and destructors
+    Matrix4();
+    Matrix4(const float& newXx, const float& newXy, const float& newXz, const float& newXw, const float& newYx, const float& newYy, const float& newYz, const float& newYw, const float& newZx, const float& newZy, const float& newZz, const float& newZw, const float& newWx, const float& newWy, const float& newWz, const float& newWw);
+    Matrix4(Vector4& newxAxis, Vector4& newyAxis, Vector4& newzAxis, Vector4& newwAxis);
+    Matrix4(const Matrix4& newMatrix);
+    ~Matrix4();
 
-	// functions
-	float determinant();
+    // functions
+    static Matrix4 identity();
+    float determinant();
     void setRotateX(const float& angle);
     void setRotateY(const float& angle);
     void setRotateZ(const float& angle);
 
-	// static Matrix4 shortcuts
-	static Matrix4 identity();
-
-	// overloaded operators
-	operator float *();
-	Vector4 operator [] (const int& index);
-	void operator = (const Matrix4& rhs);
-	void operator += (const Matrix4& rhs);
-	Matrix4 operator + (const Matrix4& rhs);
-	void operator -= (const Matrix4& rhs);
-	Matrix4 operator - (const Matrix4& rhs);
-	void operator *= (const float& scalar);
-	Matrix4 operator * (const float& scalar);
-    void operator *= (const Matrix4& rhs);
+    // overloads
+    friend std::ostream& operator << (std::ostream& stream, const Matrix4& matrix);
+    operator float *();
+    Vector4 operator [] (const int& index);
+    void operator = (const Matrix4& newMatrix);
+    Matrix4 operator + (const Matrix4& rhs);
+    void operator += (const Matrix4& rhs);
+    Matrix4 operator - (const Matrix4& rhs);
+    void operator -= (const Matrix4& rhs);
     Matrix4 operator * (const Matrix4& rhs);
-	void operator /= (const float& scalar);
-	Matrix4 operator / (const float& scalar);
-	friend std::ostream& operator << (std::ostream& stream, const Matrix4& matrix);
+    void operator *= (const Matrix4& rhs);
+    Vector4 operator * (Vector4& rhs);
+    void operator *= (Vector4& rhs);
+    Matrix4 operator + (const float& scalar);
+    void operator += (const float& scalar);
+    Matrix4 operator - (const float& scalar);
+    void operator -= (const float& scalar);
+    Matrix4 operator * (const float& scalar);
+    void operator *= (const float& scalar);
+    Matrix4 operator / (const float& scalar);
+    void operator /= (const float& scalar);
 };

@@ -6,14 +6,15 @@
 
 int main()
 {
-    Matrix3 m3a, m3b, m3c;
-    m3a.setRotateX(3.98f);
-    m3b.setRotateY(1.76f);
-    m3c.setRotateZ(9.62f);
+    Matrix2 m2;
+    m2.setRotate(4.576f);
 
-    std::cout << m3a << std::endl;
-    std::cout << m3b << std::endl;
-    std::cout << m3c << std::endl;
+    std::cout << m2 << std::endl;
+
+    Vector2 v2a(13.5f, -48.23f);
+    Vector2 v2c = m2 * v2a;
+
+    std::cout << v2c << std::endl;
 
 	system("pause");
 	return 0;

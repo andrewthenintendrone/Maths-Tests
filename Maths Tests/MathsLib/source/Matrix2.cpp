@@ -185,10 +185,8 @@ Vector2 Matrix2::operator * (Vector2& rhs)
 {
     Vector2 temp;
 
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        temp[i] = axis[i].dot(rhs);
-    }
+    temp.x = Vector2(Xx, Yx).dot(rhs);
+    temp.y = Vector2(Xy, Yy).dot(rhs);
 
     return temp;
 }

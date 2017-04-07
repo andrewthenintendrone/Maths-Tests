@@ -3,52 +3,55 @@
 #include <math.h>
 
 /*##################################################
-Matrix4 constructor and destructor
+constructors and destructors
 ##################################################*/
+
+// default constructor
 Matrix4::Matrix4()
 {
     *this = Matrix4::identity();
 }
 
-Matrix4::Matrix4(const float& newx1, const float& newy1, const float& newz1, const float& neww1, const float& newx2, const float& newy2, const float& newz2, const float& neww2, const float& newx3, const float& newy3, const float& newz3, const float& neww3, const float& newx4, const float& newy4, const float& newz4, const float& neww4)
+// construct with floats
+Matrix4::Matrix4(const float& newXx, const float& newXy, const float& newXz, const float& newXw, const float& newYx, const float& newYy, const float& newYz, const float& newYw, const float& newZx, const float& newZy, const float& newZz, const float& newZw, const float& newWx, const float& newWy, const float& newWz, const float& newWw)
 {
-	x1 = newx1;
-	y1 = newy1;
-	z1 = newz1;
-	w1 = neww1;
-	x2 = newx2;
-	y2 = newy2;
-	z2 = newz2;
-	w2 = neww2;
-	x3 = newx3;
-	y3 = newy3;
-	z3 = newz3;
-	w3 = neww3;
-	x4 = newx4;
-	y4 = newy4;
-	z4 = newz4;
-	w4 = neww4;
+    Xx = newXx;
+    Xy = newXy;
+    Xz = newXz;
+    Xw = newXw;
+    Yx = newYx;
+    Yy = newYy;
+    Yz = newYz;
+    Yw = newYw;
+    Zx = newZx;
+    Zy = newZy;
+    Zz = newZz;
+    Zw = newZw;
+    Wx = newWx;
+    Wy = newWy;
+    Wz = newWz;
+    Ww = newWw;
 }
 
-Matrix4::Matrix4(const Vector4& newVec1, const Vector4& newVec2, const Vector4& newVec3, const Vector4& newVec4)
+// construct with Vectors
+Matrix4::Matrix4(Vector4& newxAxis, Vector4& newyAxis, Vector4& newzAxis, Vector4& newwAxis)
 {
-	vecs[0] = newVec1;
-	vecs[1] = newVec2;
-	vecs[2] = newVec3;
-	vecs[3] = newVec4;
+    xAxis = newxAxis;
+    yAxis = newyAxis;
+    zAxis = newzAxis;
+    wAxis = newwAxis;
 }
 
-Matrix4::Matrix4(const float& newValue)
+// construct with another Matrix
+Matrix4::Matrix4(const Matrix4& newMatrix)
 {
-	for (unsigned int i = 0; i < 16; i++)
-	{
-		f[i] = newValue;
-	}
-}
-
-Matrix4::Matrix4(const Matrix4& newM)
-{
-    *this = newM;
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            m[i][j] = newMatrix.m[i][j];
+        }
+    }
 }
 
 Matrix4::~Matrix4()
@@ -57,30 +60,41 @@ Matrix4::~Matrix4()
 }
 
 /*##################################################
-Matrix4 Functions
+functions
 ##################################################*/
-float Matrix4::determinant()
-{
-	Matrix3 block1(y2, z2, w2, y3, z3, w3, y4, z4, w4);
-	Matrix3 block2(x2, z2, w2, x3, z3, w3, x4, z4, w4);
-	Matrix3 block3(x2, y2, w2, x3, y3, w3, x4, y4, w4);
-	Matrix3 block4(x2, y2, z2, x3, y3, z3, x4, y4, z4);
 
-    return (x1 * block1.determinant() - y1 * block2.determinant() + z1 * block3.determinant() - w1 * block4.determinant());
+// returns the identity matrix
+Matrix4 Matrix4::identity()
+{
+    return Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
 
+// returns the determinant of the matrix
+float Matrix4::determinant()
+{
+    Matrix3 block1(Yy, Yz, Yw, Zy, Zz, Zw, Wy, Wz, Ww);
+    Matrix3 block2(Xy, Xz, Xw, Zy, Zz, Zw, Wy, Wz, Ww);
+    Matrix3 block3(Xy, Xz, Xw, Yy, Yz, Yw, Wy, Wz, Ww);
+    Matrix3 block4(Xy, Xz, Xw, Yy, Yz, Yw, Zy, Zz, Zw);
+
+    return (Xx * block1.determinant() - Yx * block2.determinant() + Zx * block3.determinant() - Wx * block4.determinant());
+}
+
+// rotates the matrix on the x axis by a given angle
 void Matrix4::setRotateX(const float& angle)
 {
     Matrix4 rotationMatrix(1, 0, 0, 0, 0, cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1);
     *this *= rotationMatrix;
 }
 
+// rotates the matrix on the y axis by a given angle
 void Matrix4::setRotateY(const float& angle)
 {
     Matrix4 rotationMatrix(cosf(angle), 0, -sinf(angle), 0, 0, 1, 0, 0, sinf(angle), 0, cosf(angle), 0, 0, 0, 0, 1);
     *this *= rotationMatrix;
 }
 
+// rotates the matrix on the z axis by a given angle
 void Matrix4::setRotateZ(const float& angle)
 {
     Matrix4 rotationMatrix(cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
@@ -88,82 +102,96 @@ void Matrix4::setRotateZ(const float& angle)
 }
 
 /*##################################################
-Matrix4 shortcuts for commonly used Matrix4s
+overloads
 ##################################################*/
-Matrix4 Matrix4::identity()
+
+// stream << operator
+std::ostream& operator << (std::ostream& stream, const Matrix4& matrix)
 {
-	return Matrix4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            stream << matrix.m[i][j] << " ";
+        }
+        stream << std::endl;
+    }
+    return stream;
 }
 
-/*##################################################
-Matrix4 overloaded operators
-##################################################*/
+// * operator
 Matrix4::operator float* ()
 {
-	return &x1;
+    return &Xx;
 }
 
+// [] operator that returns vector
 Vector4 Matrix4::operator [] (const int& index)
 {
-	return vecs[index];
+    return axis[index];
 }
 
-void Matrix4::operator = (const Matrix4& rhs)
+// = operator with a matrix
+void Matrix4::operator = (const Matrix4& newMatrix)
 {
-	for (unsigned int i = 0; i < 16; i++)
-	{
-		f[i] = rhs.f[i];
-	}
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            m[i][j] = newMatrix.m[i][j];
+        }
+    }
 }
 
-void Matrix4::operator += (const Matrix4& rhs)
-{
-	for (unsigned int i = 0; i < 16; i++)
-	{
-		f[i] += rhs.f[i];
-	}
-}
-
+// + operator with a matrix
 Matrix4 Matrix4::operator + (const Matrix4& rhs)
 {
-	Matrix4 temp(*this);
-	temp += rhs;
-	return temp;
+    Matrix4 temp;
+
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            temp.m[i][j] = m[i][j] + rhs.m[i][j];
+        }
+    }
+
+    return temp;
 }
 
-void Matrix4::operator -= (const Matrix4& rhs)
+// += operator with a matrix
+void Matrix4::operator += (const Matrix4& rhs)
 {
-	for (unsigned int i = 0; i < 16; i++)
-	{
-		f[i] -= rhs.f[i];
-	}
+    *this = *this + rhs;
 }
 
+// - operator with a matrix
 Matrix4 Matrix4::operator - (const Matrix4& rhs)
 {
-	Matrix4 temp(*this);
-	temp -= rhs;
-	return temp;
+    Matrix4 temp;
+
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            temp.m[i][j] = m[i][j] - rhs.m[i][j];
+        }
+    }
+
+    return temp;
 }
 
-void Matrix4::operator *= (const float& scalar)
+// -= operator with a matrix
+void Matrix4::operator -= (const Matrix4& rhs)
 {
-	for (unsigned int i = 0; i < 16; i++)
-	{
-		f[i] *= scalar;
-	}
+    *this = *this - rhs;
 }
 
-Matrix4 Matrix4::operator * (const float& scalar)
-{
-	Matrix4 temp(*this);
-	temp *= scalar;
-	return temp;
-}
-
-void Matrix4::operator *= (const Matrix4& rhs)
+// * operator with a matrix
+Matrix4 Matrix4::operator * (const Matrix4& rhs)
 {
     Matrix4 temp;
+
     for (unsigned int i = 0; i < 4; i++)
     {
         for (unsigned int j = 0; j < 4; j++)
@@ -176,40 +204,119 @@ void Matrix4::operator *= (const Matrix4& rhs)
             temp.m[i][j] = sum;
         }
     }
-    *this = temp;
-}
 
-Matrix4 Matrix4::operator * (const Matrix4& rhs)
-{
-    Matrix4 temp(*this);
-    temp *= rhs;
     return temp;
 }
 
-void Matrix4::operator /= (const float& scalar)
+// *= operator with a matrix
+void Matrix4::operator *= (const Matrix4& rhs)
 {
-	for (unsigned int i = 0; i < 16; i++)
-	{
-		f[i] /= scalar;
-	}
+    *this = *this * rhs;
 }
 
-Matrix4 Matrix4::operator / (const float& scalar)
+// * operator with a vector
+Vector4 Matrix4::operator * (Vector4& rhs)
 {
-	Matrix4 temp(*this);
-	temp /= scalar;
-	return temp;
+    Vector4 temp;
+
+    temp.x = Vector4(Xx, Yx, Zx, Wx).dot(rhs);
+    temp.y = Vector4(Xy, Yy, Zy, Wy).dot(rhs);
+    temp.z = Vector4(Xz, Yz, Zz, Wz).dot(rhs);
+    temp.w = Vector4(Xw, Yw, Zw, Ww).dot(rhs);
+
+    return temp;
 }
 
-std::ostream& operator << (std::ostream& stream, const Matrix4& matrix)
+// *= operator with a vector
+void Matrix4::operator *= (Vector4& rhs)
 {
-	for (unsigned int i = 0; i < 4; i++)
-	{
+    rhs = *this * rhs;
+}
+
+// + operator with a scalar
+Matrix4 Matrix4::operator + (const float& scalar)
+{
+    Matrix4 temp;
+
+    for (unsigned int i = 0; i < 4; i++)
+    {
         for (unsigned int j = 0; j < 4; j++)
         {
-            stream << matrix.f[j * 4 + i] << " ";
+            temp.m[i][j] = m[i][j] + scalar;
         }
-        stream << std::endl;
-	}
-	return stream;
+    }
+
+    return temp;
+}
+
+// += operator with a scalar
+void Matrix4::operator += (const float& scalar)
+{
+    *this = *this * scalar;
+}
+
+// - operator with a scalar
+Matrix4 Matrix4::operator - (const float& scalar)
+{
+    Matrix4 temp;
+
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            temp.m[i][j] = m[i][j] - scalar;
+        }
+    }
+
+    return temp;
+}
+
+// -= operator with a scalar
+void Matrix4::operator -= (const float& scalar)
+{
+    *this = *this - scalar;
+}
+
+// * operator with a scalar
+Matrix4 Matrix4::operator * (const float& scalar)
+{
+    Matrix4 temp(*this);
+
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            temp.m[i][j] *= scalar;
+        }
+    }
+
+    return temp;
+}
+
+// *= operator with a scalar
+void Matrix4::operator *= (const float& scalar)
+{
+    *this = *this * scalar;
+}
+
+// / operator with a scalar
+Matrix4 Matrix4::operator / (const float& scalar)
+{
+    Matrix4 temp(*this);
+
+    for (unsigned int i = 0; i < 4; i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            temp.m[i][j] /= scalar;
+        }
+    }
+
+    return temp;
+}
+
+// /= operator with a scalar
+void Matrix4::operator /= (const float& scalar)
+{
+    *this = *this / scalar;
 }
