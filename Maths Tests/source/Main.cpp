@@ -6,10 +6,15 @@
 
 int main()
 {
-    Matrix2 m2(1, 2, 3, 4);
-    Vector2 v2(8, 6);
+    Matrix3 m3a, m3b, m3c;
+    m3a.setRotateX(3.98f);
+    m3b.setRotateY(1.76f);
+    m3c.setRotateZ(9.62f);
 
-    std::cout << m2 * v2 << std::endl;
+    std::cout << m3a << std::endl;
+    std::cout << m3b << std::endl;
+    std::cout << m3c << std::endl;
+
 	system("pause");
 	return 0;
 }

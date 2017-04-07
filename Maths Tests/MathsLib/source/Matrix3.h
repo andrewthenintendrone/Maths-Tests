@@ -5,64 +5,69 @@
 class Matrix3
 {
 public:
-	union
-	{
-		struct
-		{
-			Vector3 vecs[3];
-		};
+    union
+    {
+        struct
+        {
+            Vector3 xAxis;
+            Vector3 yAxis;
+            Vector3 zAxis;
+        };
+        struct
+        {
+            Vector3 axis[3];
+        };
         struct
         {
             float m[3][3];
         };
-		struct
-		{
-			float f[9];
-		};
-		struct
-		{
-			float x1;
-			float y1;
-			float z1;
-			float x2;
-			float y2;
-			float z2;
-			float x3;
-			float y3;
-			float z3;
-		};
-	};
+        struct
+        {
+            float Xx;
+            float Xy;
+            float Xz;
+            float Yx;
+            float Yy;
+            float Yz;
+            float Zx;
+            float Zy;
+            float Zz;
+        };
+    };
 
-	// constructors and destructor
-	Matrix3();
-    Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float& newz2, const float& newx3, const float& newy3, const float& newz3);
-	Matrix3(const Vector3& newVec1, const Vector3& newVec2, const Vector3& newVec3);
-	Matrix3(const float& newValue);
-	Matrix3(const Matrix3& newM);
-	~Matrix3();
+    // constructors and destructors
+    Matrix3();
+    Matrix3(const float& newXx, const float& newXy, const float& newXz, const float& newYx, const float& newYy, const float& newYz, const float& newZx, const float& newZy, const float& newZz);
+    Matrix3(Vector3& newxAxis, Vector3& newyAxis, Vector3& newzAxis);
+    Matrix3(const Matrix3& newMatrix);
+    ~Matrix3();
 
-	// functions
-	float determinant();
+    // functions
+    static Matrix3 identity();
+    float determinant();
     void setRotateX(const float& angle);
     void setRotateY(const float& angle);
     void setRotateZ(const float& angle);
 
-	// static Matrix3 shortcuts
-	static Matrix3 identity();
-
-	// overloaded operators
-	operator float *();
-	Vector3& operator [] (const int& index);
-	void operator = (const Matrix3& rhs);
-	void operator += (const Matrix3& rhs);
-	Matrix3 operator + (const Matrix3& rhs);
-	void operator -= (const Matrix3& rhs);
-	Matrix3 operator - (const Matrix3& rhs);
-	void operator *= (const float& scalar);
-	Matrix3 operator * (const float& scalar);
-    void operator *= (const Matrix3& rhs);
+    // overloads
+    friend std::ostream& operator << (std::ostream& stream, const Matrix3& matrix);
+    operator float *();
+    Vector3 operator [] (const int& index);
+    void operator = (const Matrix3& newMatrix);
+    Matrix3 operator + (const Matrix3& rhs);
+    void operator += (const Matrix3& rhs);
+    Matrix3 operator - (const Matrix3& rhs);
+    void operator -= (const Matrix3& rhs);
     Matrix3 operator * (const Matrix3& rhs);
-	void operator /= (const float& scalar);
-	Matrix3 operator / (const float& scalar);
-	friend std::ostream& operator << (std::ostream& stream, const Matrix3& matrix);
+    void operator *= (const Matrix3& rhs);
+    Vector3 operator * (Vector3& rhs);
+    void operator *= (Vector3& rhs);
+    Matrix3 operator + (const float& scalar);
+    void operator += (const float& scalar);
+    Matrix3 operator - (const float& scalar);
+    void operator -= (const float& scalar);
+    Matrix3 operator * (const float& scalar);
+    void operator *= (const float& scalar);
+    Matrix3 operator / (const float& scalar);
+    void operator /= (const float& scalar);
 };
