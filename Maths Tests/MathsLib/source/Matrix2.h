@@ -52,6 +52,8 @@ public:
     void operator -= (const Matrix2& rhs);
     Matrix2 operator * (const Matrix2& rhs);
     void operator *= (const Matrix2& rhs);
+    Vector2 operator * (Vector2& rhs);
+    void operator *= (Vector2& rhs);
     Matrix2 operator + (const float& scalar);
     void operator += (const float& scalar);
     Matrix2 operator - (const float& scalar);

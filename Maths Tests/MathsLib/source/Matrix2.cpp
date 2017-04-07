@@ -180,6 +180,25 @@ void Matrix2::operator *= (const Matrix2& rhs)
     *this = *this * rhs;
 }
 
+// * operator with a vector
+Vector2 Matrix2::operator * (Vector2& rhs)
+{
+    Vector2 temp;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        temp[i] = axis[i].dot(rhs);
+    }
+
+    return temp;
+}
+
+// *= operator with a vector
+void Matrix2::operator *= (Vector2& rhs)
+{
+    rhs = *this * rhs;
+}
+
 // + operator with a scalar
 Matrix2 Matrix2::operator + (const float& scalar)
 {

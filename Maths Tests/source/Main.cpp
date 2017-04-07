@@ -6,10 +6,10 @@
 
 int main()
 {
-    Matrix2 m2;
-    m2.setRotate(4.576f);
+    Matrix2 m2(1, 2, 3, 4);
+    Vector2 v2(8, 6);
 
-    std::cout << m2 << std::endl;
+    std::cout << m2 * v2 << std::endl;
 	system("pause");
 	return 0;
 }
