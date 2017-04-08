@@ -6,15 +6,10 @@
 
 int main()
 {
-    Matrix2 m2;
-    m2.setRotate(4.576f);
+    Matrix2 matA(0.7f, -0.7f, 0.7f, 0.7f);
+    Matrix2 matB(2, 0, 0, -1);
 
-    std::cout << m2 << std::endl;
-
-    Vector2 v2a(13.5f, -48.23f);
-    Vector2 v2c = m2 * v2a;
-
-    std::cout << v2c << std::endl;
+    std::cout << matA * matB << std::endl;
 
 	system("pause");
 	return 0;

@@ -23,8 +23,11 @@ Matrix2::Matrix2(const float& newXx, const float& newXy, const float& newYx, con
 // construct with Vectors
 Matrix2::Matrix2(Vector2& newxAxis, Vector2& newyAxis)
 {
-    xAxis = newxAxis;
-    yAxis = newyAxis;
+    Xx = newxAxis.x;
+    Xy = newxAxis.y;
+
+    Yx = newyAxis.x;
+    Yy = newyAxis.y;
 }
 
 // construct with another Matrix
@@ -63,8 +66,24 @@ float Matrix2::determinant()
 // rotates the matrix by a given angle
 void Matrix2::setRotate(const float& angle)
 {
-    Matrix2 rotationMatrix(cosf(angle), sinf(angle), -sinf(angle), cosf(angle));
+    Matrix2 rotationMatrix(cosf(angle), -sinf(angle), sinf(angle), cosf(angle));
     *this *= rotationMatrix;
+}
+
+// returns the transposed matrix
+Matrix2 Matrix2::transposed()
+{
+    Matrix2 temp;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        for (unsigned int j = 0; j < 2; j++)
+        {
+            temp.m[i][j] = this->m[j][i];
+        }
+    }
+
+    return temp;
 }
 
 /*##################################################
@@ -78,7 +97,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
     {
         for (unsigned int j = 0; j < 2; j++)
         {
-            stream << matrix.m[i][j] << " ";
+            stream << matrix.m[j][i] << " ";
         }
         stream << std::endl;
     }
@@ -94,7 +113,15 @@ Matrix2::operator float* ()
 // [] operator that returns vector
 Vector2 Matrix2::operator [] (const int& index)
 {
-    return axis[index];
+    switch (index)
+    {
+    case 0:
+        return Vector2(Xx, Xy);
+    case 1:
+        return Vector2(Yx, Yy);
+    default:
+        return Vector2(0, 0);
+    }
 }
 
 // = operator with a matrix
@@ -171,7 +198,7 @@ Matrix2 Matrix2::operator * (const Matrix2& rhs)
         }
     }
 
-    return temp;
+    return temp.transposed();
 }
 
 // *= operator with a matrix

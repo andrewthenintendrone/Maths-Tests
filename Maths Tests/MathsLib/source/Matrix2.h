@@ -9,15 +9,6 @@ public:
     {
         struct
         {
-            Vector2 xAxis;
-            Vector2 yAxis;
-        };
-        struct
-        {
-            Vector2 axis[2];
-        };
-        struct
-        {
             float m[2][2];
         };
         struct
@@ -40,6 +31,7 @@ public:
     static Matrix2 identity();
     float determinant();
     void setRotate(const float& angle);
+    Matrix2 transposed();
 
     // overloads
     friend std::ostream& operator << (std::ostream& stream, const Matrix2& matrix);

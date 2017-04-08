@@ -29,9 +29,17 @@ Matrix3::Matrix3(const float& newXx, const float& newXy, const float& newXz, con
 // construct with Vectors
 Matrix3::Matrix3(Vector3& newxAxis, Vector3& newyAxis, Vector3& newzAxis)
 {
-    xAxis = newxAxis;
-    yAxis = newyAxis;
-    zAxis = newzAxis;
+    Xx = newxAxis.x;
+    Xy = newxAxis.y;
+    Xz = newxAxis.z;
+
+    Yx = newyAxis.x;
+    Yy = newyAxis.y;
+    Yz = newyAxis.z;
+
+    Zx = newzAxis.x;
+    Zy = newzAxis.y;
+    Zx = newzAxis.z;
 }
 
 // construct with another Matrix
@@ -74,22 +82,38 @@ float Matrix3::determinant()
 // rotates the matrix on the x axis by a given angle
 void Matrix3::setRotateX(const float& angle)
 {
-    Matrix3 rotationMatrix(1, 0, 0, 0, cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle));
+    Matrix3 rotationMatrix(1, 0, 0, 0, cosf(angle), -sinf(angle), 0, sinf(angle), cosf(angle));
     *this *= rotationMatrix;
 }
 
 // rotates the matrix on the y axis by a given angle
 void Matrix3::setRotateY(const float& angle)
 {
-    Matrix3 rotationMatrix(cosf(angle), 0, -sinf(angle), 0, 1, 0, sinf(angle), 0, cosf(angle));
+    Matrix3 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 1, 0, -sinf(angle), 0, cosf(angle));
     *this *= rotationMatrix;
 }
 
 // rotates the matrix on the z axis by a given angle
 void Matrix3::setRotateZ(const float& angle)
 {
-    Matrix3 rotationMatrix(cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle), 0, 0, 0, 1);
+    Matrix3 rotationMatrix(cosf(angle), -sinf(angle), 0, sinf(angle), cosf(angle), 0, 0, 0, 1);
     *this *= rotationMatrix;
+}
+
+// returns the transposed matrix
+Matrix3 Matrix3::transposed()
+{
+    Matrix3 temp;
+
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        for (unsigned int j = 0; j < 3; j++)
+        {
+            temp.m[i][j] = this->m[j][i];
+        }
+    }
+
+    return temp;
 }
 
 /*##################################################
@@ -103,7 +127,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix3& matrix)
     {
         for (unsigned int j = 0; j < 3; j++)
         {
-            stream << matrix.m[i][j] << " ";
+            stream << matrix.m[j][i] << " ";
         }
         stream << std::endl;
     }
@@ -119,7 +143,17 @@ Matrix3::operator float* ()
 // [] operator that returns vector
 Vector3 Matrix3::operator [] (const int& index)
 {
-    return axis[index];
+    switch (index)
+    {
+    case 0:
+        return Vector3(Xx, Xy, Xz);
+    case 1:
+        return Vector3(Yx, Yy, Yz);
+    case 2:
+        return Vector3(Zx, Zy, Zz);
+    default:
+        return Vector3(0, 0, 0);
+    }
 }
 
 // = operator with a matrix
@@ -196,7 +230,7 @@ Matrix3 Matrix3::operator * (const Matrix3& rhs)
         }
     }
 
-    return temp;
+    return temp.transposed();
 }
 
 // *= operator with a matrix

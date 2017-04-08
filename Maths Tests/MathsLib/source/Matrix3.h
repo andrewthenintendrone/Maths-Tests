@@ -9,16 +9,6 @@ public:
     {
         struct
         {
-            Vector3 xAxis;
-            Vector3 yAxis;
-            Vector3 zAxis;
-        };
-        struct
-        {
-            Vector3 axis[3];
-        };
-        struct
-        {
             float m[3][3];
         };
         struct
@@ -48,6 +38,7 @@ public:
     void setRotateX(const float& angle);
     void setRotateY(const float& angle);
     void setRotateZ(const float& angle);
+    Matrix3 transposed();
 
     // overloads
     friend std::ostream& operator << (std::ostream& stream, const Matrix3& matrix);
