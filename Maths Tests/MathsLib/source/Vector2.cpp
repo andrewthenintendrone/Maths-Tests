@@ -1,132 +1,176 @@
 #include "Vector2.h"
 
 /*##################################################
-Vector2 constructor and destructor
+constructors and destructor
 ##################################################*/
+
+// default to 0s
 Vector2::Vector2()
 {
 	x = 0;
 	y = 0;
 }
 
+// construct with a float
 Vector2::Vector2(const float& value)
 {
-	x = value;
-	y = value;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] = value;
+    }
 }
 
+// construct with floats
 Vector2::Vector2(float newX, float newY)
 {
     x = newX;
     y = newY;
 }
 
+// construct with a vector
 Vector2::Vector2(const Vector2& vector)
 {
-	x = vector.x;
-	y = vector.y;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] = vector.v[i];
+    }
 }
 
+// destructor
 Vector2::~Vector2()
 {
 
 }
 
 /*##################################################
-Vector2 Functions
+functions
 ##################################################*/
+
+// returns the dot product of 2 vectors
 float Vector2::dot(Vector2& rhs)
 {
-	return(x * rhs.x + y * rhs.y);
+    float sum = 0;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        sum += v[i] * rhs.v[i];
+    }
+
+    return sum;
 }
 
+// returns the magnitude of the vector
 float Vector2::magnitude()
 {
     return sqrt(x * x + y * y);
 }
 
+// returns the squared magnitude of the vector
 float Vector2::squaremagnitude()
 {
     return(x * x + y * y);
 }
 
+// normalises the vector by dividing by magnitude
 void Vector2::normalise()
 {
     float mag = magnitude();
-    x /= mag;
-    y /= mag;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] /= mag;
+    }
 }
 
+// returns the normalised vector
 Vector2 Vector2::normalized()
 {
 	Vector2 temp(*this);
-    float magnitude = temp.magnitude();
     temp.normalise();
     return temp;
 }
 
-float Vector2::angle(Vector2& rhs)
-{
-	return acosf(Vector2::dot(rhs.normalized()));
-}
-
-Vector2 Vector2::perpendicular()
-{
-	return Vector2(-y, x);
-}
-
 /*##################################################
-Vector2 shortcuts for commonly used Vector2s
+shortcuts
 ##################################################*/
+
+// returns a vector pointing up
 Vector2 Vector2::Up()
 {
     return{ 0, 1 };
 }
 
+// returns a vector pointing down
 Vector2 Vector2::Down()
 {
     return{ 0, -1 };
 }
 
+// returns a vector pointing left
 Vector2 Vector2::Left()
 {
     return{ -1, 0 };
 }
 
+// returns a vector pointing right
 Vector2 Vector2::Right()
 {
     return{ -1, 0 };
 }
 
+// returns a vector of 0s
 Vector2 Vector2::Zero()
 {
-    return{ 0, 0 };
+    return Vector2(0);
 }
 
 /*##################################################
-Vector2 overloaded operators
+overloads
 ##################################################*/
+
+// stream << operator
+std::ostream& operator << (std::ostream& stream, const Vector2& vector)
+{
+    stream << "( ";
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        stream << vector.v[i] << " ";
+    }
+
+    stream << ")" << std::endl;
+
+    return stream;
+}
+
+// returns a pointer
 Vector2::operator float* ()
 {
 	return &x;
 }
 
+// returns v index
 float& Vector2::operator [] (const int& index)
 {
 	return v[index];
 }
 
+// returns true if vectors are equal
 bool Vector2::operator == (const Vector2& rhs)
 {
     return (x == rhs.x && y == rhs.y);
 }
 
+// sets vector with a vector
 void Vector2::operator = (const Vector2& rhs)
 {
-    x = rhs.x;
-    y = rhs.y;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] = rhs.v[i];
+    }
 }
 
+// + operator with a vector
 Vector2 Vector2::operator + (const Vector2& rhs)
 {
 	Vector2 temp(*this);
@@ -134,12 +178,16 @@ Vector2 Vector2::operator + (const Vector2& rhs)
     return temp;
 }
 
+// += operator with a vector
 void Vector2::operator += (const Vector2& rhs)
 {
-	x += rhs.x;
-	y += rhs.y;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] += rhs.v[i];
+    }
 }
 
+// - operator with a vector
 Vector2 Vector2::operator - (const Vector2& rhs)
 {
 	Vector2 temp(*this);
@@ -147,12 +195,16 @@ Vector2 Vector2::operator - (const Vector2& rhs)
     return temp;
 }
 
+// -= operator with a vector
 void Vector2::operator -= (const Vector2& rhs)
 {
-    x -= rhs.x;
-    y -= rhs.y;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] -= rhs.v[i];
+    }
 }
 
+// * operator with a float
 Vector2 Vector2::operator * (const float& scalar)
 {
 	Vector2 temp(*this);
@@ -160,17 +212,22 @@ Vector2 Vector2::operator * (const float& scalar)
 	return temp;
 }
 
+// float * operator
 Vector2 operator * (const float& scalar, Vector2& vector)
 {
 	return vector * scalar;
 }
 
+// *= operator with a float
 void Vector2::operator *= (const float& scalar)
 {
-	x *= scalar;
-	y *= scalar;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] *= scalar;
+    }
 }
 
+// / operator with a float
 Vector2 Vector2::operator / (const float& scalar)
 {
 	Vector2 temp(*this);
@@ -178,14 +235,11 @@ Vector2 Vector2::operator / (const float& scalar)
 	return temp;
 }
 
+// /= operator with a float
 void Vector2::operator /= (const float& scalar)
 {
-	x /= scalar;
-	y /= scalar;
-}
-
-std::ostream& operator << (std::ostream& stream, const Vector2& vector)
-{
-    stream << "(" << vector.x << ", " << vector.y << ")";
-    return stream;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] /= scalar;
+    }
 }

@@ -11,23 +11,34 @@ Matrix2::Matrix2()
     *this = Matrix2::identity();
 }
 
-// construct with floats
-Matrix2::Matrix2(const float& newXx, const float& newXy, const float& newYx, const float& newYy)
+// construct with a float
+Matrix2::Matrix2(const float& newValue)
 {
-    Xx = newXx;
-    Xy = newXy;
-    Yx = newYx;
-    Yy = newYy;
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        for (unsigned int j = 0; j < 2; j++)
+        {
+            m[i][j] = newValue;
+        }
+    }
+}
+
+// construct with floats
+Matrix2::Matrix2(const float& newXx, const float& newYx, const float& newXy, const float& newYy)
+{
+    m[0][0] = newXx;
+    m[0][1] = newYx;
+    m[1][0] = newXy;
+    m[1][1] = newYy;
 }
 
 // construct with Vectors
-Matrix2::Matrix2(Vector2& newxAxis, Vector2& newyAxis)
+Matrix2::Matrix2(Vector2& newAxis1, Vector2& newAxis2)
 {
-    Xx = newxAxis.x;
-    Xy = newxAxis.y;
-
-    Yx = newyAxis.x;
-    Yy = newyAxis.y;
+    m[0][0] = newAxis1.x;
+    m[0][1] = newAxis2.x;
+    m[1][0] = newAxis1.y;
+    m[1][1] = newAxis2.y;
 }
 
 // construct with another Matrix
@@ -51,22 +62,28 @@ Matrix2::~Matrix2()
 functions
 ##################################################*/
 
+// returns the determinant of the matrix
+float Matrix2::determinant()
+{
+    return (Xx * Xy - Yx * Yy);
+}
+
 // returns the identity matrix
 Matrix2 Matrix2::identity()
 {
     return Matrix2(1, 0, 0, 1);
 }
 
-// returns the determinant of the matrix
-float Matrix2::determinant()
+// returns a matrix of 0s
+Matrix2 Matrix2::zero()
 {
-    return (m[0][0] * m[1][1] - m[1][0] * m[0][1]);
+    return Matrix2(0);
 }
 
 // rotates the matrix by a given angle
 void Matrix2::setRotate(const float& angle)
 {
-    Matrix2 rotationMatrix(cosf(angle), -sinf(angle), sinf(angle), cosf(angle));
+    Matrix2 rotationMatrix(cosf(angle), sinf(angle), -sinf(angle), cosf(angle));
     *this *= rotationMatrix;
 }
 
@@ -97,7 +114,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
     {
         for (unsigned int j = 0; j < 2; j++)
         {
-            stream << matrix.m[j][i] << " ";
+            stream << matrix.m[i][j] << " ";
         }
         stream << std::endl;
     }
@@ -107,7 +124,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
 // * operator
 Matrix2::operator float* ()
 {
-    return &Xx;
+    return &m[0][0];
 }
 
 // [] operator that returns vector
@@ -122,6 +139,22 @@ Vector2 Matrix2::operator [] (const int& index)
     default:
         return Vector2(0, 0);
     }
+}
+
+// returns true if matricies are equal
+bool Matrix2::operator == (const Matrix2& rhs)
+{
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        for (unsigned int j = 0; j < 2; j++)
+        {
+            if (m[i][j] != rhs.m[i][j])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 // = operator with a matrix
@@ -181,7 +214,7 @@ void Matrix2::operator -= (const Matrix2& rhs)
 }
 
 // * operator with a matrix
-Matrix2 Matrix2::operator * (const Matrix2& rhs)
+Matrix2 Matrix2::operator * (Matrix2& rhs)
 {
     Matrix2 temp;
 
@@ -198,11 +231,11 @@ Matrix2 Matrix2::operator * (const Matrix2& rhs)
         }
     }
 
-    return temp.transposed();
+    return temp;
 }
 
 // *= operator with a matrix
-void Matrix2::operator *= (const Matrix2& rhs)
+void Matrix2::operator *= (Matrix2& rhs)
 {
     *this = *this * rhs;
 }
@@ -210,12 +243,9 @@ void Matrix2::operator *= (const Matrix2& rhs)
 // * operator with a vector
 Vector2 Matrix2::operator * (Vector2& rhs)
 {
-    Vector2 temp;
+    Vector2 temp[2];
 
-    temp.x = Vector2(Xx, Yx).dot(rhs);
-    temp.y = Vector2(Xy, Yy).dot(rhs);
-
-    return temp;
+    return Vector2(temp[0].dot(rhs), temp[1].dot(rhs));
 }
 
 // *= operator with a vector

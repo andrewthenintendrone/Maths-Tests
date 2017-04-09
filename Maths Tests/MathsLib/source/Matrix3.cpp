@@ -13,33 +13,35 @@ Matrix3::Matrix3()
 }
 
 // construct with floats
-Matrix3::Matrix3(const float& newXx, const float& newXy, const float& newXz, const float& newYx, const float& newYy, const float& newYz, const float& newZx, const float& newZy, const float& newZz)
+Matrix3::Matrix3(const float& new11, const float& new12, const float& new13, const float& new21, const float& new22, const float& new23, const float& new31, const float& new32, const float& new33)
 {
-    Xx = newXx;
-    Xy = newXy;
-    Xz = newXz;
-    Yx = newYx;
-    Yy = newYy;
-    Yz = newYz;
-    Zx = newZx;
-    Zy = newZy;
-    Zz = newZz;
+    m[0][0] = new11;
+    m[0][1] = new12;
+    m[0][2] = new13;
+
+    m[1][0] = new21;
+    m[1][1] = new22;
+    m[1][2] = new23;
+
+    m[2][0] = new31;
+    m[2][1] = new32;
+    m[2][2] = new33;
 }
 
 // construct with Vectors
-Matrix3::Matrix3(Vector3& newxAxis, Vector3& newyAxis, Vector3& newzAxis)
+Matrix3::Matrix3(Vector3& newAxis1, Vector3& newAxis2, Vector3& newAxis3)
 {
-    Xx = newxAxis.x;
-    Xy = newxAxis.y;
-    Xz = newxAxis.z;
+    m[0][0] = newAxis1.x;
+    m[0][1] = newAxis1.y;
+    m[0][2] = newAxis1.z;
 
-    Yx = newyAxis.x;
-    Yy = newyAxis.y;
-    Yz = newyAxis.z;
+    m[1][0] = newAxis2.x;
+    m[1][1] = newAxis2.y;
+    m[1][2] = newAxis2.z;
 
-    Zx = newzAxis.x;
-    Zy = newzAxis.y;
-    Zx = newzAxis.z;
+    m[2][0] = newAxis3.x;
+    m[2][1] = newAxis3.y;
+    m[2][2] = newAxis3.z;
 }
 
 // construct with another Matrix
@@ -72,32 +74,32 @@ Matrix3 Matrix3::identity()
 // returns the determinant of the matrix
 float Matrix3::determinant()
 {
-    Matrix2 block1(Yy, Yz, Zy, Zz);
-    Matrix2 block2(Xy, Xz, Zy, Zz);
-    Matrix2 block3(Xy, Xz, Yy, Yz);
+    Matrix2 block1(m[1][1], m[1][2], m[2][1], m[2][2]);
+    Matrix2 block2(m[1][0], m[1][2], m[2][0], m[2][2]);
+    Matrix2 block3(m[1][0], m[1][1], m[2][0], m[2][1]);
 
-    return (Xx * block1.determinant() - Yx * block2.determinant() + Zx * block3.determinant());
+    return (m[0][0] * block1.determinant() - m[0][1] * block2.determinant() + m[0][2] * block3.determinant());
 }
 
 // rotates the matrix on the x axis by a given angle
 void Matrix3::setRotateX(const float& angle)
 {
     Matrix3 rotationMatrix(1, 0, 0, 0, cosf(angle), -sinf(angle), 0, sinf(angle), cosf(angle));
-    *this *= rotationMatrix;
+    *this *= rotationMatrix.transposed();
 }
 
 // rotates the matrix on the y axis by a given angle
 void Matrix3::setRotateY(const float& angle)
 {
     Matrix3 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 1, 0, -sinf(angle), 0, cosf(angle));
-    *this *= rotationMatrix;
+    *this *= rotationMatrix.transposed();
 }
 
 // rotates the matrix on the z axis by a given angle
 void Matrix3::setRotateZ(const float& angle)
 {
     Matrix3 rotationMatrix(cosf(angle), -sinf(angle), 0, sinf(angle), cosf(angle), 0, 0, 0, 1);
-    *this *= rotationMatrix;
+    *this *= rotationMatrix.transposed();
 }
 
 // returns the transposed matrix
@@ -127,7 +129,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix3& matrix)
     {
         for (unsigned int j = 0; j < 3; j++)
         {
-            stream << matrix.m[j][i] << " ";
+            stream << matrix.m[i][j] << " ";
         }
         stream << std::endl;
     }
@@ -137,23 +139,13 @@ std::ostream& operator << (std::ostream& stream, const Matrix3& matrix)
 // * operator
 Matrix3::operator float* ()
 {
-    return &Xx;
+    return &m[0][0];
 }
 
 // [] operator that returns vector
 Vector3 Matrix3::operator [] (const int& index)
 {
-    switch (index)
-    {
-    case 0:
-        return Vector3(Xx, Xy, Xz);
-    case 1:
-        return Vector3(Yx, Yy, Yz);
-    case 2:
-        return Vector3(Zx, Zy, Zz);
-    default:
-        return Vector3(0, 0, 0);
-    }
+    return vecs[index];
 }
 
 // = operator with a matrix
@@ -213,7 +205,7 @@ void Matrix3::operator -= (const Matrix3& rhs)
 }
 
 // * operator with a matrix
-Matrix3 Matrix3::operator * (const Matrix3& rhs)
+Matrix3 Matrix3::operator * (Matrix3& rhs)
 {
     Matrix3 temp;
 
@@ -230,11 +222,11 @@ Matrix3 Matrix3::operator * (const Matrix3& rhs)
         }
     }
 
-    return temp.transposed();
+    return temp;
 }
 
 // *= operator with a matrix
-void Matrix3::operator *= (const Matrix3& rhs)
+void Matrix3::operator *= (Matrix3& rhs)
 {
     *this = *this * rhs;
 }
@@ -242,13 +234,9 @@ void Matrix3::operator *= (const Matrix3& rhs)
 // * operator with a vector
 Vector3 Matrix3::operator * (Vector3& rhs)
 {
-    Vector3 temp;
+    Matrix3 temp(this->transposed());
 
-    temp.x = Vector3(Xx, Yx, Zx).dot(rhs);
-    temp.y = Vector3(Xy, Yy, Zy).dot(rhs);
-    temp.z = Vector3(Xz, Yz, Zz).dot(rhs);
-
-    return temp;
+    return Vector3(temp[0].dot(rhs), temp[1].dot(rhs), temp[2].dot(rhs));
 }
 
 // *= operator with a vector

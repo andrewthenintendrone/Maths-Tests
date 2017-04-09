@@ -13,48 +13,51 @@ Matrix4::Matrix4()
 }
 
 // construct with floats
-Matrix4::Matrix4(const float& newXx, const float& newXy, const float& newXz, const float& newXw, const float& newYx, const float& newYy, const float& newYz, const float& newYw, const float& newZx, const float& newZy, const float& newZz, const float& newZw, const float& newWx, const float& newWy, const float& newWz, const float& newWw)
+Matrix4::Matrix4(const float& new11, const float& new12, const float& new13, const float& new14, const float& new21, const float& new22, const float& new23, const float& new24, const float& new31, const float& new32, const float& new33, const float& new34, const float& new41, const float& new42, const float& new43, const float& new44)
 {
-    Xx = newXx;
-    Xy = newXy;
-    Xz = newXz;
-    Xw = newXw;
-    Yx = newYx;
-    Yy = newYy;
-    Yz = newYz;
-    Yw = newYw;
-    Zx = newZx;
-    Zy = newZy;
-    Zz = newZz;
-    Zw = newZw;
-    Wx = newWx;
-    Wy = newWy;
-    Wz = newWz;
-    Ww = newWw;
+    m[0][0] = new11;
+    m[0][1] = new12;
+    m[0][2] = new13;
+    m[0][3] = new14;
+
+    m[1][0] = new21;
+    m[1][1] = new22;
+    m[1][2] = new23;
+    m[1][3] = new24;
+
+    m[2][0] = new31;
+    m[2][1] = new32;
+    m[2][2] = new33;
+    m[2][3] = new34;
+
+    m[3][0] = new41;
+    m[3][1] = new42;
+    m[3][2] = new43;
+    m[3][3] = new44;
 }
 
 // construct with Vectors
-Matrix4::Matrix4(Vector4& newxAxis, Vector4& newyAxis, Vector4& newzAxis, Vector4& newwAxis)
+Matrix4::Matrix4(Vector4& newAxis1, Vector4& newAxis2, Vector4& newAxis3, Vector4& newAxis4)
 {
-    Xx = newxAxis.x;
-    Xy = newxAxis.y;
-    Xz = newxAxis.z;
-    Xw = newxAxis.w;
+    m[0][0] = newAxis1.x;
+    m[0][1] = newAxis1.y;
+    m[0][2] = newAxis1.z;
+    m[0][3] = newAxis1.w;
 
-    Yx = newyAxis.x;
-    Yy = newyAxis.y;
-    Yz = newyAxis.z;
-    Yw = newyAxis.w;
+    m[1][0] = newAxis2.x;
+    m[1][1] = newAxis2.y;
+    m[1][2] = newAxis2.z;
+    m[1][3] = newAxis2.w;
 
-    Zx = newzAxis.x;
-    Zy = newzAxis.y;
-    Zz = newzAxis.z;
-    Zw = newzAxis.w;
+    m[2][0] = newAxis3.x;
+    m[2][1] = newAxis3.y;
+    m[2][2] = newAxis3.z;
+    m[2][3] = newAxis3.w;
 
-    Wx = newwAxis.x;
-    Wy = newwAxis.y;
-    Wz = newwAxis.z;
-    Ww = newwAxis.w;
+    m[3][0] = newAxis4.x;
+    m[3][1] = newAxis4.y;
+    m[3][2] = newAxis4.z;
+    m[3][3] = newAxis4.w;
 }
 
 // construct with another Matrix
@@ -87,33 +90,33 @@ Matrix4 Matrix4::identity()
 // returns the determinant of the matrix
 float Matrix4::determinant()
 {
-    Matrix3 block1(Yy, Yz, Yw, Zy, Zz, Zw, Wy, Wz, Ww);
-    Matrix3 block2(Xy, Xz, Xw, Zy, Zz, Zw, Wy, Wz, Ww);
-    Matrix3 block3(Xy, Xz, Xw, Yy, Yz, Yw, Wy, Wz, Ww);
-    Matrix3 block4(Xy, Xz, Xw, Yy, Yz, Yw, Zy, Zz, Zw);
+    Matrix3 block1(m[1][1], m[1][2], m[1][3], m[2][1], m[2][2], m[2][3], m[3][1], m[3][2], m[3][3]);
+    Matrix3 block2(m[1][0], m[1][2], m[1][3], m[2][0], m[2][2], m[2][3], m[3][0], m[3][2], m[3][3]);
+    Matrix3 block3(m[1][0], m[1][1], m[1][3], m[2][0], m[2][1], m[2][3], m[3][0], m[3][1], m[3][3]);
+    Matrix3 block4(m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], m[3][0], m[3][1], m[3][2]);
 
-    return (Xx * block1.determinant() - Yx * block2.determinant() + Zx * block3.determinant() - Wx * block4.determinant());
+    return (m[0][0] * block1.determinant() - m[0][1] * block2.determinant() + m[0][2] * block3.determinant() - m[0][3] * block4.determinant());
 }
 
 // rotates the matrix on the x axis by a given angle
 void Matrix4::setRotateX(const float& angle)
 {
     Matrix4 rotationMatrix(1, 0, 0, 0, 0, cosf(angle), -sinf(angle), 0, 0, sinf(angle), cosf(angle), 0, 0, 0, 0, 1);
-    *this *= rotationMatrix;
+    *this *= rotationMatrix.transposed();
 }
 
 // rotates the matrix on the y axis by a given angle
 void Matrix4::setRotateY(const float& angle)
 {
     Matrix4 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 0, 1, 0, 0, -sinf(angle), 0, cosf(angle), 0, 0, 0, 0, 1);
-    *this *= rotationMatrix;
+    *this *= rotationMatrix.transposed();
 }
 
 // rotates the matrix on the z axis by a given angle
 void Matrix4::setRotateZ(const float& angle)
 {
     Matrix4 rotationMatrix(cosf(angle), -sinf(angle), 0, 0, sinf(angle), cosf(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    *this *= rotationMatrix;
+    *this *= rotationMatrix.transposed();
 }
 
 // returns the transposed matrix
@@ -143,7 +146,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix4& matrix)
     {
         for (unsigned int j = 0; j < 4; j++)
         {
-            stream << matrix.m[j][i] << " ";
+            stream << matrix.m[i][j] << " ";
         }
         stream << std::endl;
     }
@@ -153,25 +156,13 @@ std::ostream& operator << (std::ostream& stream, const Matrix4& matrix)
 // * operator
 Matrix4::operator float* ()
 {
-    return &Xx;
+    return &m[0][0];
 }
 
 // [] operator that returns vector
 Vector4 Matrix4::operator [] (const int& index)
 {
-    switch (index)
-    {
-    case 0:
-        return Vector4(Xx, Xy, Xz, Xw);
-    case 1:
-        return Vector4(Yx, Yy, Yz, Yw);
-    case 2:
-        return Vector4(Zx, Zy, Zz, Zw);
-    case 3:
-        return Vector4(Wx, Wy, Wz, Ww);
-    default:
-        return Vector4(0, 0, 0, 0);
-    }
+    return vecs[index];
 }
 
 // = operator with a matrix
@@ -231,7 +222,7 @@ void Matrix4::operator -= (const Matrix4& rhs)
 }
 
 // * operator with a matrix
-Matrix4 Matrix4::operator * (const Matrix4& rhs)
+Matrix4 Matrix4::operator * (Matrix4& rhs)
 {
     Matrix4 temp;
 
@@ -248,11 +239,11 @@ Matrix4 Matrix4::operator * (const Matrix4& rhs)
         }
     }
 
-    return temp.transposed();
+    return temp;
 }
 
 // *= operator with a matrix
-void Matrix4::operator *= (const Matrix4& rhs)
+void Matrix4::operator *= (Matrix4& rhs)
 {
     *this = *this * rhs;
 }
@@ -260,14 +251,9 @@ void Matrix4::operator *= (const Matrix4& rhs)
 // * operator with a vector
 Vector4 Matrix4::operator * (Vector4& rhs)
 {
-    Vector4 temp;
+    Matrix4 temp(this->transposed());
 
-    temp.x = Vector4(Xx, Yx, Zx, Wx).dot(rhs);
-    temp.y = Vector4(Xy, Yy, Zy, Wy).dot(rhs);
-    temp.z = Vector4(Xz, Yz, Zz, Wz).dot(rhs);
-    temp.w = Vector4(Xw, Yw, Zw, Ww).dot(rhs);
-
-    return temp;
+    return Vector4(temp[0].dot(rhs), temp[1].dot(rhs), temp[2].dot(rhs), temp[3].dot(rhs));
 }
 
 // *= operator with a vector

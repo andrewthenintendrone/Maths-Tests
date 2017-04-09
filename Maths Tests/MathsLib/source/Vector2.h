@@ -32,17 +32,16 @@ public:
 	float squaremagnitude();
 	void normalise();
 	Vector2 normalized();
-	float angle(Vector2& rhs);
-	Vector2 perpendicular();
 
-    // static Vector3 shortcuts
+    // shortcuts
     static Vector2 Up();
     static Vector2 Down();
     static Vector2 Left();
     static Vector2 Right();
     static Vector2 Zero();
 
-    // operator overloads
+    // overloads
+    friend std::ostream& operator << (std::ostream& stream, const Vector2& vector);
 	operator float *();
 	float& operator [] (const int& index);
     bool operator == (const Vector2& rhs);
@@ -56,5 +55,4 @@ public:
 	void operator *= (const float& scalar);
 	Vector2 operator / (const float& scalar);
 	void operator /= (const float& scalar);
-    friend std::ostream& operator << (std::ostream& stream, const Vector2& vector);
 };
