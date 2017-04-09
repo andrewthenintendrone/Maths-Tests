@@ -223,9 +223,7 @@ void Matrix2::operator *= (Matrix2& rhs)
 // * operator with a vector
 Vector2 Matrix2::operator * (Vector2& rhs)
 {
-    Vector2 temp[2];
-
-    return Vector2(temp[0].dot(rhs), temp[1].dot(rhs));
+    return Vector2(vecs[0].dot(rhs), vecs[1].dot(rhs));
 }
 
 // *= operator with a vector
