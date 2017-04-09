@@ -14,42 +14,34 @@ Matrix2::Matrix2()
 // construct with a float
 Matrix2::Matrix2(const float& newValue)
 {
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            m[i][j] = newValue;
-        }
-    }
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		m[i] = newValue;
+	}
 }
 
 // construct with floats
-Matrix2::Matrix2(const float& newXx, const float& newYx, const float& newXy, const float& newYy)
+Matrix2::Matrix2(const float& newx1, const float& newy1, const float& newx2, const float& newy2)
 {
-    m[0][0] = newXx;
-    m[0][1] = newYx;
-    m[1][0] = newXy;
-    m[1][1] = newYy;
+	x1 = newx1;
+	y1 = newy1;
+	x2 = newx2;
+	y2 = newy2;
 }
 
 // construct with Vectors
 Matrix2::Matrix2(Vector2& newAxis1, Vector2& newAxis2)
 {
-    m[0][0] = newAxis1.x;
-    m[0][1] = newAxis2.x;
-    m[1][0] = newAxis1.y;
-    m[1][1] = newAxis2.y;
+	vecs[0] = newAxis1;
+	vecs[1] = newAxis2;
 }
 
 // construct with another Matrix
 Matrix2::Matrix2(const Matrix2& newMatrix)
 {
-    for (unsigned int i = 0; i < 2; i++)
+    for (unsigned int i = 0; i < 4; i++)
     {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            m[i][j] = newMatrix.m[i][j];
-        }
+		m[i] = newMatrix.m[i];
     }
 }
 
@@ -65,7 +57,7 @@ functions
 // returns the determinant of the matrix
 float Matrix2::determinant()
 {
-    return (Xx * Xy - Yx * Yy);
+    return (x1 * y2 - y1 * x2);
 }
 
 // returns the identity matrix
@@ -83,7 +75,7 @@ Matrix2 Matrix2::zero()
 // rotates the matrix by a given angle
 void Matrix2::setRotate(const float& angle)
 {
-    Matrix2 rotationMatrix(cosf(angle), sinf(angle), -sinf(angle), cosf(angle));
+    Matrix2 rotationMatrix(cosf(angle), -sinf(angle), sinf(angle), cosf(angle));
     *this *= rotationMatrix;
 }
 
@@ -96,7 +88,7 @@ Matrix2 Matrix2::transposed()
     {
         for (unsigned int j = 0; j < 2; j++)
         {
-            temp.m[i][j] = this->m[j][i];
+            temp.mm[i][j] = this->mm[j][i];
         }
     }
 
@@ -114,7 +106,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
     {
         for (unsigned int j = 0; j < 2; j++)
         {
-            stream << matrix.m[i][j] << " ";
+            stream << matrix.mm[i][j] << " ";
         }
         stream << std::endl;
     }
@@ -124,7 +116,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
 // * operator
 Matrix2::operator float* ()
 {
-    return &m[0][0];
+    return &m[0];
 }
 
 // [] operator that returns vector
@@ -133,9 +125,9 @@ Vector2 Matrix2::operator [] (const int& index)
     switch (index)
     {
     case 0:
-        return Vector2(Xx, Xy);
+        return Vector2(x1, x2);
     case 1:
-        return Vector2(Yx, Yy);
+        return Vector2(y1, y2);
     default:
         return Vector2(0, 0);
     }
@@ -144,15 +136,12 @@ Vector2 Matrix2::operator [] (const int& index)
 // returns true if matricies are equal
 bool Matrix2::operator == (const Matrix2& rhs)
 {
-    for (unsigned int i = 0; i < 2; i++)
+    for (unsigned int i = 0; i < 4; i++)
     {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            if (m[i][j] != rhs.m[i][j])
-            {
-                return false;
-            }
-        }
+		if (m[i] != rhs.m[i])
+		{
+			return false;
+		}
     }
     return true;
 }
@@ -160,13 +149,10 @@ bool Matrix2::operator == (const Matrix2& rhs)
 // = operator with a matrix
 void Matrix2::operator = (const Matrix2& newMatrix)
 {
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            m[i][j] = newMatrix.m[i][j];
-        }
-    }
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		m[i] = newMatrix.m[i];
+	}
 }
 
 // + operator with a matrix
@@ -174,12 +160,9 @@ Matrix2 Matrix2::operator + (const Matrix2& rhs)
 {
     Matrix2 temp;
 
-    for (unsigned int i = 0; i < 2; i++)
+    for (unsigned int i = 0; i < 4; i++)
     {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            temp.m[i][j] = m[i][j] + rhs.m[i][j];
-        }
+		temp.m[i] = m[i] + rhs.m[i];
     }
 
     return temp;
@@ -196,13 +179,10 @@ Matrix2 Matrix2::operator - (const Matrix2& rhs)
 {
     Matrix2 temp;
 
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            temp.m[i][j] = m[i][j] - rhs.m[i][j];
-        }
-    }
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		temp.m[i] = m[i] - rhs.m[i];
+	}
 
     return temp;
 }
@@ -225,9 +205,9 @@ Matrix2 Matrix2::operator * (Matrix2& rhs)
             float sum = 0;
             for (unsigned int k = 0; k < 2; k++)
             {
-                sum += m[i][k] * rhs.m[k][j];
+                sum += mm[i][k] * rhs.mm[k][j];
             }
-            temp.m[i][j] = sum;
+            temp.mm[i][j] = sum;
         }
     }
 
@@ -259,13 +239,10 @@ Matrix2 Matrix2::operator + (const float& scalar)
 {
     Matrix2 temp;
 
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            temp.m[i][j] = m[i][j] + scalar;
-        }
-    }
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		temp.m[i] = m[i] + scalar;
+	}
 
     return temp;
 }
@@ -281,13 +258,10 @@ Matrix2 Matrix2::operator - (const float& scalar)
 {
     Matrix2 temp;
 
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            temp.m[i][j] = m[i][j] - scalar;
-        }
-    }
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		temp.m[i] = m[i] - scalar;
+	}
 
     return temp;
 }
@@ -303,13 +277,10 @@ Matrix2 Matrix2::operator * (const float& scalar)
 {
     Matrix2 temp(*this);
 
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            temp.m[i][j] *= scalar;
-        }
-    }
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		temp.m[i] = m[i] * scalar;
+	}
 
     return temp;
 }
@@ -325,13 +296,10 @@ Matrix2 Matrix2::operator / (const float& scalar)
 {
     Matrix2 temp(*this);
 
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            temp.m[i][j] /= scalar;
-        }
-    }
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		temp.m[i] = m[i] / scalar;
+	}
 
     return temp;
 }

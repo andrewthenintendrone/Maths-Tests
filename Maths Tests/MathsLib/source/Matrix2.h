@@ -7,23 +7,31 @@ class Matrix2
 public:
     union
     {
+		struct
+		{
+			Vector2 vecs[2];
+		};
         struct
         {
-            float m[2][2];
+            float mm[2][2];
         };
+		struct
+		{
+			float m[4];
+		};
         struct
         {
-            float Xx;
-            float Yx;
-            float Xy;
-            float Yy;
+            float x1;
+			float y1;
+            float x2;
+            float y2;
         };
     };
 
     // constructors and destructors
     Matrix2();
     Matrix2(const float& newValue);
-    Matrix2(const float& new11, const float& new12, const float& new21, const float& new22);
+    Matrix2(const float& newx1, const float& newy1, const float& newx2, const float& newy2);
     Matrix2(Vector2& newAxis1, Vector2& newAxis2);
     Matrix2(const Matrix2& newMatrix);
     ~Matrix2();
