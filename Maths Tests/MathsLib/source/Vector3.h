@@ -22,9 +22,9 @@ public:
 
 	// constructors and destructor
 	Vector3();
-	Vector3(const float& newValue);
+	Vector3(const float& value);
 	Vector3(float newX, float newY, float newZ);
-	Vector3(const Vector3& newVector);
+	Vector3(const Vector3& vector);
 	~Vector3();
 
 	// functions
@@ -34,9 +34,8 @@ public:
 	float squaremagnitude();
 	void normalise();
 	Vector3 normalized();
-	float angle(Vector3& rhs);
 
-	// static Vector3 shortcuts
+	// shortcuts
 	static Vector3 Up();
 	static Vector3 Down();
 	static Vector3 Left();
@@ -45,7 +44,8 @@ public:
 	static Vector3 Back();
 	static Vector3 Zero();
 
-	// operator overloads
+	// overloads
+	friend std::ostream& operator << (std::ostream& stream, const Vector3& vector);
 	operator float *();
 	float& operator [] (const int& index);
 	bool operator == (const Vector3& rhs);
@@ -55,9 +55,8 @@ public:
 	Vector3 operator - (const Vector3& rhs);
 	void operator -= (const Vector3& rhs);
 	Vector3 operator * (const float& scalar);
-	friend Vector3 operator * (const float& scalar, Vector3& vector);
 	void operator *= (const float& scalar);
+	friend Vector3 operator * (const float& scalar, Vector3& vector);
 	Vector3 operator / (const float& scalar);
 	void operator /= (const float& scalar);
-	friend std::ostream& operator << (std::ostream& stream, const Vector3& vector);
 };

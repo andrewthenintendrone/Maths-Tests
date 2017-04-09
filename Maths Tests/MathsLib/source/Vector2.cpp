@@ -46,7 +46,7 @@ Vector2::~Vector2()
 functions
 ##################################################*/
 
-// returns the dot product of 2 vectors
+// returns the dot product of vectors
 float Vector2::dot(Vector2& rhs)
 {
     float sum = 0;
