@@ -173,43 +173,52 @@ void Vector2::operator = (const Vector2& rhs)
 // + operator with a vector
 Vector2 Vector2::operator + (const Vector2& rhs)
 {
-	Vector2 temp(*this);
-    temp += rhs;
+    Vector2 temp;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        temp[i] = v[i] + rhs.v[i];
+    }
+
     return temp;
 }
 
 // += operator with a vector
 void Vector2::operator += (const Vector2& rhs)
 {
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        v[i] += rhs.v[i];
-    }
+    *this = *this + rhs;
 }
 
 // - operator with a vector
 Vector2 Vector2::operator - (const Vector2& rhs)
 {
-	Vector2 temp(*this);
-    temp -= rhs;
+    Vector2 temp;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        temp[i] = v[i] - rhs.v[i];
+    }
+
     return temp;
 }
 
 // -= operator with a vector
 void Vector2::operator -= (const Vector2& rhs)
 {
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        v[i] -= rhs.v[i];
-    }
+    *this = *this - rhs;
 }
 
 // * operator with a float
 Vector2 Vector2::operator * (const float& scalar)
 {
-	Vector2 temp(*this);
-	temp *= scalar;
-	return temp;
+    Vector2 temp;
+
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        temp[i] = v[i] * scalar;
+    }
+
+    return temp;
 }
 
 // float * operator
