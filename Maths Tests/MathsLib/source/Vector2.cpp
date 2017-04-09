@@ -221,19 +221,16 @@ Vector2 Vector2::operator * (const float& scalar)
     return temp;
 }
 
+// *= operator with a float
+void Vector2::operator *= (const float& scalar)
+{
+    *this = *this * scalar;
+}
+
 // float * operator
 Vector2 operator * (const float& scalar, Vector2& vector)
 {
 	return vector * scalar;
-}
-
-// *= operator with a float
-void Vector2::operator *= (const float& scalar)
-{
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        v[i] *= scalar;
-    }
 }
 
 // / operator with a float
