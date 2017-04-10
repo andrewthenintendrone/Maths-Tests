@@ -22,7 +22,7 @@ Matrix3::Matrix3(const float& newValue)
 }
 
 // construct with floats
-Matrix3::Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float newz2, const float& newx3, const float& newy3, const float& newz3)
+Matrix3::Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float& newz2, const float& newx3, const float& newy3, const float& newz3)
 {
 	x1 = newx1;
 	y1 = newy1;
@@ -97,7 +97,7 @@ void Matrix3::setRotateY(const float& angle)
 	*this *= rotationMatrix;
 }
 
-// rotates the matrix on the y axis by a given angle
+// rotates the matrix on the z axis by a given angle
 void Matrix3::setRotateZ(const float& angle)
 {
 	Matrix3 rotationMatrix(cosf(angle), -sinf(angle), 0, sinf(angle), cosf(angle), 0, 0, 0, 1);
@@ -153,6 +153,8 @@ Vector3 Matrix3::operator [] (const int& index)
 		return Vector3(x1, x2, x3);
 	case 1:
 		return Vector3(y1, y2, y3);
+	case 2:
+		return Vector3(z1, z2, z3);
 	default:
 		return Vector3(0, 0, 0);
 	}

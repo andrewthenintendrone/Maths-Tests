@@ -36,7 +36,7 @@ public:
 	// constructors and destructors
 	Matrix3();
 	Matrix3(const float& newValue);
-	Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float newz2, const float& newx3, const float& newy3, const float& newz3);
+	Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float& newz2, const float& newx3, const float& newy3, const float& newz3);
 	Matrix3(Vector3& newAxis1, Vector3& newAxis2, Vector3& newAxis3);
 	Matrix3(const Matrix3& newMatrix);
 	~Matrix3();
