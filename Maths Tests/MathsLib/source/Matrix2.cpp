@@ -76,6 +76,7 @@ Matrix2 Matrix2::zero()
 void Matrix2::setRotate(const float& angle)
 {
     Matrix2 rotationMatrix(cosf(angle), -sinf(angle), sinf(angle), cosf(angle));
+	rotationMatrix = rotationMatrix.transposed();
     *this *= rotationMatrix;
 }
 

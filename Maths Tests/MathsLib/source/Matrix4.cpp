@@ -28,13 +28,17 @@ Matrix4::Matrix4(const float& newx1, const float& newy1, const float& newz1, con
 	y1 = newy1;
 	z1 = newz1;
 	w1 = neww1;
+
 	x2 = newx2;
 	y2 = newy2;
 	z2 = newz2;
 	w2 = neww2;
+
 	x3 = newx3;
 	y3 = newy3;
 	z3 = newz3;
+	w3 = neww3;
+
 	x4 = newx4;
 	y4 = newy4;
 	z4 = newz4;
@@ -94,22 +98,31 @@ Matrix4 Matrix4::zero()
 // rotates the matrix on the x axis by a given angle
 void Matrix4::setRotateX(const float& angle)
 {
-	Matrix4 rotationMatrix(1, 0, 0, 0, 0, cosf(angle), -sinf(angle), 0, 0, sinf(angle), cosf(angle), 0, 0, 0, 0, 1);
-	*this *= rotationMatrix;
+	Matrix4 rotationMatrix(1, 0, 0, 0,
+		0, cosf(angle), -sinf(angle), 0, 
+		0, sinf(angle), cosf(angle), 0, 
+		0, 0, 0, 1);
+	*this *= rotationMatrix.transposed();
 }
 
 // rotates the matrix on the y axis by a given angle
 void Matrix4::setRotateY(const float& angle)
 {
-	Matrix4 rotationMatrix(cosf(angle), 0, sinf(angle), 0, 0, 1, 0, 0, sinf(angle), 0, cosf(angle), 0, 0, 0, 0, 1);
-	*this *= rotationMatrix;
+	Matrix4 rotationMatrix(cosf(angle), 0, sinf(angle), 0,
+		0, 1, 0, 0,
+		-sinf(angle), 0, cosf(angle), 0,
+		0, 0, 0, 1);
+	*this *= rotationMatrix.transposed();
 }
 
 // rotates the matrix on the z axis by a given angle
 void Matrix4::setRotateZ(const float& angle)
 {
-	Matrix4 rotationMatrix(cosf(angle), -sinf(angle), 0, 0, sinf(angle), cosf(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-	*this *= rotationMatrix;
+	Matrix4 rotationMatrix(cosf(angle), -sinf(angle), 0, 0,
+		sinf(angle), cosf(angle), 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1);
+	*this *= rotationMatrix.transposed();
 }
 
 // returns the transposed matrix

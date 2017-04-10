@@ -86,22 +86,28 @@ Matrix3 Matrix3::zero()
 // rotates the matrix on the x axis by a given angle
 void Matrix3::setRotateX(const float& angle)
 {
-	Matrix3 rotationMatrix(1, 0, 0, 0, cosf(angle), -sinf(angle), 0, sinf(angle), cosf(angle));
-	*this *= rotationMatrix;
+	Matrix3 rotationMatrix(1, 0, 0,
+		0, cosf(angle), -sinf(angle),
+		0, sinf(angle), cosf(angle));
+	*this *= rotationMatrix.transposed();
 }
 
 // rotates the matrix on the y axis by a given angle
 void Matrix3::setRotateY(const float& angle)
 {
-	Matrix3 rotationMatrix(cosf(angle), 0, -sinf(angle), 0, 1, 0, sinf(angle), 0, cosf(angle));
-	*this *= rotationMatrix;
+	Matrix3 rotationMatrix(cosf(angle), 0, sinf(angle),
+		0, 1, 0,
+		-sinf(angle), 0, cosf(angle));
+	*this *= rotationMatrix.transposed();
 }
 
 // rotates the matrix on the z axis by a given angle
 void Matrix3::setRotateZ(const float& angle)
 {
-	Matrix3 rotationMatrix(cosf(angle), -sinf(angle), 0, sinf(angle), cosf(angle), 0, 0, 0, 1);
-	*this *= rotationMatrix;
+	Matrix3 rotationMatrix(cosf(angle), -sinf(angle), 0,
+		sinf(angle), cosf(angle), 0,
+		0, 0, 1);
+	*this *= rotationMatrix.transposed();
 }
 
 // returns the transposed matrix
