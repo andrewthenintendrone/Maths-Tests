@@ -63,6 +63,18 @@ float Vector4::dot(Vector4& rhs)
 	return sum;
 }
 
+Vector4 Vector4::cross(Vector4& rhs)
+{
+	Vector4 temp;
+
+	temp.x = y * rhs.z - z * rhs.y;
+	temp.y = z * rhs.x - x * rhs.z;
+	temp.z = x * rhs.y - y * rhs.x;
+	temp.w = 0;
+
+	return temp;
+}
+
 // returns the magnitude of the vector
 float Vector4::magnitude()
 {

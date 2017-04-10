@@ -30,6 +30,7 @@ public:
 
 	// functions
 	float dot(Vector4& rhs);
+	Vector4 cross(Vector4& rhs);
 	float magnitude();
 	float squaremagnitude();
 	void normalise();
