@@ -150,7 +150,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix4& matrix)
 // * operator
 Matrix4::operator float* ()
 {
-	return &m[0];
+	return &mm[0][0];
 }
 
 // [] operator that returns vector
