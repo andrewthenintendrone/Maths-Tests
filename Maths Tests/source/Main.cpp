@@ -6,10 +6,10 @@
 
 int main()
 {
-	Matrix3 m3b;
-	m3b.setRotateY(1.76f);
+	Matrix2 mat(1, 2, 3, 6);
+	Matrix2 mat2(1, 2, 3, 4);
 
-    std::cout << m3b << std::endl;
+    std::cout << mat * mat2 << std::endl;
 
 	system("pause");
 	return 0;

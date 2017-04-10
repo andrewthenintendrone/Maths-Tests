@@ -9,7 +9,7 @@ constructors and destructors
 // default constructor
 Matrix4::Matrix4()
 {
-	*this = Matrix4::identity();
+	*this = Matrix4::zero();
 }
 
 // construct with a float
@@ -22,26 +22,26 @@ Matrix4::Matrix4(const float& newValue)
 }
 
 // construct with floats
-Matrix4::Matrix4(const float& newx1, const float& newy1, const float& newz1, const float& neww1, const float& newx2, const float& newy2, const float& newz2, const float& neww2, const float& newx3, const float& newy3, const float& newz3, const float& neww3, const float& newx4, const float& newy4, const float& newz4, const float& neww4)
+Matrix4::Matrix4(const float& newx1, const float& newx2, const float& newx3, const float& newx4, const float& newy1, const float& newy2, const float& newy3, const float& newy4, const float& newz1, const float& newz2, const float& newz3, const float& neww1, const float& neww2, const float& neww3, const float& newz4, const float& neww4)
 {
 	x1 = newx1;
-	y1 = newy1;
-	z1 = newz1;
-	w1 = neww1;
-
 	x2 = newx2;
-	y2 = newy2;
-	z2 = newz2;
-	w2 = neww2;
-
 	x3 = newx3;
-	y3 = newy3;
-	z3 = newz3;
-	w3 = neww3;
-
 	x4 = newx4;
+
+	y1 = newy1;
+	y2 = newy2;
+	y3 = newy3;
 	y4 = newy4;
+
+	z1 = newz1;
+	z2 = newz2;
+	z3 = newz3;
 	z4 = newz4;
+
+	w1 = neww1;
+	w2 = neww2;
+	w3 = neww3;
 	w4 = neww4;
 }
 
@@ -75,12 +75,12 @@ functions
 // returns the determinant of the matrix
 float Matrix4::determinant()
 {
-	Matrix3 block1(y2, z2, w2, y3, z3, w3, y4, z4, w4);
-	Matrix3 block2(x2, z2, w2, x3, z3, w3, x4, z4, w4);
-	Matrix3 block3(x2, y2, w2, x3, y3, w3, x4, y4, w4);
-	Matrix3 block4(x2, y2, z2, x3, y3, z3, x4, y4, z4);
+	Matrix3 block1(y2, y3, y4, z2, z3, z4, w2, w3, w4);
+	Matrix3 block2(y1, y3, y4, z1, z3, z4, w1, w3, w4);
+	Matrix3 block3(y1, y2, y4, z1, z2, z4, w1, w2, w4);
+	Matrix3 block4(y1, y2, y3, z1, z2, z3, w1, w2, w3);
 
-	return (x1 * block1.determinant() - y1 * block2.determinant() + z1 * block3.determinant() - w1 * block4.determinant());
+	return (x1 * block1.determinant() - x2 * block2.determinant() + x3 * block3.determinant() - x4 * block4.determinant());
 }
 
 // returns the identity matrix
@@ -95,34 +95,22 @@ Matrix4 Matrix4::zero()
 	return Matrix4(0);
 }
 
-// rotates the matrix on the x axis by a given angle
+// sets the matrix to the rotation matrix for a given angle on the x axis
 void Matrix4::setRotateX(const float& angle)
 {
-	Matrix4 rotationMatrix(1, 0, 0, 0,
-		0, cosf(angle), -sinf(angle), 0, 
-		0, sinf(angle), cosf(angle), 0, 
-		0, 0, 0, 1);
-	*this *= rotationMatrix.transposed();
+	*this = Matrix4(1, 0, 0, 0, 0, cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1);
 }
 
-// rotates the matrix on the y axis by a given angle
+// sets the matrix to the rotation matrix for a given angle on the y axis
 void Matrix4::setRotateY(const float& angle)
 {
-	Matrix4 rotationMatrix(cosf(angle), 0, sinf(angle), 0,
-		0, 1, 0, 0,
-		-sinf(angle), 0, cosf(angle), 0,
-		0, 0, 0, 1);
-	*this *= rotationMatrix.transposed();
+	*this = Matrix4(cosf(angle), 0, -sinf(angle), 0, 0, 1, 0, 0, sinf(angle), 0, cosf(angle), 0, 0, 0, 0, 1);
 }
 
-// rotates the matrix on the z axis by a given angle
+// sets the matrix to the rotation matrix for a given angle on the z axis
 void Matrix4::setRotateZ(const float& angle)
 {
-	Matrix4 rotationMatrix(cosf(angle), -sinf(angle), 0, 0,
-		sinf(angle), cosf(angle), 0, 0,
-		0, 0, 1, 0,
-		0, 0, 0, 1);
-	*this *= rotationMatrix.transposed();
+	*this = Matrix4(cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 }
 
 // returns the transposed matrix
@@ -152,7 +140,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix4& matrix)
 	{
 		for (unsigned int j = 0; j < 4; j++)
 		{
-			stream << matrix.mm[i][j] << " ";
+			stream << matrix.mm[j][i] << " ";
 		}
 		stream << std::endl;
 	}
@@ -166,21 +154,9 @@ Matrix4::operator float* ()
 }
 
 // [] operator that returns vector
-Vector4 Matrix4::operator [] (const int& index)
+Vector4& Matrix4::operator [] (const int& index)
 {
-	switch (index)
-	{
-	case 0:
-		return Vector4(x1, x2, x3, x4);
-	case 1:
-		return Vector4(y1, y2, y3, y4);
-	case 2:
-		return Vector4(z1, z2, z3, z4);
-	case 3:
-		return Vector4(w1, w2, w3, w4);
-	default:
-		return Vector4(0, 0, 0, 0);
-	}
+	return vecs[index];
 }
 
 // returns true if matricies are equal
@@ -255,9 +231,9 @@ Matrix4 Matrix4::operator * (Matrix4& rhs)
 			float sum = 0;
 			for (unsigned int k = 0; k < 4; k++)
 			{
-				sum += mm[i][k] * rhs.mm[k][j];
+				sum += mm[k][i] * rhs.mm[j][k];
 			}
-			temp.mm[i][j] = sum;
+			temp.mm[j][i] = sum;
 		}
 	}
 
@@ -273,7 +249,22 @@ void Matrix4::operator *= (Matrix4& rhs)
 // * operator with a vector
 Vector4 Matrix4::operator * (Vector4& rhs)
 {
-	return Vector4(vecs[0].dot(rhs), vecs[1].dot(rhs), vecs[2].dot(rhs), vecs[3].dot(rhs));
+	Vector4 temp;
+
+	for (unsigned int i = 0; i < 1; i++)
+	{
+		for (unsigned int j = 0; j < 4; j++)
+		{
+			float sum = 0;
+			for (unsigned int k = 0; k < 4; k++)
+			{
+				sum += mm[k][j] * rhs.v[k];
+			}
+			temp.v[j] = sum;
+		}
+	}
+
+	return temp;
 }
 
 // *= operator with a vector

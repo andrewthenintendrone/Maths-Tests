@@ -22,13 +22,15 @@ public:
 		struct
 		{
 			float x1;
-			float y1;
-			float z1;
 			float x2;
-			float y2;
-			float z2;
 			float x3;
+
+			float y1;
+			float y2;
 			float y3;
+
+			float z1;
+			float z2;
 			float z3;
 		};
 	};
@@ -36,7 +38,7 @@ public:
 	// constructors and destructors
 	Matrix3();
 	Matrix3(const float& newValue);
-	Matrix3(const float& newx1, const float& newy1, const float& newz1, const float& newx2, const float& newy2, const float& newz2, const float& newx3, const float& newy3, const float& newz3);
+	Matrix3(const float& newx1, const float& newx2, const float& newx3, const float& newy1, const float& newy2, const float& newy3, const float& newz1, const float& newz2, const float& newz3);
 	Matrix3(Vector3& newAxis1, Vector3& newAxis2, Vector3& newAxis3);
 	Matrix3(const Matrix3& newMatrix);
 	~Matrix3();
@@ -53,7 +55,7 @@ public:
 	// overloads
 	friend std::ostream& operator << (std::ostream& stream, const Matrix3& matrix);
 	operator float *();
-	Vector3 operator [] (const int& index);
+	Vector3& operator [] (const int& index);
 	bool operator == (const Matrix3& rhs);
 	void operator = (const Matrix3& newMatrix);
 	Matrix3 operator + (const Matrix3& rhs);

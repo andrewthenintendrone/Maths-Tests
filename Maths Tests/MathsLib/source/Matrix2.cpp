@@ -8,7 +8,7 @@ constructors and destructors
 // default constructor
 Matrix2::Matrix2()
 {
-    *this = Matrix2::identity();
+	*this = Matrix2::zero();
 }
 
 // construct with a float
@@ -21,11 +21,12 @@ Matrix2::Matrix2(const float& newValue)
 }
 
 // construct with floats
-Matrix2::Matrix2(const float& newx1, const float& newy1, const float& newx2, const float& newy2)
+Matrix2::Matrix2(const float& newx1, const float& newx2, const float& newy1, const float& newy2)
 {
 	x1 = newx1;
-	y1 = newy1;
 	x2 = newx2;
+
+	y1 = newy1;
 	y2 = newy2;
 }
 
@@ -72,12 +73,10 @@ Matrix2 Matrix2::zero()
     return Matrix2(0);
 }
 
-// rotates the matrix by a given angle
+// sets the matrix to the rotation matrix for a given angle
 void Matrix2::setRotate(const float& angle)
 {
-    Matrix2 rotationMatrix(cosf(angle), -sinf(angle), sinf(angle), cosf(angle));
-	rotationMatrix = rotationMatrix.transposed();
-    *this *= rotationMatrix;
+    *this = Matrix2(cosf(angle), -sinf(angle), sinf(angle), cosf(angle)).transposed();
 }
 
 // returns the transposed matrix
@@ -107,7 +106,7 @@ std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
     {
         for (unsigned int j = 0; j < 2; j++)
         {
-            stream << matrix.mm[i][j] << " ";
+            stream << matrix.mm[j][i] << " ";
         }
         stream << std::endl;
     }
@@ -117,21 +116,13 @@ std::ostream& operator << (std::ostream& stream, const Matrix2& matrix)
 // * operator
 Matrix2::operator float* ()
 {
-    return &m[0];
+    return &mm[0][0];
 }
 
 // [] operator that returns vector
-Vector2 Matrix2::operator [] (const int& index)
+Vector2& Matrix2::operator [] (const int& index)
 {
-    switch (index)
-    {
-    case 0:
-        return Vector2(x1, x2);
-    case 1:
-        return Vector2(y1, y2);
-    default:
-        return Vector2(0, 0);
-    }
+	return vecs[index];
 }
 
 // returns true if matricies are equal
@@ -199,18 +190,18 @@ Matrix2 Matrix2::operator * (Matrix2& rhs)
 {
     Matrix2 temp;
 
-    for (unsigned int i = 0; i < 2; i++)
-    {
-        for (unsigned int j = 0; j < 2; j++)
-        {
-            float sum = 0;
-            for (unsigned int k = 0; k < 2; k++)
-            {
-                sum += mm[i][k] * rhs.mm[k][j];
-            }
-            temp.mm[i][j] = sum;
-        }
-    }
+	for (unsigned int i = 0; i < 2; i++)
+	{
+		for (unsigned int j = 0; j < 2; j++)
+		{
+			float sum = 0;
+			for (unsigned int k = 0; k < 2; k++)
+			{
+				sum += mm[k][i] * rhs.mm[j][k];
+			}
+			temp.mm[j][i] = sum;
+		}
+	}
 
     return temp;
 }
@@ -224,7 +215,22 @@ void Matrix2::operator *= (Matrix2& rhs)
 // * operator with a vector
 Vector2 Matrix2::operator * (Vector2& rhs)
 {
-    return Vector2(vecs[0].dot(rhs), vecs[1].dot(rhs));
+	Vector2 temp;
+
+	for (unsigned int i = 0; i < 1; i++)
+	{
+		for (unsigned int j = 0; j < 2; j++)
+		{
+			float sum = 0;
+			for (unsigned int k = 0; k < 2; k++)
+			{
+				sum += mm[k][j] * rhs.v[k];
+			}
+			temp.v[j] = sum;
+		}
+	}
+
+	return temp;
 }
 
 // *= operator with a vector

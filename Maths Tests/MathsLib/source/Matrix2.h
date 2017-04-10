@@ -22,8 +22,9 @@ public:
         struct
         {
             float x1;
-			float y1;
             float x2;
+
+			float y1;
             float y2;
         };
     };
@@ -31,7 +32,7 @@ public:
     // constructors and destructors
     Matrix2();
     Matrix2(const float& newValue);
-    Matrix2(const float& newx1, const float& newy1, const float& newx2, const float& newy2);
+    Matrix2(const float& newx1, const float& newx2, const float& newy1, const float& newy2);
     Matrix2(Vector2& newAxis1, Vector2& newAxis2);
     Matrix2(const Matrix2& newMatrix);
     ~Matrix2();
@@ -46,7 +47,7 @@ public:
     // overloads
     friend std::ostream& operator << (std::ostream& stream, const Matrix2& matrix);
     operator float *();
-    Vector2 operator [] (const int& index);
+    Vector2& operator [] (const int& index);
     bool operator == (const Matrix2& rhs);
     void operator = (const Matrix2& newMatrix);
     Matrix2 operator + (const Matrix2& rhs);
