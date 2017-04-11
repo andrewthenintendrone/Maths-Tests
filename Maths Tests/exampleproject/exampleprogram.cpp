@@ -44,17 +44,17 @@ bool exampleprogram::startup() {
 	models[0].scale(Vector3(0.75f, 0.75f, 0.75f));
 	models[0].setColorsRandom();
 
-	models[1].load("./models/sphere.obj");
+	models[1].load("./models/andrew.obj");
 	models[1].setColorPallete(191, 255, 96, 160, 0, 0);
 	models[1].scale(Vector3(0.25f, 0.25f, 0.25f));
 	models[1].setColorsRandom();
 
-	models[2].load("./models/sphere.obj");
+	models[2].load("./models/cube.obj");
 	models[2].setColorPallete(10, 30, 10, 30, 10, 30);
 	models[2].scale(Vector3(0.5f, 0.5f, 0.5f));
 	models[2].setColorsRandom();
 
-	models[3].load("./models/sphere.obj");
+	models[3].load("./models/monkey.obj");
 	models[3].setColorPallete(235, 255, 235, 255, 235, 255);
 	models[2].scale(Vector3(1.0f, 1.0f, 1.0f));
 	models[3].setColorsRandom();
