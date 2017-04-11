@@ -98,6 +98,32 @@ void exampleprogram::update(float deltaTime) {
 		models[2].translate(Vector3::Up() * deltaTime);
 		models[3].translate(Vector3::Down() * deltaTime);
 	}
+	else
+	{
+		switch ((int)time % 3)
+		{
+		case 0:
+			models[0].rotateX(deltaTime * 2.0);
+			models[1].rotateX(deltaTime * 2.0);
+			models[2].rotateX(deltaTime * 2.0);
+			models[3].rotateX(deltaTime * 2.0);
+			break;
+			
+		case 1:
+			models[0].rotateY(deltaTime * 2.0);
+			models[1].rotateY(deltaTime * 2.0);
+			models[2].rotateY(deltaTime * 2.0);
+			models[3].rotateY(deltaTime * 2.0);
+			break;
+
+		case 2:
+			models[0].rotateZ(deltaTime * 2.0);
+			models[1].rotateZ(deltaTime * 2.0);
+			models[2].rotateZ(deltaTime * 2.0);
+			models[3].rotateZ(deltaTime * 2.0);
+			break;
+		}
+	}
 
 	for (unsigned int i = 0; i < models.size(); i++)
 	{
