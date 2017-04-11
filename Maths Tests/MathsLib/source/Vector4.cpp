@@ -106,6 +106,12 @@ Vector4 Vector4::normalized()
 	return temp;
 }
 
+// returns a glm vec of the vector
+glm::vec4 Vector4::toGLM()
+{
+	return glm::vec4(x, y, z, w);
+}
+
 /*##################################################
 shortcuts
 ##################################################*/

@@ -1,6 +1,8 @@
 #pragma once
 #include <math.h>
 #include <iostream>
+#include <glm\glm.hpp>
+#include <glm\ext.hpp>
 
 class Vector2
 {
@@ -32,6 +34,7 @@ public:
 	float squaremagnitude();
 	void normalise();
 	Vector2 normalized();
+	glm::vec2 toGLM();
 
     // shortcuts
     static Vector2 Up();

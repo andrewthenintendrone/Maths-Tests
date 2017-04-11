@@ -103,6 +103,26 @@ Vector3 Vector3::normalized()
 	return temp;
 }
 
+// returns the vector normalized by a certain percentage
+Vector3 Vector3::semiNormalized(float ammount)
+{
+	float mag = magnitude() * fabs(ammount);
+	Vector3 temp(this->normalized());
+
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		temp.v[i] *= mag;
+	}
+
+	return temp;
+}
+
+// returns a glm vec of the vector
+glm::vec3 Vector3::toGLM()
+{
+	return glm::vec3(x, y, z);
+}
+
 /*##################################################
 shortcuts
 ##################################################*/

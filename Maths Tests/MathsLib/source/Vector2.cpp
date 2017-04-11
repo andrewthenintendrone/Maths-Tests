@@ -90,6 +90,12 @@ Vector2 Vector2::normalized()
     return temp;
 }
 
+// returns a glm vec of the vector
+glm::vec2 Vector2::toGLM()
+{
+	return glm::vec2(x, y, z, w);
+}
+
 /*##################################################
 shortcuts
 ##################################################*/
