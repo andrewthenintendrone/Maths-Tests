@@ -137,7 +137,7 @@ Vector4 Vector4::Left()
 // returns a vector pointing right
 Vector4 Vector4::Right()
 {
-	return{ -1, 0, 0, 0 };
+	return{ 1, 0, 0, 0 };
 }
 
 // returns a vector pointing forward
@@ -240,6 +240,18 @@ Vector4 Vector4::operator - (const Vector4& rhs)
 void Vector4::operator -= (const Vector4& rhs)
 {
 	*this = *this - rhs;
+}
+
+// * operator with a vector
+Vector4 Vector4::operator * (const Vector4& rhs)
+{
+	return Vector4(x * rhs.x, y * rhs.y, z * rhs.z, w * rhs.w);
+}
+
+// *= operator with a vector
+void Vector4::operator *= (const Vector4& rhs)
+{
+	*this = *this * rhs;
 }
 
 // * operator with a float

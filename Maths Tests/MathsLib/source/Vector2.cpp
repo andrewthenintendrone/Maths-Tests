@@ -93,7 +93,7 @@ Vector2 Vector2::normalized()
 // returns a glm vec of the vector
 glm::vec2 Vector2::toGLM()
 {
-	return glm::vec2(x, y, z, w);
+	return glm::vec2(x, y);
 }
 
 /*##################################################
@@ -121,7 +121,7 @@ Vector2 Vector2::Left()
 // returns a vector pointing right
 Vector2 Vector2::Right()
 {
-    return{ -1, 0 };
+    return{ 1, 0 };
 }
 
 // returns a vector of 0s
@@ -212,6 +212,18 @@ Vector2 Vector2::operator - (const Vector2& rhs)
 void Vector2::operator -= (const Vector2& rhs)
 {
     *this = *this - rhs;
+}
+
+// * operator with a vector
+Vector2 Vector2::operator * (const Vector2& rhs)
+{
+	return Vector2(x * rhs.x, y * rhs.y);
+}
+
+// *= operator with a vector
+void Vector2::operator *= (const Vector2& rhs)
+{
+	*this = *this * rhs;
 }
 
 // * operator with a float

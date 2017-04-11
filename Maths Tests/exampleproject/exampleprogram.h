@@ -10,6 +10,90 @@ struct Model
 {
 	std::vector<Vector3>vertices;
 	std::vector<Vector3>faces;
+	std::vector<Vector4>colors;
+	int minR;
+	int maxR;
+	int minG;
+	int maxG;
+	int minB;
+	int maxB;
+
+
+	Model()
+	{
+		minR = 0;
+		maxR = 0;
+		minG = 0;
+		maxG = 0;
+		minB = 0;
+		maxB = 0;
+	}
+
+	// set the minimum and maximum color values for random color generation
+	void setColorPallete(const int& newMinR, const int& newMaxR, const int& newMinG, const int& newMaxG, const int& newMinB, const int& newMaxB)
+	{
+		minR = newMinR;
+		maxR = newMaxR;
+		minG = newMinG;
+		maxG = newMaxG;
+		minB = newMinB;
+		maxB = newMaxB;
+	}
+
+	// changes to a random color within the minimum and maximum values
+	void setColorsRandom()
+	{
+		for (unsigned int currentColor = 0; currentColor < colors.size(); currentColor++)
+		{
+			colors[currentColor] = Vector4((minR + rand() % (maxR - minR + 1)) / 255.0f, (minG + rand() % (maxG - minG + 1)) / 255.0f, (minB + 1 + rand() % (maxB - minB + 1)) / 255.0f, 1.0f);
+		}
+	}
+
+	void rotateX(const float& ammount)
+	{
+		Matrix3 rotationMatrix;
+		rotationMatrix.setRotateX(ammount);
+		for (unsigned int v = 0; v < vertices.size(); v++)
+		{
+			vertices[v] = rotationMatrix * vertices[v];
+		}
+	}
+
+	void rotateY(const float& ammount)
+	{
+		Matrix3 rotationMatrix;
+		rotationMatrix.setRotateY(ammount);
+		for (unsigned int v = 0; v < vertices.size(); v++)
+		{
+			vertices[v] = rotationMatrix * vertices[v];
+		}
+	}
+
+	void rotateZ(const float& ammount)
+	{
+		Matrix3 rotationMatrix;
+		rotationMatrix.setRotateZ(ammount);
+		for (unsigned int v = 0; v < vertices.size(); v++)
+		{
+			vertices[v] = rotationMatrix * vertices[v];
+		}
+	}
+
+	void scale(Vector3& scaleVector)
+	{
+		for (unsigned int i = 0; i < vertices.size(); i++)
+		{
+			vertices[i] *= scaleVector;
+		}
+	}
+
+	void translate(Vector3& translation)
+	{
+		for (unsigned int v = 0; v < vertices.size(); v++)
+		{
+			vertices[v] += translation;
+		}
+	}
 
 	void load(std::string fileName)
 	{
@@ -43,9 +127,14 @@ struct Model
 			}
 			if (strcmp(lineHeader, "f") == 0)
 			{
-				int x, y, z;
-				fscanf_s(file, "%d %d %d\n", &x, &y, &z);
-				faces.push_back(Vector3{ (float)x - 1, (float)y - 1, (float)z - 1 });
+				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+				int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertexIndex[0], &uvIndex[0], &normalIndex[0], &vertexIndex[1], &uvIndex[1], &normalIndex[1], &vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+				Vector3 temp;
+				temp.x = (float)vertexIndex[0] - 1;
+				temp.y = (float)vertexIndex[1] - 1;
+				temp.z = (float)vertexIndex[2] - 1;
+				faces.push_back(temp);
+				colors.push_back(Vector4(1));
 			}
 		}
 	}
@@ -82,6 +171,9 @@ public:
 	virtual void draw();
 
 	std::vector<Model>models;
+	Model currentModel;
+
+	float changetime;
 
 protected:
 

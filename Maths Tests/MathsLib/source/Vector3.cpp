@@ -148,7 +148,7 @@ Vector3 Vector3::Left()
 // returns a vector pointing right
 Vector3 Vector3::Right()
 {
-	return{ -1, 0, 0 };
+	return{ 1, 0, 0 };
 }
 
 // returns a vector pointing forward
@@ -270,6 +270,18 @@ Vector3 Vector3::operator * (const float& scalar)
 void Vector3::operator *= (const float& scalar)
 {
 	*this = *this * scalar;
+}
+
+// * operator with a vector
+Vector3 Vector3::operator * (const Vector3& rhs)
+{
+	return Vector3(x * rhs.x, y * rhs.y, z * rhs.z);
+}
+
+// *= operator with a vector
+void Vector3::operator *= (const Vector3& rhs)
+{
+	*this = *this * rhs;
 }
 
 // float * operator
