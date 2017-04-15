@@ -42,7 +42,10 @@
     <ClInclude Include="source\Matrix4.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Model.h">
+    <ClInclude Include="source\GameObject.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Transform.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,7 +71,10 @@
     <ClCompile Include="source\Matrix4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Model.cpp">
+    <ClCompile Include="source\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

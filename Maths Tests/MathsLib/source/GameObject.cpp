@@ -1,7 +1,7 @@
-#include "Model.h"
+#include "GameObject.h"
 
 
-Model::Model()
+GameObject::GameObject()
 {
 	minR = 0;
 	maxR = 0;
@@ -12,7 +12,7 @@ Model::Model()
 }
 
 // set the minimum and maximum color values for random color generation
-void Model::setColorPallete(const int& newMinR, const int& newMaxR, const int& newMinG, const int& newMaxG, const int& newMinB, const int& newMaxB)
+void GameObject::setColorPallete(const int& newMinR, const int& newMaxR, const int& newMinG, const int& newMaxG, const int& newMinB, const int& newMaxB)
 {
 	minR = newMinR;
 	maxR = newMaxR;
@@ -23,7 +23,7 @@ void Model::setColorPallete(const int& newMinR, const int& newMaxR, const int& n
 }
 
 // changes to a random color within the minimum and maximum values
-void Model::setColorsRandom()
+void GameObject::setColorsRandom()
 {
 	for (unsigned int currentColor = 0; currentColor < colors.size(); currentColor++)
 	{
@@ -31,59 +31,13 @@ void Model::setColorsRandom()
 	}
 }
 
-void Model::rotateX(const float& ammount)
+void GameObject::load(std::string fileName)
 {
-	Matrix3 rotationMatrix;
-	rotationMatrix.setRotateX(ammount);
-	for (unsigned int v = 0; v < vertices.size(); v++)
-	{
-		vertices[v] = rotationMatrix * vertices[v];
-	}
-}
-
-void Model::rotateY(const float& ammount)
-{
-	Matrix3 rotationMatrix;
-	rotationMatrix.setRotateY(ammount);
-	for (unsigned int v = 0; v < vertices.size(); v++)
-	{
-		vertices[v] = rotationMatrix * vertices[v];
-	}
-}
-
-void Model::rotateZ(const float& ammount)
-{
-	Matrix3 rotationMatrix;
-	rotationMatrix.setRotateZ(ammount);
-	for (unsigned int v = 0; v < vertices.size(); v++)
-	{
-		vertices[v] = rotationMatrix * vertices[v];
-	}
-}
-
-void Model::scale(Vector3& scaleVector)
-{
-	for (unsigned int i = 0; i < vertices.size(); i++)
-	{
-		vertices[i] *= scaleVector;
-	}
-}
-
-void Model::translate(Vector3& translation)
-{
-	for (unsigned int v = 0; v < vertices.size(); v++)
-	{
-		vertices[v] += translation;
-	}
-}
-
-void Model::load(std::string fileName)
-{
-	//open model
+	//open GameObject
 	FILE * file;
 	fopen_s(&file, fileName.c_str(), "r");
 
-	// break if the model doesn't exist
+	// break if the GameObject doesn't exist
 	if (file == NULL) {
 		printf("Impossible to open the file !\n");
 		return;
@@ -105,7 +59,7 @@ void Model::load(std::string fileName)
 		{
 			float x, y, z;
 			fscanf_s(file, "%f %f %f\n", &x, &y, &z);
-			vertices.push_back(Vector3(x, y, z));
+			vertices.push_back(Vector4(x, y, z, 1));
 		}
 		if (strcmp(lineHeader, "f") == 0)
 		{
@@ -118,12 +72,13 @@ void Model::load(std::string fileName)
 			faces.push_back(temp);
 			colors.push_back(Vector4(1));
 		}
+        transformedVertices = vertices;
 	}
 }
 
-Model Model::generateRandom()
+GameObject GameObject::generateRandom()
 {
-	Model temp;
+	GameObject temp;
 	for (int i = 0; i < 20; i++)
 	{
 		Vector3 vertex((rand() % 500 - 250) / 100.0f, (rand() % 500 - 250) / 100.0f, (rand() % 500 - 250) / 100.0f);
@@ -137,4 +92,13 @@ Model Model::generateRandom()
 		temp.faces[i].z = (float)(rand() % 20);
 	}
 	return temp;
+}
+
+// transforms each vert by the global transform and stores them in transformedVertices
+void GameObject::updateVerts()
+{
+    for (unsigned int i = 0; i < transformedVertices.size(); i++)
+    {
+        transformedVertices[i] = transform.m_globalTransform * vertices[i];
+    }
 }

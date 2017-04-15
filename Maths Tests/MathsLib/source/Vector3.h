@@ -1,6 +1,7 @@
 #pragma once
 #include <math.h>
 #include <iostream>
+#include "Vector2.h"
 #include <glm\glm.hpp>
 #include <glm\ext.hpp>
 
@@ -27,6 +28,7 @@ public:
 	Vector3(const float& value);
 	Vector3(float newX, float newY, float newZ);
 	Vector3(const Vector3& vector);
+    Vector3(const Vector2& vector);
 	~Vector3();
 
 	// functions
@@ -54,6 +56,7 @@ public:
 	float& operator [] (const int& index);
 	bool operator == (const Vector3& rhs);
 	void operator = (const Vector3& rhs);
+    void operator = (const Vector2& rhs);
 	Vector3 operator + (const Vector3& rhs);
 	void operator += (const Vector3& rhs);
 	Vector3 operator - (const Vector3& rhs);

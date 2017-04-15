@@ -40,6 +40,27 @@ Vector4::Vector4(const Vector4& vector)
 	}
 }
 
+// construct with a vector
+Vector4::Vector4(const Vector3& vector)
+{
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        v[i] = vector.v[i];
+    }
+    w = 0;
+}
+
+// construct with a vector
+Vector4::Vector4(const Vector2& vector)
+{
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] = vector.v[i];
+    }
+    z = 0;
+    w = 0;
+}
+
 // destructor
 Vector4::~Vector4()
 {
@@ -110,6 +131,12 @@ Vector4 Vector4::normalized()
 glm::vec4 Vector4::toGLM()
 {
 	return glm::vec4(x, y, z, w);
+}
+
+// returns a glm vec of the vector
+glm::vec3 Vector4::toGLM3()
+{
+    return glm::vec3(x, y, z);
 }
 
 /*##################################################
@@ -202,6 +229,27 @@ void Vector4::operator = (const Vector4& rhs)
 	{
 		v[i] = rhs.v[i];
 	}
+}
+
+// sets vector with a vector
+void Vector4::operator = (const Vector3& rhs)
+{
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        v[i] = rhs.v[i];
+    }
+    w = 0;
+}
+
+// sets vector with a vector
+void Vector4::operator = (const Vector2& rhs)
+{
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] = rhs.v[i];
+    }
+    z = 0;
+    w = 0;
 }
 
 // + operator with a vector

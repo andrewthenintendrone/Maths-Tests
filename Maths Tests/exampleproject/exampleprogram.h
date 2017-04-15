@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Application.h"
+#include "Renderer2D.h"
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 #include <vector>
@@ -18,13 +19,12 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
-	std::vector<Model>models;
-	Model currentModel;
-
-	float changetime;
+	std::vector<GameObject>m_gameobjects;
 
 protected:
 
+    aie::Renderer2D*	m_2dRenderer;
+    aie::Font*			m_font;
 	glm::mat4	m_viewMatrix;
 	glm::mat4	m_projectionMatrix;
 };

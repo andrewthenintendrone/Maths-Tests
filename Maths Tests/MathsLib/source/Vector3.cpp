@@ -38,6 +38,16 @@ Vector3::Vector3(const Vector3& vector)
 	}
 }
 
+// construct with a vector
+Vector3::Vector3(const Vector2& vector)
+{
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] = vector.v[i];
+    }
+    z = 0;
+}
+
 // destructor
 Vector3::~Vector3()
 {
@@ -213,6 +223,16 @@ void Vector3::operator = (const Vector3& rhs)
 	{
 		v[i] = rhs.v[i];
 	}
+}
+
+// sets vector with a vector
+void Vector3::operator = (const Vector2& rhs)
+{
+    for (unsigned int i = 0; i < 2; i++)
+    {
+        v[i] = rhs.v[i];
+    }
+    z = 0;
 }
 
 // + operator with a vector

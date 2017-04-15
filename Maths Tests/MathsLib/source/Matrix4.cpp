@@ -9,7 +9,7 @@ constructors and destructors
 // default constructor
 Matrix4::Matrix4()
 {
-	*this = Matrix4::zero();
+	*this = Matrix4::identity();
 }
 
 // construct with a float

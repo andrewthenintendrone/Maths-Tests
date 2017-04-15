@@ -8,7 +8,7 @@ constructors and destructors
 // default constructor
 Matrix2::Matrix2()
 {
-	*this = Matrix2::zero();
+	*this = Matrix2::identity();
 }
 
 // construct with a float

@@ -1,6 +1,7 @@
 #pragma once
 #include <math.h>
 #include <iostream>
+#include "Vector3.h"
 #include <glm\glm.hpp>
 #include <glm\ext.hpp>
 
@@ -28,6 +29,8 @@ public:
 	Vector4(const float& value);
 	Vector4(float newX, float newY, float newZ, float newW);
 	Vector4(const Vector4& vector);
+    Vector4(const Vector3& vector);
+    Vector4(const Vector2& vector);
 	~Vector4();
 
 	// functions
@@ -38,6 +41,7 @@ public:
 	void normalise();
 	Vector4 normalized();
 	glm::vec4 toGLM();
+    glm::vec3 toGLM3();
 
 	// shortcuts
 	static Vector4 Up();
@@ -54,6 +58,8 @@ public:
 	float& operator [] (const int& index);
 	bool operator == (const Vector4& rhs);
 	void operator = (const Vector4& rhs);
+    void operator = (const Vector3& rhs);
+    void operator = (const Vector2& rhs);
 	Vector4 operator + (const Vector4& rhs);
 	void operator += (const Vector4& rhs);
 	Vector4 operator - (const Vector4& rhs);

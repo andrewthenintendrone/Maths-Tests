@@ -8,6 +8,6 @@
 #include "Matrix3.h"
 #include "Matrix4.h"
 
-#include "Model.h"
+#include "GameObject.h"
 
 #include "radians.h"
