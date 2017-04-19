@@ -22,6 +22,13 @@ public:
 			float z;
 			float w;
 		};
+        struct
+        {
+            float r;
+            float g;
+            float b;
+            float a;
+        };
 	};
 
 	// constructors and destructor

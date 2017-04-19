@@ -55,7 +55,7 @@ bool exampleprogram::startup() {
     for (unsigned int i = 0; i < 11; i++)
     {
         m_gameobjects[i].load("./models/sphere_low.obj");
-        m_gameobjects[i].setColorPallete(0, 255, 0, 255, 0, 255);
+        m_gameobjects[i].setColorPallete(0, 255, 0, 255, 0, 255, 255, 255);
         m_gameobjects[i].setColorsRandom();
         m_gameobjects[i].transform.setParent(&m_orbitTransforms[i]);
         m_gameobjects[i].transform.setScaleAll(Vector3((100 + rand() % 101) / 100.0f));
