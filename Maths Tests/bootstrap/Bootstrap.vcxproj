@@ -43,17 +43,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)dependencies/imgui;$(SolutionDir)dependencies/libsndfile/include;$(SolutionDir)dependencies/openal/include;$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/stb;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <OutDir>$(SolutionDir)\bootstrap\lib\</OutDir>
-    <IntDir>$(SolutionDir)\bootstrap\build\</IntDir>
-    <LibraryPath>$(SolutionDir)dependencies/libsndfile/lib;$(SolutionDir)dependencies/openal/libs/Win32;$(SolutionDir)dependencies/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <OutDir>$(ProjectDir)\lib\</OutDir>
+    <IntDir>$(ProjectDir)\build\$(Configuration)\</IntDir>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <TargetName>$(ProjectName)_DEBUG</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)dependencies/imgui;$(SolutionDir)dependencies/libsndfile/include;$(SolutionDir)dependencies/openal/include;$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/stb;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <OutDir>$(SolutionDir)\bootstrap\lib\</OutDir>
-    <IntDir>$(SolutionDir)\bootstrap\build\</IntDir>
-    <LibraryPath>$(SolutionDir)dependencies/libsndfile/lib;$(SolutionDir)dependencies/openal/libs/Win32;$(SolutionDir)dependencies/glfw/lib-vc2015;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <OutDir>$(ProjectDir)\lib\</OutDir>
+    <IntDir>$(ProjectDir)\build\$(Configuration)\</IntDir>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -68,7 +68,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;libsndfile-1.lib;OpenAL32.lib;glfw3.lib;</AdditionalDependencies>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\openal\include\;$(SolutionDir)\dependencies\libsndfile\include\;$(SolutionDir)\dependencies\stb\;$(SolutionDir)\dependencies\imgui\;$(SolutionDir)\dependencies\glm\;$(SolutionDir)\dependencies\glfw\include\</AdditionalIncludeDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,6 +80,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\openal\include\;$(SolutionDir)\dependencies\libsndfile\include\;$(SolutionDir)\dependencies\stb\;$(SolutionDir)\dependencies\imgui\;$(SolutionDir)\dependencies\glm\;$(SolutionDir)\dependencies\glfw\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -88,7 +89,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;libsndfile-1.lib;OpenAL32.lib;glfw3.lib;</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

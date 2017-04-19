@@ -28,7 +28,7 @@ public:
 	GameObject();
 	virtual ~GameObject() {};
 
-	void setColorPallete(const int& newMinR, const int& newMaxR, const int& newMinG, const int& newMaxG, const int& newMinB, const int& newMaxB, const int& newMinA, const int& newMaxA);
+    void setColorPallete(const float& newMinR, const float& newMaxR, const float& newMinG, const float& newMaxG, const float& newMinB, const float& newMaxB, const float& newMinA, const float& newMaxA);
 	void setColorsRandom();
 	void load(std::string fileName);
 	static GameObject generateRandom();

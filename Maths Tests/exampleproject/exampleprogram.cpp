@@ -59,7 +59,7 @@ bool exampleprogram::startup() {
         m_gameobjects[i].setColorsRandom();
         m_gameobjects[i].transform.setParent(&m_orbitTransforms[i]);
         m_gameobjects[i].transform.setScaleAll(Vector3((100 + rand() % 101) / 100.0f));
-        m_gameobjects[i].transform.translateX(3 * i + 1);
+        m_gameobjects[i].transform.translateX((float)(3 * i + 1));
     }
 
 	return true;

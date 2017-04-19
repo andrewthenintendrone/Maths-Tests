@@ -8,10 +8,10 @@ GameObject::GameObject()
 }
 
 // set the minimum and maximum color values for random color generation
-void GameObject::setColorPallete(const int& newMinR, const int& newMaxR, const int& newMinG, const int& newMaxG, const int& newMinB, const int& newMaxB, const int& newMinA, const int& newMaxA)
+void GameObject::setColorPallete(const float& newMinR, const float& newMaxR, const float& newMinG, const float& newMaxG, const float& newMinB, const float& newMaxB, const float& newMinA, const float& newMaxA)
 {
-    minColorValues = Vector4((float)newMinR, (float)newMinG, (float)newMinB, (float)newMinA);
-    colorDifferences = Vector4((float)newMaxR - newMinR + 1, (float)newMaxG - newMinG + 1, (float)newMaxB - newMinB + 1, (float)newMaxA - newMinA + 1);
+    minColorValues = Vector4(newMinR, newMinG, newMinB, newMinA);
+    colorDifferences = Vector4(newMaxR - newMinR + 1, newMaxG - newMinG + 1, newMaxB - newMinB + 1, newMaxA - newMinA + 1);
 }
 
 // sets every color randomly using the minimum values and the difference
@@ -68,6 +68,7 @@ void GameObject::load(std::string fileName)
             // read vertex data into array and other data into the extra value
             int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &facedata[0], &facedata[3], &facedata[3], &facedata[1], &facedata[3], &facedata[3], &facedata[2], &facedata[3], &facedata[3]);
 			// push back the new face and push back a default white color
+            faces.push_back(Vector3((float)facedata[0] - 1, (float)facedata[1] - 1, (float)facedata[2] - 1));
 			colors.push_back(Vector4(1));
 		}
         // copy the vertices into transformed vertices
