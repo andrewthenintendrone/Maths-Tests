@@ -21,6 +21,12 @@ public:
 			float y;
 			float z;
 		};
+        struct
+        {
+            float r;
+            float g;
+            float b;
+        };
 	};
 
 	// constructors and destructor
@@ -36,7 +42,7 @@ public:
 	Vector3 cross(Vector3& rhs);
 	float magnitude();
 	float squaremagnitude();
-	void normalise();
+	void normalize();
 	Vector3 normalized();
 	Vector3 semiNormalized(float ammount);
 	glm::vec3 toGLM();

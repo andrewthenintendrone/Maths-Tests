@@ -6,7 +6,7 @@ int main() {
 	auto app = new exampleprogram();
 
 	// initialise and loop
-	app->run("AIE", 1280, 720, false);
+	app->run("example", 1280, 720, false);
 
 	// deallocation
 	delete app;

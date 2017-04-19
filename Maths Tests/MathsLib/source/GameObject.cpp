@@ -3,23 +3,15 @@
 
 GameObject::GameObject()
 {
-	minR = 0;
-	maxR = 0;
-	minG = 0;
-	maxG = 0;
-	minB = 0;
-	maxB = 0;
+    minColorValues = Vector3(255);
+    colorDifferences = Vector3(1);
 }
 
 // set the minimum and maximum color values for random color generation
 void GameObject::setColorPallete(const int& newMinR, const int& newMaxR, const int& newMinG, const int& newMaxG, const int& newMinB, const int& newMaxB)
 {
-	minR = newMinR;
-	maxR = newMaxR;
-	minG = newMinG;
-	maxG = newMaxG;
-	minB = newMinB;
-	maxB = newMaxB;
+    minColorValues = Vector3(newMinR, newMinG, newMinB);
+    colorDifferences = Vector3(newMaxR - newMinR + 1, newMaxG - newMinG + 1, newMaxB - newMinB + 1);
 }
 
 // changes to a random color within the minimum and maximum values
@@ -27,7 +19,7 @@ void GameObject::setColorsRandom()
 {
 	for (unsigned int currentColor = 0; currentColor < colors.size(); currentColor++)
 	{
-		colors[currentColor] = Vector4((minR + rand() % (maxR - minR + 1)) / 255.0f, (minG + rand() % (maxG - minG + 1)) / 255.0f, (minB + 1 + rand() % (maxB - minB + 1)) / 255.0f, 1.0f);
+        colors[currentColor] = Vector4((minColorValues.r + rand() % (int)colorDifferences.r) / 255.0f, (minColorValues.g + rand() % (int)colorDifferences.g) / 255.0f, (minColorValues.b + rand() % (int)colorDifferences.b) / 255.0f, 0.5f);
 	}
 }
 

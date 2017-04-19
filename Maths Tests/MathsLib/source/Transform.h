@@ -22,11 +22,6 @@ public:
     void setParent(Transform* newParent);
     void updateGlobalTransform();
 
-    void scaleX(const float& ammount);
-    void scaleY(const float& ammount);
-    void scaleZ(const float& ammount);
-    void scaleAll(Vector3& scaleVector);
-
     void setScaleX(const float& newScaleX);
     void setScaleY(const float& newScaleY);
     void setScaleZ(const float& newScaleZ);
@@ -37,20 +32,10 @@ public:
     void rotateZ(const float& ammount);
     void rotateAll(Vector3& rotationVector);
 
-    void setRotationX(const float& newRotationX);
-    void setRotationY(const float& newRotationY);
-    void setRotationZ(const float& newRotationZ);
-    void setRotationAll(Vector3& newRotation);
-
     void translateX(const float& ammount);
     void translateY(const float& ammount);
     void translateZ(const float& ammount);
     void translateAll(Vector3& translation);
-
-    void setPositionX(const float& newPositionX);
-    void setPositionY(const float& newPositionY);
-    void setPositionZ(const float& newPositionZ);
-    void setPositionAll(Vector3& newPosition);
 
     Transform();
     ~Transform();

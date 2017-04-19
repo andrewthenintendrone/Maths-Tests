@@ -39,31 +39,27 @@ bool exampleprogram::startup() {
 	m_projectionMatrix = glm::perspective(5.0f,
 		getWindowWidth() / (float)getWindowHeight(),
 		0.1f, 1000.f);
-
-    // create 21 teapots
-    for (unsigned int i = 0; i < 21; i++)
+    
+    // push back orbit transforms and gameobjects
+    // also set random orbit speeds and rotation speeds for each planet
+    for (unsigned int i = 0; i < 11; i++)
     {
+        m_orbitTransforms.push_back(Transform());
         m_gameobjects.push_back(GameObject());
-        m_gameobjects[i].load("./models/teapot.obj");
-        m_gameobjects[i].setColorPallete(191, 255, 191, 255, 191, 255);
-        m_gameobjects[i].setColorsRandom();
+        m_orbitSpeeds.push_back((rand() % 101 - 50) / 50.0f);
+        m_gameobjectRotationSpeeds.push_back((rand() % 101 - 50) / 50.0f);
     }
 
-    Vector3 offsets[4] = { Vector3::Left(), Vector3::Right(), Vector3::Forward(), Vector3::Back() };
-
-    m_gameobjects[0].transform.scaleAll(Vector3(0.75f));
-
-    for (unsigned int i = 1; i < 5; i++)
+    // load models for each gameobject and set a color pallete
+    // also parent each gameobject to its orbit transform and scale and translate randomly
+    for (unsigned int i = 0; i < 11; i++)
     {
-        m_gameobjects[i].transform.setParent(&m_gameobjects[0].transform);
-        m_gameobjects[i].transform.scaleAll(Vector3(0.5f));
-        m_gameobjects[i].transform.translateAll(offsets[i - 1] * 8);
-        for (unsigned int j = 1; j < 5; j++)
-        {
-            m_gameobjects[4 * i + j].transform.setParent(&m_gameobjects[i].transform);
-            m_gameobjects[4 * i + j].transform.scaleAll(Vector3(0.5f));
-            m_gameobjects[4 * i + j].transform.translateAll(offsets[j - 1] * 4);
-        }
+        m_gameobjects[i].load("./models/sphere_low.obj");
+        m_gameobjects[i].setColorPallete(0, 255, 0, 255, 0, 255);
+        m_gameobjects[i].setColorsRandom();
+        m_gameobjects[i].transform.setParent(&m_orbitTransforms[i]);
+        m_gameobjects[i].transform.setScaleAll(Vector3((100 + rand() % 101) / 100.0f));
+        m_gameobjects[i].transform.translateX(3 * i + 1);
     }
 
 	return true;
@@ -103,58 +99,59 @@ void exampleprogram::update(float deltaTime) {
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
 
-    for (GameObject& object : m_gameobjects)
-    {
-        object.transform.rotateY(deltaTime);
-    }
-
-    m_gameobjects[0].transform.updateGlobalTransform();
-
     /*else
     {
         if (input->isKeyDown(aie::INPUT_KEY_LEFT))
         {
-            for (unsigned int i = 0; i < m_gameobjects.size(); i++)
+            for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
             {
-                m_gameobjects[i].transform.rotateY(-2.0f * deltaTime);
+                m_orbitTransforms[i].rotateY(-2.0f * deltaTime);
             }
         }
         if (input->isKeyDown(aie::INPUT_KEY_RIGHT))
         {
-            for (unsigned int i = 0; i < m_gameobjects.size(); i++)
+            for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
             {
-                m_gameobjects[i].transform.rotateY(2.0f * deltaTime);
+                m_orbitTransforms[i].rotateY(2.0f * deltaTime);
             }
         }
         if (input->isKeyDown(aie::INPUT_KEY_UP))
         {
-            for (unsigned int i = 0; i < m_gameobjects.size(); i++)
+            for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
             {
-                m_gameobjects[i].transform.rotateX(-2.0f * deltaTime);
+                m_orbitTransforms[i].rotateX(-2.0f * deltaTime);
             }
         }
         if (input->isKeyDown(aie::INPUT_KEY_DOWN))
         {
-            for (unsigned int i = 0; i < m_gameobjects.size(); i++)
+            for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
             {
-                m_gameobjects[i].transform.rotateX(2.0f * deltaTime);
+                m_orbitTransforms[i].rotateX(2.0f * deltaTime);
             }
         }
         if (input->isKeyDown(aie::INPUT_KEY_Q))
         {
-            for (unsigned int i = 0; i < m_gameobjects.size(); i++)
+            for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
             {
-                m_gameobjects[0].transform.translateX(2.0f * deltaTime);
+                m_orbitTransforms[i].translateX(-deltaTime / 5.0f);
             }
         }
         if (input->isKeyDown(aie::INPUT_KEY_W))
         {
-            for (unsigned int i = 0; i < m_gameobjects.size(); i++)
+            for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
             {
-                m_gameobjects[0].transform.translateX(-2.0f * deltaTime);
+                m_orbitTransforms[i].translateX(deltaTime / 5.0f);
             }
         }
     }*/
+
+
+    for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
+    {
+        m_orbitTransforms[i].rotateY(deltaTime * m_orbitSpeeds[i]);
+        m_gameobjects[i].transform.rotateY(deltaTime * m_gameobjectRotationSpeeds[i]);
+        m_orbitTransforms[i].updateGlobalTransform();
+    }
 }
 
 void exampleprogram::draw() {
@@ -175,9 +172,10 @@ void exampleprogram::draw() {
     char time[32];
     sprintf_s(time, 32, "TIME: %i", (int)getTime());
     m_2dRenderer->drawText(m_font, time, 100, 620);
+
     m_2dRenderer->end();
 
-    Vector4 black(0, 1, 0, 1);
+    Vector4 red(1, 0, 0, 1);
 
     // draw 3D elements
     for (unsigned int i = 0; i < m_gameobjects.size(); i++)
@@ -185,23 +183,23 @@ void exampleprogram::draw() {
         m_gameobjects[i].updateVerts();
         for (unsigned int j = 0; j < m_gameobjects[i].faces.size(); j++)
         {
-            /*Gizmos::addTri(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].x].toGLM3(),
+            Gizmos::addTri(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].x].toGLM3(),
                 m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].y].toGLM3(),
                 m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].z].toGLM3(),
-                m_gameobjects[i].colors[j].toGLM());*/
+                m_gameobjects[i].colors[j].toGLM());
 
             
-            Gizmos::addLine(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].x].toGLM3(),
+            /*Gizmos::addLine(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].x].toGLM3(),
             m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].y].toGLM3(),
-            black.toGLM());
+            red.toGLM());
 
             Gizmos::addLine(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].y].toGLM3(),
             m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].z].toGLM3(),
-            black.toGLM());
+            red.toGLM());
 
             Gizmos::addLine(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].z].toGLM3(),
             m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].x].toGLM3(),
-            black.toGLM());
+            red.toGLM());*/
         }
     }
 

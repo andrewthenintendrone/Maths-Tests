@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "Renderer2D.h"
+#include <Texture.h>
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 #include <vector>
@@ -19,7 +20,10 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+    std::vector<Transform>m_orbitTransforms;
 	std::vector<GameObject>m_gameobjects;
+    std::vector<float>m_orbitSpeeds;
+    std::vector<float>m_gameobjectRotationSpeeds;
 
 protected:
 

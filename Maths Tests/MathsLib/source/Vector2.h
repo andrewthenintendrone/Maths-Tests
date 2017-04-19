@@ -32,7 +32,7 @@ public:
 	float dot(Vector2& rhs);
     float magnitude();
 	float squaremagnitude();
-	void normalise();
+	void normalize();
 	Vector2 normalized();
 	glm::vec2 toGLM();
 

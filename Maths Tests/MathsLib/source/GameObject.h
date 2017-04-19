@@ -16,12 +16,8 @@ public:
     std::vector<Vector4>transformedVertices;
 	std::vector<Vector3>faces;
 	std::vector<Vector4>colors;
-	int minR;
-	int maxR;
-	int minG;
-	int maxG;
-	int minB;
-	int maxB;
+    Vector3 minColorValues;
+    Vector3 colorDifferences;
 
 
 	GameObject();
