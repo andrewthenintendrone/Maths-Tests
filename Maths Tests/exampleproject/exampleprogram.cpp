@@ -23,44 +23,78 @@ bool exampleprogram::startup() {
 	// set RNG seed
 	srand((int)time(NULL));
 
+    // set a background color
 	setBackgroundColour(30.0f / 255.0f, 30.0f / 255.0f, 30.0f / 255.0f, 1);
 
-    // create 2d renderer
+    // create 2d renderer for text etc
     m_2dRenderer = new aie::Renderer2D();
 
-    // open comic sans
+    // open a font
     m_font = new aie::Font("./font/Andrew_Fitzpatrick_Handwriting.ttf", 32);
 
 	// initialise gizmo primitive counts
 	Gizmos::create(1000000, 1000000, 1000000, 1000000);
 
-	// create simple camera transforms
-	m_viewMatrix = glm::lookAt(vec3(0, 10, 20), vec3(0), vec3(0, 1, 0));
+	// position camera
+	m_viewMatrix = glm::lookAt(vec3(0, 100, 200), vec3(0), vec3(0, 1, 0));
 	m_projectionMatrix = glm::perspective(5.0f,
 		getWindowWidth() / (float)getWindowHeight(),
 		0.1f, 1000.f);
-    
-    // push back orbit transforms and gameobjects
-    // also set random orbit speeds and rotation speeds for each planet
-    for (unsigned int i = 0; i < 11; i++)
+
+    // load teapot as first gameobject
+    m_orbitTransforms.push_back(Transform());
+    m_gameobjects.push_back(GameObject());
+    m_gameobjects[0].load("./models/teapot.obj");
+    m_gameobjects[0].setColorPallete(255, 255, 0, 255, 0, 0, 255, 255);
+    m_gameobjects[0].setColorsRandom();
+    m_orbitSpeeds.push_back(0);
+    m_gameobjectRotationSpeeds.push_back(0);
+
+    // create gameobjects and orbit transforms
+    for (unsigned int i = 1; i < 26; i++)
     {
+        // push back a new orbit transform and gameobject
         m_orbitTransforms.push_back(Transform());
         m_gameobjects.push_back(GameObject());
-        m_orbitSpeeds.push_back((rand() % 101 - 50) / 50.0f);
-        m_gameobjectRotationSpeeds.push_back((rand() % 101 - 50) / 50.0f);
+        // load model
+        m_gameobjects[i].load("./models/cube.obj");
+        // choose a random base color for the gameobject
+        Vector3 baseColor((float)(rand() % 256), (float)(rand() % 256), (float)(rand() % 256));
+        // set the gameobjects pallete close to the base color
+        m_gameobjects[i].setColorPallete(baseColor.x - 32, baseColor.x + 32, baseColor.y - 32, baseColor.y + 32, baseColor.z - 32, baseColor.z + 32, 255, 255);
+        m_gameobjects[i].setColorsRandom();
+        // push back a new orbit speed with random float values from -2 to 2
+        m_orbitSpeeds.push_back(Vector3(-2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
+            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
+            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4))));
+        // push back a new gameobject rotation speed with random float values from -2 to 2
+        m_gameobjectRotationSpeeds.push_back(Vector3(-2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
+            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
+            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4))));
     }
 
-    // load models for each gameobject and set a color pallete
-    // also parent each gameobject to its orbit transform and scale and translate randomly
-    for (unsigned int i = 0; i < 11; i++)
+    // position and parent each gameobject to it's orbit
+    for (unsigned int i = 1; i < 26; i++)
     {
-        m_gameobjects[i].load("./models/sphere_low.obj");
-        m_gameobjects[i].setColorPallete(0, 255, 0, 255, 0, 255, 255, 255);
-        m_gameobjects[i].setColorsRandom();
+        // scale the gameobject somewhere between 0.5 and 1.5
+        m_gameobjects[i].transform.setScaleAll(Vector3(0.5f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX))));
+        // create a temporary start position
+        Vector3 startPosition(4.0f * i + 1.0f);
+        // randomly negate each value of the start position
+        for (unsigned int j = 0; j < 3; j++)
+        {
+            if (rand() % 2 == 0)
+            {
+                startPosition[j] -= (2 * startPosition[j]);
+            }
+        }
+        // translate the gameobject to its start position
+        m_gameobjects[i].transform.translateAll(startPosition);
+        // parent the gameobject to its orbit transform
         m_gameobjects[i].transform.setParent(&m_orbitTransforms[i]);
-        m_gameobjects[i].transform.setScaleAll(Vector3((100 + rand() % 101) / 100.0f));
-        m_gameobjects[i].transform.translateX((float)(3 * i + 1));
     }
+
+    m_gameobjects[0].transform.setParent(&m_orbitTransforms[0]);
 
 	return true;
 }
@@ -71,7 +105,7 @@ void exampleprogram::shutdown() {
 }
 
 void exampleprogram::update(float deltaTime) {
-    //deltaTime /= 100;
+    //deltaTime /= 10;
 
 	// query time since application started
 	float time = getTime();
@@ -145,11 +179,10 @@ void exampleprogram::update(float deltaTime) {
         }
     }*/
 
-
     for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
     {
-        m_orbitTransforms[i].rotateY(deltaTime * m_orbitSpeeds[i]);
-        m_gameobjects[i].transform.rotateY(deltaTime * m_gameobjectRotationSpeeds[i]);
+        m_gameobjects[i].transform.rotateAll(deltaTime * m_gameobjectRotationSpeeds[i]);
+        m_orbitTransforms[i].rotateAll(deltaTime * m_orbitSpeeds[i]);
         m_orbitTransforms[i].updateGlobalTransform();
     }
 }

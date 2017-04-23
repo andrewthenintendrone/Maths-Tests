@@ -22,8 +22,8 @@ public:
 
     std::vector<Transform>m_orbitTransforms;
 	std::vector<GameObject>m_gameobjects;
-    std::vector<float>m_orbitSpeeds;
-    std::vector<float>m_gameobjectRotationSpeeds;
+    std::vector<Vector3>m_orbitSpeeds;
+    std::vector<Vector3>m_gameobjectRotationSpeeds;
 
 protected:
 
