@@ -38,6 +38,7 @@
 *.userosscache
 *.sln.docstates
 
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -46,6 +47,7 @@
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+[Bb]uild/
 x64/
 x86/
 bld/
@@ -100,7 +102,8 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
-*.objs
+*.obj
+!Maths Tests/exampleproject/resources/models/*.obj
 
 # Chutzpah Test files
 _Chutzpah*
