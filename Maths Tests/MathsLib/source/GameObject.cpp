@@ -27,14 +27,14 @@ void GameObject::setColorsRandom()
 }
 
 // load vertices and faces from a .obj file
-void GameObject::load(std::string fileName)
+void GameObject::loadModelOBJ(std::string fileName)
 {
 	//open model file
-	FILE * file;
-	fopen_s(&file, fileName.c_str(), "r");
+	FILE * ObjFile;
+	fopen_s(&ObjFile, fileName.c_str(), "r");
 
 	// return if the file doesn't exist
-	if (file == NULL) {
+	if (ObjFile == NULL) {
 		printf("Impossible to open the file !\n");
 		return;
 	}
@@ -44,7 +44,7 @@ void GameObject::load(std::string fileName)
 		char lineHeader[256];
 
 		// read the first three characters of the current line
-		int res = fscanf_s(file, "%s", lineHeader, sizeof(lineHeader));
+		int res = fscanf_s(ObjFile, "%s", lineHeader, sizeof(lineHeader));
 
 		if (res == EOF)
 		{
@@ -56,7 +56,7 @@ void GameObject::load(std::string fileName)
 		{
             // read 3 floats from the line into floats x y and z
 			float x, y, z;
-			fscanf_s(file, "%f %f %f\n", &x, &y, &z);
+			fscanf_s(ObjFile, "%f %f %f\n", &x, &y, &z);
             // push back the new vertex
 			vertices.push_back(Vector4(x, y, z, 1));
 		}
@@ -66,7 +66,7 @@ void GameObject::load(std::string fileName)
             // create an array to store face data with an extra value to read unwanted UV and normal data into
             int facedata[4];
             // read vertex data into array and other data into the extra value
-            int matches = fscanf_s(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &facedata[0], &facedata[3], &facedata[3], &facedata[1], &facedata[3], &facedata[3], &facedata[2], &facedata[3], &facedata[3]);
+            int matches = fscanf_s(ObjFile, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &facedata[0], &facedata[3], &facedata[3], &facedata[1], &facedata[3], &facedata[3], &facedata[2], &facedata[3], &facedata[3]);
 			// push back the new face and push back a default white color
             faces.push_back(Vector3((float)facedata[0] - 1, (float)facedata[1] - 1, (float)facedata[2] - 1));
 			colors.push_back(Vector4(1));

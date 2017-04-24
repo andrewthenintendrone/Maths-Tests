@@ -30,7 +30,7 @@ public:
 
     void setColorPallete(const float& newMinR, const float& newMaxR, const float& newMinG, const float& newMaxG, const float& newMinB, const float& newMaxB, const float& newMinA, const float& newMaxA);
 	void setColorsRandom();
-	void load(std::string fileName);
+	void loadModelOBJ(std::string fileName);
 	static GameObject generateRandom();
     void updateVerts();
 };

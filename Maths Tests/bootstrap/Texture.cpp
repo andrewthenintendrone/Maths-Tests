@@ -23,7 +23,7 @@ Texture::Texture(const char * filename)
 	m_format(0),
 	m_loadedPixels(nullptr) {
 
-	load(filename);
+	loadModelOBJ(filename);
 }
 
 Texture::Texture(unsigned int width, unsigned int height, Format format, unsigned char* pixels)
@@ -43,7 +43,7 @@ Texture::~Texture() {
 		stbi_image_free(m_loadedPixels);
 }
 
-bool Texture::load(const char* filename) {
+bool Texture::loadModelOBJ(const char* filename) {
 
 	if (m_glHandle != 0) {
 		glDeleteTextures(1, &m_glHandle);
