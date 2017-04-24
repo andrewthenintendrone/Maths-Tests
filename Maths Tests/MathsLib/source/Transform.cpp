@@ -39,25 +39,51 @@ void Transform::updateGlobalTransform()
 // sets scale on the x axis
 void Transform::setScaleX(const float& newScaleX)
 {
-    m_scale.x = newScaleX;
+    m_scale.mm[0][0] = newScaleX;
 }
 
 // sets scale on the y axis
 void Transform::setScaleY(const float& newScaleY)
 {
-    m_scale.y = newScaleY;
+    m_scale.mm[1][1] = newScaleY;
 }
 
 // sets scale on the z axis
 void Transform::setScaleZ(const float& newScaleZ)
 {
-    m_scale.z = newScaleZ;
+    m_scale.mm[2][2] = newScaleZ;
 }
 
 // sets scale on all axis
 void Transform::setScaleAll(Vector3& newScale)
 {
-    m_scale = newScale;
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        m_scale.mm[i][i] = newScale[i];
+    }
+}
+
+void Transform::scaleX(const float& ammount)
+{
+    m_scale[0][0] += ammount;
+}
+
+void Transform::scaleY(const float& ammount)
+{
+    m_scale[1][1] += ammount;
+}
+
+void Transform::scaleZ(const float& ammount)
+{
+    m_scale[2][2] += ammount;
+}
+
+void Transform::scaleAll(Vector3& scaleVector)
+{
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        m_scale.mm[i][i] += scaleVector[i];
+    }
 }
 
 // rotates on the x axis

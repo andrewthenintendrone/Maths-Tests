@@ -83,11 +83,7 @@ void exampleprogram::resizeOrbits(const float& ammount)
 {
     for (unsigned int i = 1; i < m_gameobjects.size(); i++)
     {
-        Vector3 temp (m_gameobjects[i].transform.m_position.vecs[3]);
-        temp.normalize();
-        temp *= 
-        temp.w = 1;
-        m_gameobjects[i].transform.m_position = Vector3
+        m_gameobjects[i].transform.scaleAll(Vector3(ammount));
     }
 }
 
@@ -245,12 +241,6 @@ void exampleprogram::update(float deltaTime) {
         randomizeOrbits();
     }
 
-    // resize all the orbits with the UP and DOWN keys
-    if (input->wasKeyPressed(aie::INPUT_KEY_UP))
-    {
-        resizeOrbits(0.9f);
-    }
-
     // rotate all GameObjects and their orbit transforms
     if (m_independantMotion == true)
     {
@@ -295,7 +285,6 @@ void exampleprogram::draw() {
     m_2dRenderer->drawText(m_font, "Q key: randomize center object color palette", 100, (float)getWindowHeight() - 70);
     m_2dRenderer->drawText(m_font, "W key: randomize other objects color palettes", 100, (float)getWindowHeight() - 90);
     m_2dRenderer->drawText(m_font, "E key: randomize orbits", 100, (float)getWindowHeight() - 110);
-    m_2dRenderer->drawText(m_font, "UP / DOWN keys: resize orbits", 100, (float)getWindowHeight() - 130);
     m_2dRenderer->drawText(m_font, "ESC: exit example", 100, (float)getWindowHeight() - 150);
 
     // stop drawing 2D elements
