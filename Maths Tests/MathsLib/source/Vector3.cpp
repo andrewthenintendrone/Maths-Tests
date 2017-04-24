@@ -95,7 +95,7 @@ float Vector3::squaremagnitude()
 }
 
 // normalises the vector by dividing by magnitude
-void Vector3::normalize()
+void Vector3::normalise()
 {
 	float mag = magnitude();
 
@@ -109,7 +109,7 @@ void Vector3::normalize()
 Vector3 Vector3::normalized()
 {
 	Vector3 temp(*this);
-	temp.normalize();
+	temp.normalise();
 	return temp;
 }
 

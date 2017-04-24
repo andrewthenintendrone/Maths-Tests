@@ -45,7 +45,7 @@ public:
 	Vector4 cross(Vector4& rhs);
 	float magnitude();
 	float squaremagnitude();
-	void normalize();
+	void normalise();
 	Vector4 normalized();
 	glm::vec4 toGLM();
     glm::vec3 toGLM3();
