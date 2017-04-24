@@ -26,6 +26,7 @@ public:
 
 
 	GameObject();
+    GameObject(const GameObject& rhs);
 	virtual ~GameObject() {};
 
     void setColorPallete(const float& newMinR, const float& newMaxR, const float& newMinG, const float& newMaxG, const float& newMinB, const float& newMaxB, const float& newMinA, const float& newMaxA);

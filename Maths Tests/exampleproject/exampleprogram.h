@@ -20,10 +20,17 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+    void randomizeCenterPalette();
+    void randomizeOtherPalettes();
+    void randomizeOrbits();
+    void resizeOrbits(const float& ammount);
+
     std::vector<Transform>m_orbitTransforms;
 	std::vector<GameObject>m_gameobjects;
     std::vector<Vector3>m_orbitSpeeds;
     std::vector<Vector3>m_gameobjectRotationSpeeds;
+
+    bool m_independantMotion = true;
 
 protected:
 

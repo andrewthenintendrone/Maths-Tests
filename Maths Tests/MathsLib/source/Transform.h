@@ -15,9 +15,9 @@ public:
     Matrix4 m_localTransform;
     Matrix4 m_globalTransform;
 
-    Matrix4 m_scale;
-    Matrix4 m_rotation;
-    Matrix4 m_position;
+    Vector3 m_scale;
+    Vector3 m_rotation;
+    Vector3 m_position;
 
     void setParent(Transform* newParent);
     void updateGlobalTransform();

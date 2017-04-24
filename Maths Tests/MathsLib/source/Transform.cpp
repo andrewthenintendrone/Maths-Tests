@@ -20,6 +20,7 @@ void Transform::setParent(Transform* newParent)
 // updates m_globalTransform for this Transform and its children
 void Transform::updateGlobalTransform()
 {
+
     m_localTransform = m_position * m_rotation * m_scale;
     if (m_parent != nullptr)
     {
@@ -38,28 +39,25 @@ void Transform::updateGlobalTransform()
 // sets scale on the x axis
 void Transform::setScaleX(const float& newScaleX)
 {
-    m_scale.mm[0][0] = newScaleX;
+    m_scale.x = newScaleX;
 }
 
 // sets scale on the y axis
 void Transform::setScaleY(const float& newScaleY)
 {
-    m_scale.mm[1][1] = newScaleY;
+    m_scale.y = newScaleY;
 }
 
 // sets scale on the z axis
 void Transform::setScaleZ(const float& newScaleZ)
 {
-    m_scale.mm[2][2] = newScaleZ;
+    m_scale.z = newScaleZ;
 }
 
 // sets scale on all axis
 void Transform::setScaleAll(Vector3& newScale)
 {
-    for (unsigned int i = 0; i < 3; i++)
-    {
-        m_scale.mm[i][i] = newScale[i];
-    }
+    m_scale = newScale;
 }
 
 // rotates on the x axis

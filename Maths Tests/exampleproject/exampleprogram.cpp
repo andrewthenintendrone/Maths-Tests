@@ -18,20 +18,93 @@ exampleprogram::~exampleprogram() {
 
 }
 
+// randomizes the palette of the center GameObject
+void exampleprogram::randomizeCenterPalette()
+{
+    // generate 4 random colors
+    Vector4 randomColor1(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
+    Vector4 randomColor2(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
+    Vector4 randomColor3(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
+    Vector4 randomColor4(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
+
+    // assign random colors to faces
+    for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
+    {
+        if (i < 8)
+        {
+            m_gameobjects[0].colors[i] = randomColor1;
+        }
+        else if (i < 24)
+        {
+            m_gameobjects[0].colors[i] = randomColor2;
+        }
+        else if (i < 60)
+        {
+            m_gameobjects[0].colors[i] = randomColor3;
+        }
+        else if (i < 96)
+        {
+            m_gameobjects[0].colors[i] = randomColor4;
+        }
+    }
+}
+
+// randomizes the palette of the other GameObjects
+void exampleprogram::randomizeOtherPalettes()
+{
+    for (unsigned int i = 1; i < m_gameobjects.size(); i++)
+    {
+        // choose a random base color for the current GameObject
+        Vector3 baseColor((float)(rand() % 256), (float)(rand() % 256), (float)(rand() % 256));
+        // set the GameObjects pallete close to the base color
+        m_gameobjects[i].setColorPallete(baseColor.x - 32, baseColor.x + 32, baseColor.y - 32, baseColor.y + 32, baseColor.z - 32, baseColor.z + 32, 255, 255);
+        m_gameobjects[i].setColorsRandom();
+    }
+}
+
+// randomizes the orbit speeds and rotation speeds for all the orbiting objects
+void exampleprogram::randomizeOrbits()
+{
+    for (unsigned int i = 1; i < m_orbitSpeeds.size(); i++)
+    {
+        // push back a new orbit speed with random float values from -2 to 2
+        m_orbitSpeeds[i] = Vector3(-2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
+            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
+            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)));
+        // push back a new gameobject rotation speed with random float values from -2 to 2
+        m_gameobjectRotationSpeeds[i] = Vector3(-2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
+            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
+            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)));
+    }
+}
+
+// resizes all the orbits 
+void exampleprogram::resizeOrbits(const float& ammount)
+{
+    for (unsigned int i = 1; i < m_gameobjects.size(); i++)
+    {
+        Vector3 temp (m_gameobjects[i].transform.m_position.vecs[3]);
+        temp.normalize();
+        temp *= 
+        temp.w = 1;
+        m_gameobjects[i].transform.m_position = Vector3
+    }
+}
+
 bool exampleprogram::startup() {
 
 	// set RNG seed
 	srand((int)time(NULL));
 
     // set background to grey
-	//setBackgroundColour(30.0f / 255.0f, 30.0f / 255.0f, 30.0f / 255.0f, 1);
-    setBackgroundColour(0, 0, 0, 1);
+	setBackgroundColour(30.0f / 255.0f, 30.0f / 255.0f, 30.0f / 255.0f, 1);
+    //setBackgroundColour(0, 0, 0, 1);
 
     // create 2d renderer for text etc
     m_2dRenderer = new aie::Renderer2D();
 
     // open a font
-    m_font = new aie::Font("./font/consolas.ttf", 32);
+    m_font = new aie::Font("./font/consolas.ttf", 16);
 
 	// initialise gizmo primitive counts
 	Gizmos::create(1000000, 1000000, 1000000, 1000000);
@@ -42,63 +115,60 @@ bool exampleprogram::startup() {
 		getWindowWidth() / (float)getWindowHeight(),
 		0.1f, 1000.f);
 
-    // load n64 as first gameobject
+    // set up center GameObject
     m_orbitTransforms.push_back(Transform());
     m_gameobjects.push_back(GameObject());
     m_gameobjects[0].loadModelOBJ("./models/n64.obj");
 
-	// set up n64 colors
-	for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
-	{
-		if (i < 8)
-		{
-			m_gameobjects[0].colors[i] = Vector4(1, 0, 0, 1);
-		}
-		else if (i < 24)
-		{
-			m_gameobjects[0].colors[i] = Vector4(1, 1, 0, 1);
-		}
-		else if (i < 60)
-		{
-			m_gameobjects[0].colors[i] = Vector4(0, 1, 0, 1);
-		}
-		else if (i < 96)
-		{
-			m_gameobjects[0].colors[i] = Vector4(0, 0, 1, 1);
-		}
-	}
+    // assign default colors to faces
+    for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
+    {
+        if (i < 8)
+        {
+            m_gameobjects[0].colors[i] = Vector4(1, 0, 0, 1);
+        }
+        else if (i < 24)
+        {
+            m_gameobjects[0].colors[i] = Vector4(1, 1, 0, 1);
+        }
+        else if (i < 60)
+        {
+            m_gameobjects[0].colors[i] = Vector4(0, 1, 0, 1);
+        }
+        else if (i < 96)
+        {
+            m_gameobjects[0].colors[i] = Vector4(0, 0, 1, 1);
+        }
+    }
     m_orbitSpeeds.push_back(0);
     m_gameobjectRotationSpeeds.push_back(Vector3(0, 1.5f, 0));
 	m_gameobjects[0].transform.setScaleAll(Vector3(4.0f));
 
+    // load model into a temporary GameObject instead of reading the file many times
+    GameObject temporaryGameObject;
+    temporaryGameObject.loadModelOBJ("./models/sphere.obj");
+
     // create gameobjects and orbit transforms
     for (unsigned int i = 1; i < 101; i++)
     {
-        // push back a new orbit transform and gameobject
+        // push back a new orbit transform and a new copy of the temporary GameObject
         m_orbitTransforms.push_back(Transform());
-        m_gameobjects.push_back(GameObject());
-        // load model
-        m_gameobjects[i].loadModelOBJ("./models/cube.obj");
-        // choose a random base color for the gameobject
-        Vector3 baseColor((float)(rand() % 256), (float)(rand() % 256), (float)(rand() % 256));
-        // set the gameobjects pallete close to the base color
-        m_gameobjects[i].setColorPallete(baseColor.x - 32, baseColor.x + 32, baseColor.y - 32, baseColor.y + 32, baseColor.z - 32, baseColor.z + 32, 255, 255);
-        m_gameobjects[i].setColorsRandom();
-        // push back a new orbit speed with random float values from -2 to 2
-        m_orbitSpeeds.push_back(Vector3(-2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
-            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
-            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4))));
-        // push back a new gameobject rotation speed with random float values from -2 to 2
-        m_gameobjectRotationSpeeds.push_back(Vector3(-2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
-            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
-            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4))));
+        m_gameobjects.push_back(GameObject(temporaryGameObject));
+
+        // push back default rotations of 0
+        m_orbitSpeeds.push_back(Vector3(0));
+        m_gameobjectRotationSpeeds.push_back(Vector3(0));
     }
+
+    randomizeOrbits();
+    randomizeOtherPalettes();
 
     // position and parent each gameobject to it's orbit
     for (unsigned int i = 1; i < 101; i++)
     {
         // scale the gameobject somewhere between 0.1 and 0.25
-        m_gameobjects[i].transform.setScaleAll(Vector3(0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.15f))) / 4.0f);
+        //m_gameobjects[i].transform.setScaleAll(Vector3(0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.15f))) / 4.0f);
+        m_gameobjects[i].transform.setScaleAll(Vector3(0.1f));
         // create a temporary start position
         Vector3 startPosition(1.0f);
         // randomly negate each value of the start position
@@ -118,7 +188,7 @@ bool exampleprogram::startup() {
 	// parent n64 to the first orbit transform
     m_gameobjects[0].transform.setParent(&m_orbitTransforms[0]);
 
-	// parent all orbits to the n64
+	// parent all orbit transforms to the n64
 	for (unsigned int i = 1; i < m_orbitTransforms.size(); i++)
 	{
 		m_orbitTransforms[i].setParent(&m_gameobjects[0].transform);
@@ -151,14 +221,54 @@ void exampleprogram::update(float deltaTime) {
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
 
-    // rotate each gameobject and their orbits then update orbits global transforms
-    for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
+    // toggle whether all the gameobjects rotate independantly or as a group with the space bar
+    if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
     {
-        m_gameobjects[i].transform.rotateAll(deltaTime * m_gameobjectRotationSpeeds[i]);
-        m_orbitTransforms[i].rotateAll(deltaTime * m_orbitSpeeds[i]);
-        //m_orbitTransforms[i].updateGlobalTransform();
+        m_independantMotion = !m_independantMotion;
     }
-	m_orbitTransforms[0].updateGlobalTransform();
+
+    // randomize the center objects palette with Q
+    if (input->wasKeyPressed(aie::INPUT_KEY_Q))
+    {
+        randomizeCenterPalette();
+    }
+
+    // randomize the other objects palettes with W
+    if (input->wasKeyPressed(aie::INPUT_KEY_W))
+    {
+        randomizeOtherPalettes();
+    }
+
+    // randomize all the orbits with E
+    if (input->wasKeyPressed(aie::INPUT_KEY_E))
+    {
+        randomizeOrbits();
+    }
+
+    // resize all the orbits with the UP and DOWN keys
+    if (input->wasKeyPressed(aie::INPUT_KEY_UP))
+    {
+        resizeOrbits(0.9f);
+    }
+
+    // rotate all GameObjects and their orbit transforms
+    if (m_independantMotion == true)
+    {
+        for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
+        {
+            m_gameobjects[i].transform.rotateAll(deltaTime * m_gameobjectRotationSpeeds[i]);
+            m_orbitTransforms[i].rotateAll(deltaTime * m_orbitSpeeds[i]);
+        }
+    }
+    else
+    {
+        for (unsigned int i = 0; i < m_orbitTransforms.size(); i++)
+        {
+            m_gameobjects[i].transform.rotateAll(deltaTime * m_gameobjectRotationSpeeds[i]);
+        }
+    }
+    // update all global transforms
+    m_orbitTransforms[0].updateGlobalTransform();
 }
 
 void exampleprogram::draw() {
@@ -181,7 +291,12 @@ void exampleprogram::draw() {
     //char time[32];
     //sprintf_s(time, 32, "TIME: %i", (int)getTime());
 
-    //m_2dRenderer->drawText(m_font, "NINTENDO 64", 100, (float)getWindowHeight() - 100);
+    m_2dRenderer->drawText(m_font, "Space Bar: toggle independant motion", 100, (float)getWindowHeight() - 50);
+    m_2dRenderer->drawText(m_font, "Q key: randomize center object color palette", 100, (float)getWindowHeight() - 70);
+    m_2dRenderer->drawText(m_font, "W key: randomize other objects color palettes", 100, (float)getWindowHeight() - 90);
+    m_2dRenderer->drawText(m_font, "E key: randomize orbits", 100, (float)getWindowHeight() - 110);
+    m_2dRenderer->drawText(m_font, "UP / DOWN keys: resize orbits", 100, (float)getWindowHeight() - 130);
+    m_2dRenderer->drawText(m_font, "ESC: exit example", 100, (float)getWindowHeight() - 150);
 
     // stop drawing 2D elements
     m_2dRenderer->end();

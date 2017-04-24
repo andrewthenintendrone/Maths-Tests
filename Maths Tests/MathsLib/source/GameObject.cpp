@@ -7,6 +7,18 @@ GameObject::GameObject()
     colorDifferences = Vector4(1);
 }
 
+// GameObject copy constructor
+GameObject::GameObject(const GameObject& rhs)
+{
+    transform = rhs.transform;
+    vertices = rhs.vertices;
+    transformedVertices = rhs.vertices;
+    faces = rhs.faces;
+    colors = rhs.colors;
+    minColorValues = rhs.minColorValues;
+    colorDifferences = rhs.colorDifferences;
+}
+
 // set the minimum and maximum color values for random color generation
 void GameObject::setColorPallete(const float& newMinR, const float& newMaxR, const float& newMinG, const float& newMaxG, const float& newMinB, const float& newMaxB, const float& newMinA, const float& newMaxA)
 {
