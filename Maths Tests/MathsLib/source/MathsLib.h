@@ -11,3 +11,4 @@
 #include "GameObject.h"
 
 #include "radians.h"
+#include "Binary.h"
