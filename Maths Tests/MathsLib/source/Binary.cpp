@@ -66,5 +66,14 @@ std::string toBinary(unsigned int value)
 // Returns true if value is a power of 2 and false otherwise
 bool IsPowerOf2(unsigned int value)
 {
-    return true;
+    unsigned int temp = 1;
+    for (unsigned char i = 0; i < sizeof(unsigned int) * CHAR_BIT; i++)
+    {
+        if (value == temp)
+        {
+            return true;
+        }
+        temp = temp << 1;
+    }
+    return false;
 }
