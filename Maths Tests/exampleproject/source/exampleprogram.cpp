@@ -102,7 +102,7 @@ bool exampleprogram::startup() {
     m_2dRenderer = new aie::Renderer2D();
 
     // open a font
-    m_font = new aie::Font("./font/consolas.ttf", 16);
+    m_font = new aie::Font("./resources/font/consolas.ttf", 16);
 
 	// initialise gizmo primitive counts
 	Gizmos::create(1000000, 1000000, 1000000, 1000000);
@@ -116,7 +116,7 @@ bool exampleprogram::startup() {
     // set up center GameObject
     m_orbitTransforms.push_back(Transform());
     m_gameobjects.push_back(GameObject());
-    m_gameobjects[0].loadModelOBJ("./models/n64.obj");
+    m_gameobjects[0].loadModelOBJ("./resources/models/n64.obj");
 
     // assign default colors to faces
     for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
@@ -144,7 +144,7 @@ bool exampleprogram::startup() {
 
     // load model into a temporary GameObject instead of reading the file many times
     GameObject temporaryGameObject;
-    temporaryGameObject.loadModelOBJ("./models/sphere.obj");
+    temporaryGameObject.loadModelOBJ("./resources/models/sphere.obj");
 
     // create gameobjects and orbit transforms
     for (unsigned int i = 1; i < 101; i++)
