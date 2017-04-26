@@ -4,6 +4,8 @@
 #include <iostream>
 #include "MathsLib.h"
 
+using namespace AFMaths;
+
 int main()
 {
     unsigned int upperBound = 2048;

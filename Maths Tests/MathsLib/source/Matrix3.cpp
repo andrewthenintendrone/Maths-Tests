@@ -2,339 +2,342 @@
 #include "Matrix2.h"
 #include <math.h>
 
-/*##################################################
-constructors and destructors
-##################################################*/
-
-// default constructor
-Matrix3::Matrix3()
+namespace AFMaths
 {
-	*this = Matrix3::identity();
-}
+    /*##################################################
+    constructors and destructors
+    ##################################################*/
 
-// construct with a float
-Matrix3::Matrix3(const float& newValue)
-{
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		m[i] = newValue;
-	}
-}
+    // default constructor
+    Matrix3::Matrix3()
+    {
+        *this = Matrix3::identity();
+    }
 
-// construct with floats
-Matrix3::Matrix3(const float& newx1, const float& newx2, const float& newx3, const float& newy1, const float& newy2, const float& newy3, const float& newz1, const float& newz2, const float& newz3)
-{
-	x1 = newx1;
-	y1 = newy1;
-	z1 = newz1;
+    // construct with a float
+    Matrix3::Matrix3(const float& newValue)
+    {
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            m[i] = newValue;
+        }
+    }
 
-	x2 = newx2;
-	y2 = newy2;
-	z2 = newz2;
+    // construct with floats
+    Matrix3::Matrix3(const float& newx1, const float& newx2, const float& newx3, const float& newy1, const float& newy2, const float& newy3, const float& newz1, const float& newz2, const float& newz3)
+    {
+        x1 = newx1;
+        y1 = newy1;
+        z1 = newz1;
 
-	x3 = newx3;
-	y3 = newy3;
-	z3 = newz3;
-}
+        x2 = newx2;
+        y2 = newy2;
+        z2 = newz2;
 
-// construct with Vectors
-Matrix3::Matrix3(Vector3& newAxis1, Vector3& newAxis2, Vector3& newAxis3)
-{
-	vecs[0] = newAxis1;
-	vecs[1] = newAxis2;
-	vecs[2] = newAxis3;
-}
+        x3 = newx3;
+        y3 = newy3;
+        z3 = newz3;
+    }
 
-// construct with another Matrix
-Matrix3::Matrix3(const Matrix3& newMatrix)
-{
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		m[i] = newMatrix.m[i];
-	}
-}
+    // construct with Vectors
+    Matrix3::Matrix3(Vector3& newAxis1, Vector3& newAxis2, Vector3& newAxis3)
+    {
+        vecs[0] = newAxis1;
+        vecs[1] = newAxis2;
+        vecs[2] = newAxis3;
+    }
 
-Matrix3::~Matrix3()
-{
+    // construct with another Matrix
+    Matrix3::Matrix3(const Matrix3& newMatrix)
+    {
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            m[i] = newMatrix.m[i];
+        }
+    }
 
-}
+    Matrix3::~Matrix3()
+    {
 
-/*##################################################
-functions
-##################################################*/
+    }
 
-// returns the determinant of the matrix
-float Matrix3::determinant()
-{
-	Matrix2 block1(y2, y3, z2, z3);
-	Matrix2 block2(y1, y3, z1, z3);
-	Matrix2 block3(y1, y2, z1, z2);
+    /*##################################################
+    functions
+    ##################################################*/
 
-	return (x1 * block1.determinant() - x2 * block2.determinant() + x3 * block3.determinant());
-}
+    // returns the determinant of the matrix
+    float Matrix3::determinant()
+    {
+        Matrix2 block1(y2, y3, z2, z3);
+        Matrix2 block2(y1, y3, z1, z3);
+        Matrix2 block3(y1, y2, z1, z2);
 
-// returns the identity matrix
-Matrix3 Matrix3::identity()
-{
-	return Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1);
-}
+        return (x1 * block1.determinant() - x2 * block2.determinant() + x3 * block3.determinant());
+    }
 
-// returns a matrix of 0s
-Matrix3 Matrix3::zero()
-{
-	return Matrix3(0);
-}
+    // returns the identity matrix
+    Matrix3 Matrix3::identity()
+    {
+        return Matrix3(1, 0, 0, 0, 1, 0, 0, 0, 1);
+    }
 
-// sets the matrix to the rotation matrix for a given angle on the x axis
-void Matrix3::setRotateX(const float& angle)
-{
-	*this = Matrix3(1, 0, 0, 0, cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle));
-}
+    // returns a matrix of 0s
+    Matrix3 Matrix3::zero()
+    {
+        return Matrix3(0);
+    }
 
-// sets the matrix to the rotation matrix for a given angle on the y axis
-void Matrix3::setRotateY(const float& angle)
-{
-	*this = Matrix3(cosf(angle), 0, -sinf(angle), 0, 1, 0, sinf(angle), 0, cosf(angle));
-}
+    // sets the matrix to the rotation matrix for a given angle on the x axis
+    void Matrix3::setRotateX(const float& angle)
+    {
+        *this = Matrix3(1, 0, 0, 0, cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle));
+    }
 
-// sets the matrix to the rotation matrix for a given angle on the z axis
-void Matrix3::setRotateZ(const float& angle)
-{
-	*this = Matrix3(cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle), 0, 0, 0, 1);
-}
+    // sets the matrix to the rotation matrix for a given angle on the y axis
+    void Matrix3::setRotateY(const float& angle)
+    {
+        *this = Matrix3(cosf(angle), 0, -sinf(angle), 0, 1, 0, sinf(angle), 0, cosf(angle));
+    }
 
-// returns the transposed matrix
-Matrix3 Matrix3::transposed()
-{
-	Matrix3 temp;
+    // sets the matrix to the rotation matrix for a given angle on the z axis
+    void Matrix3::setRotateZ(const float& angle)
+    {
+        *this = Matrix3(cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle), 0, 0, 0, 1);
+    }
 
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		for (unsigned int j = 0; j < 3; j++)
-		{
-			temp.mm[i][j] = this->mm[j][i];
-		}
-	}
+    // returns the transposed matrix
+    Matrix3 Matrix3::transposed()
+    {
+        Matrix3 temp;
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 3; i++)
+        {
+            for (unsigned int j = 0; j < 3; j++)
+            {
+                temp.mm[i][j] = this->mm[j][i];
+            }
+        }
 
-/*##################################################
-overloads
-##################################################*/
+        return temp;
+    }
 
-// stream << operator
-std::ostream& operator << (std::ostream& stream, const Matrix3& matrix)
-{
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		for (unsigned int j = 0; j < 3; j++)
-		{
-			stream << matrix.mm[j][i] << " ";
-		}
-		stream << std::endl;
-	}
-	return stream;
-}
+    /*##################################################
+    overloads
+    ##################################################*/
 
-// * operator
-Matrix3::operator float* ()
-{
-	return &mm[0][0];
-}
+    // stream << operator
+    std::ostream& operator << (std::ostream& stream, const Matrix3& matrix)
+    {
+        for (unsigned int i = 0; i < 3; i++)
+        {
+            for (unsigned int j = 0; j < 3; j++)
+            {
+                stream << matrix.mm[j][i] << " ";
+            }
+            stream << std::endl;
+        }
+        return stream;
+    }
 
-// [] operator that returns vector
-Vector3& Matrix3::operator [] (const int& index)
-{
-	return vecs[index];
-}
+    // * operator
+    Matrix3::operator float* ()
+    {
+        return &mm[0][0];
+    }
 
-// returns true if matricies are equal
-bool Matrix3::operator == (const Matrix3& rhs)
-{
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		if (m[i] != rhs.m[i])
-		{
-			return false;
-		}
-	}
-	return true;
-}
+    // [] operator that returns vector
+    Vector3& Matrix3::operator [] (const int& index)
+    {
+        return vecs[index];
+    }
 
-// = operator with a matrix
-void Matrix3::operator = (const Matrix3& newMatrix)
-{
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		m[i] = newMatrix.m[i];
-	}
-}
+    // returns true if matricies are equal
+    bool Matrix3::operator == (const Matrix3& rhs)
+    {
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            if (m[i] != rhs.m[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
-// + operator with a matrix
-Matrix3 Matrix3::operator + (const Matrix3& rhs)
-{
-	Matrix3 temp;
+    // = operator with a matrix
+    void Matrix3::operator = (const Matrix3& newMatrix)
+    {
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            m[i] = newMatrix.m[i];
+        }
+    }
 
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		temp.m[i] = m[i] + rhs.m[i];
-	}
+    // + operator with a matrix
+    Matrix3 Matrix3::operator + (const Matrix3& rhs)
+    {
+        Matrix3 temp;
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            temp.m[i] = m[i] + rhs.m[i];
+        }
 
-// += operator with a matrix
-void Matrix3::operator += (const Matrix3& rhs)
-{
-	*this = *this + rhs;
-}
+        return temp;
+    }
 
-// - operator with a matrix
-Matrix3 Matrix3::operator - (const Matrix3& rhs)
-{
-	Matrix3 temp;
+    // += operator with a matrix
+    void Matrix3::operator += (const Matrix3& rhs)
+    {
+        *this = *this + rhs;
+    }
 
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		temp.m[i] = m[i] - rhs.m[i];
-	}
+    // - operator with a matrix
+    Matrix3 Matrix3::operator - (const Matrix3& rhs)
+    {
+        Matrix3 temp;
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            temp.m[i] = m[i] - rhs.m[i];
+        }
 
-// -= operator with a matrix
-void Matrix3::operator -= (const Matrix3& rhs)
-{
-	*this = *this - rhs;
-}
+        return temp;
+    }
 
-// * operator with a matrix
-Matrix3 Matrix3::operator * (Matrix3& rhs)
-{
-	Matrix3 temp;
+    // -= operator with a matrix
+    void Matrix3::operator -= (const Matrix3& rhs)
+    {
+        *this = *this - rhs;
+    }
 
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		for (unsigned int j = 0; j < 3; j++)
-		{
-			float sum = 0;
-			for (unsigned int k = 0; k < 3; k++)
-			{
-				sum += mm[k][i] * rhs.mm[j][k];
-			}
-			temp.mm[j][i] = sum;
-		}
-	}
+    // * operator with a matrix
+    Matrix3 Matrix3::operator * (Matrix3& rhs)
+    {
+        Matrix3 temp;
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 3; i++)
+        {
+            for (unsigned int j = 0; j < 3; j++)
+            {
+                float sum = 0;
+                for (unsigned int k = 0; k < 3; k++)
+                {
+                    sum += mm[k][i] * rhs.mm[j][k];
+                }
+                temp.mm[j][i] = sum;
+            }
+        }
 
-// *= operator with a matrix
-void Matrix3::operator *= (Matrix3& rhs)
-{
-	*this = *this * rhs;
-}
+        return temp;
+    }
 
-// * operator with a vector
-Vector3 Matrix3::operator * (Vector3& rhs)
-{
-	Vector3 temp;
+    // *= operator with a matrix
+    void Matrix3::operator *= (Matrix3& rhs)
+    {
+        *this = *this * rhs;
+    }
 
-	for (unsigned int i = 0; i < 1; i++)
-	{
-		for (unsigned int j = 0; j < 3; j++)
-		{
-			float sum = 0;
-			for (unsigned int k = 0; k < 3; k++)
-			{
-				sum += mm[k][j] * rhs.v[k];
-			}
-			temp.v[j] = sum;
-		}
-	}
+    // * operator with a vector
+    Vector3 Matrix3::operator * (Vector3& rhs)
+    {
+        Vector3 temp;
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 1; i++)
+        {
+            for (unsigned int j = 0; j < 3; j++)
+            {
+                float sum = 0;
+                for (unsigned int k = 0; k < 3; k++)
+                {
+                    sum += mm[k][j] * rhs.v[k];
+                }
+                temp.v[j] = sum;
+            }
+        }
 
-// *= operator with a vector
-void Matrix3::operator *= (Vector3& rhs)
-{
-	rhs = *this * rhs;
-}
+        return temp;
+    }
 
-// + operator with a scalar
-Matrix3 Matrix3::operator + (const float& scalar)
-{
-	Matrix3 temp;
+    // *= operator with a vector
+    void Matrix3::operator *= (Vector3& rhs)
+    {
+        rhs = *this * rhs;
+    }
 
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		temp.m[i] = m[i] + scalar;
-	}
+    // + operator with a scalar
+    Matrix3 Matrix3::operator + (const float& scalar)
+    {
+        Matrix3 temp;
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            temp.m[i] = m[i] + scalar;
+        }
 
-// += operator with a scalar
-void Matrix3::operator += (const float& scalar)
-{
-	*this = *this * scalar;
-}
+        return temp;
+    }
 
-// - operator with a scalar
-Matrix3 Matrix3::operator - (const float& scalar)
-{
-	Matrix3 temp;
+    // += operator with a scalar
+    void Matrix3::operator += (const float& scalar)
+    {
+        *this = *this * scalar;
+    }
 
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		temp.m[i] = m[i] - scalar;
-	}
+    // - operator with a scalar
+    Matrix3 Matrix3::operator - (const float& scalar)
+    {
+        Matrix3 temp;
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            temp.m[i] = m[i] - scalar;
+        }
 
-// -= operator with a scalar
-void Matrix3::operator -= (const float& scalar)
-{
-	*this = *this - scalar;
-}
+        return temp;
+    }
 
-// * operator with a scalar
-Matrix3 Matrix3::operator * (const float& scalar)
-{
-	Matrix3 temp(*this);
+    // -= operator with a scalar
+    void Matrix3::operator -= (const float& scalar)
+    {
+        *this = *this - scalar;
+    }
 
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		temp.m[i] = m[i] * scalar;
-	}
+    // * operator with a scalar
+    Matrix3 Matrix3::operator * (const float& scalar)
+    {
+        Matrix3 temp(*this);
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            temp.m[i] = m[i] * scalar;
+        }
 
-// *= operator with a scalar
-void Matrix3::operator *= (const float& scalar)
-{
-	*this = *this * scalar;
-}
+        return temp;
+    }
 
-// / operator with a scalar
-Matrix3 Matrix3::operator / (const float& scalar)
-{
-	Matrix3 temp(*this);
+    // *= operator with a scalar
+    void Matrix3::operator *= (const float& scalar)
+    {
+        *this = *this * scalar;
+    }
 
-	for (unsigned int i = 0; i < 9; i++)
-	{
-		temp.m[i] = m[i] / scalar;
-	}
+    // / operator with a scalar
+    Matrix3 Matrix3::operator / (const float& scalar)
+    {
+        Matrix3 temp(*this);
 
-	return temp;
-}
+        for (unsigned int i = 0; i < 9; i++)
+        {
+            temp.m[i] = m[i] / scalar;
+        }
 
-// /= operator with a scalar
-void Matrix3::operator /= (const float& scalar)
-{
-	*this = *this / scalar;
+        return temp;
+    }
+
+    // /= operator with a scalar
+    void Matrix3::operator /= (const float& scalar)
+    {
+        *this = *this / scalar;
+    }
 }

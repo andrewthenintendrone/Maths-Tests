@@ -9,6 +9,7 @@
 #include "Matrix4.h"
 
 #include "GameObject.h"
+#include "Transform.h"
 
 #include "radians.h"
 #include "Binary.h"

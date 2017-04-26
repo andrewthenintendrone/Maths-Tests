@@ -10,6 +10,8 @@ using glm::vec4;
 using glm::mat4;
 using aie::Gizmos;
 
+using namespace AFMaths;
+
 exampleprogram::exampleprogram() {
 
 }

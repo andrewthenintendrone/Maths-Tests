@@ -25,10 +25,10 @@ public:
     void randomizeOrbits();
     void resizeOrbits(const float& ammount);
 
-    std::vector<Transform>m_orbitTransforms;
-	std::vector<GameObject>m_gameobjects;
-    std::vector<Vector3>m_orbitSpeeds;
-    std::vector<Vector3>m_gameobjectRotationSpeeds;
+    std::vector<AFMaths::Transform>m_orbitTransforms;
+	std::vector<AFMaths::GameObject>m_gameobjects;
+    std::vector<AFMaths::Vector3>m_orbitSpeeds;
+    std::vector<AFMaths::Vector3>m_gameobjectRotationSpeeds;
 
     bool m_independantMotion = true;
 
