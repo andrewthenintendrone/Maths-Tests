@@ -9,7 +9,7 @@ bool IsLeftMostBitSet(unsigned int value)
 
 bool IsRightMostBitSet(unsigned int value)
 {
-    return true;
+    return ((1 & value) > 0);
 }
 
 bool IsBitSet(unsigned int value, unsigned char bit_to_check)

@@ -6,11 +6,11 @@
 
 int main()
 {
-    unsigned int test = 4294967295;
+    unsigned int test = 33;
 
-    std::cout << "The leftmost bit of " << test << " is ";
+    std::cout << "The rightmost bit of " << test << " is ";
 
-    if (IsLeftMostBitSet(test))
+    if (IsRightMostBitSet(test))
     {
         std::cout << "set.";
     }
