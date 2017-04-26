@@ -81,11 +81,10 @@ namespace AFMaths
         *this = Matrix2(cosf(angle), -sinf(angle), sinf(angle), cosf(angle)).transposed();
     }
 
-    // returns the transposed matrix
-    Matrix2 Matrix2::transposed()
+    // transposes this matrix
+    void Matrix2::transpose()
     {
-        Matrix2 temp;
-
+        Matrix2 temp(*this);
         for (unsigned int i = 0; i < 2; i++)
         {
             for (unsigned int j = 0; j < 2; j++)
@@ -93,7 +92,14 @@ namespace AFMaths
                 temp.mm[i][j] = this->mm[j][i];
             }
         }
+        *this = temp;
+    }
 
+    // returns the transposed matrix
+    Matrix2 Matrix2::transposed()
+    {
+        Matrix2 temp(*this);
+        temp.transpose();
         return temp;
     }
 

@@ -60,6 +60,7 @@ namespace AFMaths
         void setRotateX(const float& angle);
         void setRotateY(const float& angle);
         void setRotateZ(const float& angle);
+        void transpose();
         Matrix4 transposed();
 
         // overloads

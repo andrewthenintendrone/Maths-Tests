@@ -44,6 +44,7 @@ namespace AFMaths
         static Matrix2 identity();
         static Matrix2 zero();
         void setRotate(const float& angle);
+        void transpose();
         Matrix2 transposed();
 
         // overloads

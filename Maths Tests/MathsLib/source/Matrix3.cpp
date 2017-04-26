@@ -105,11 +105,10 @@ namespace AFMaths
         *this = Matrix3(cosf(angle), sinf(angle), 0, -sinf(angle), cosf(angle), 0, 0, 0, 1);
     }
 
-    // returns the transposed matrix
-    Matrix3 Matrix3::transposed()
+    // transposes this matrix
+    void Matrix3::transpose()
     {
-        Matrix3 temp;
-
+        Matrix3 temp(*this);
         for (unsigned int i = 0; i < 3; i++)
         {
             for (unsigned int j = 0; j < 3; j++)
@@ -117,7 +116,14 @@ namespace AFMaths
                 temp.mm[i][j] = this->mm[j][i];
             }
         }
+        *this = temp;
+    }
 
+    // returns the transposed matrix
+    Matrix3 Matrix3::transposed()
+    {
+        Matrix3 temp(*this);
+        temp.transpose();
         return temp;
     }
 

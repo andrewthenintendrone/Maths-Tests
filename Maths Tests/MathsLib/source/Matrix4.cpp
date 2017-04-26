@@ -115,11 +115,10 @@ namespace AFMaths
         *this = Matrix4(cosf(angle), sinf(angle), 0, 0, -sinf(angle), cosf(angle), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
     }
 
-    // returns the transposed matrix
-    Matrix4 Matrix4::transposed()
+    // transposes this matrix
+    void Matrix4::transpose()
     {
-        Matrix4 temp;
-
+        Matrix4 temp(*this);
         for (unsigned int i = 0; i < 4; i++)
         {
             for (unsigned int j = 0; j < 4; j++)
@@ -127,7 +126,14 @@ namespace AFMaths
                 temp.mm[i][j] = this->mm[j][i];
             }
         }
+        *this = temp;
+    }
 
+    // returns the transposed matrix
+    Matrix4 Matrix4::transposed()
+    {
+        Matrix4 temp(*this);
+        temp.transpose();
         return temp;
     }
 
