@@ -103,7 +103,7 @@ artifacts/
 *.svclog
 *.scc
 *.obj
-!Maths Tests/exampleproject/resources/models/*.obj
+!Maths Tests/exampleproject/resources/resources/models/*.obj
 
 # Chutzpah Test files
 _Chutzpah*

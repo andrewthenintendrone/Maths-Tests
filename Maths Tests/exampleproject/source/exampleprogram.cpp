@@ -32,19 +32,19 @@ void exampleprogram::randomizeCenterPalette()
     // assign random colors to faces
     for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
     {
-        if (i < 8)
+        if (i < 16)
         {
             m_gameobjects[0].colors[i] = randomColor1;
         }
-        else if (i < 24)
+        else if (i < 32)
         {
             m_gameobjects[0].colors[i] = randomColor2;
         }
-        else if (i < 60)
+        else if (i < 80)
         {
             m_gameobjects[0].colors[i] = randomColor3;
         }
-        else if (i < 96)
+        else if (i < 128)
         {
             m_gameobjects[0].colors[i] = randomColor4;
         }
@@ -121,19 +121,19 @@ bool exampleprogram::startup() {
     // assign default colors to faces
     for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
     {
-        if (i < 8)
+        if (i < 16)
         {
             m_gameobjects[0].colors[i] = Vector4(1, 0, 0, 1);
         }
-        else if (i < 24)
+        else if (i < 32)
         {
             m_gameobjects[0].colors[i] = Vector4(1, 1, 0, 1);
         }
-        else if (i < 60)
+        else if (i < 80)
         {
             m_gameobjects[0].colors[i] = Vector4(0, 1, 0, 1);
         }
-        else if (i < 96)
+        else if (i < 128)
         {
             m_gameobjects[0].colors[i] = Vector4(0, 0, 1, 1);
         }
