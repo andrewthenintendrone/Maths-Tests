@@ -14,7 +14,7 @@ bool IsRightMostBitSet(unsigned int value)
 
 bool IsBitSet(unsigned int value, unsigned char bit_to_check)
 {
-    // if the bit to check is more than the ammount of bits in an unsigned int return false
+    // if the bit to check is more than the number of bits in an unsigned int return false
     if (bit_to_check >= sizeof(unsigned int) * CHAR_BIT)
     {
         return false;
@@ -27,7 +27,14 @@ bool IsBitSet(unsigned int value, unsigned char bit_to_check)
 
 int GetRightMostSetBit(unsigned int value)
 {
-    return 1;
+    for (unsigned char i = 0; i < sizeof(unsigned int) * CHAR_BIT; i++)
+    {
+        if (IsBitSet(value, i))
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 // prints a number converted to binary

@@ -6,19 +6,9 @@
 
 int main()
 {
-    unsigned int value = 59786546;
-    unsigned char checkbit = 5;
+    unsigned int value = 123;
 
-    std::cout << "The number " << (int)checkbit << " bit of " << value << " is ";
-
-    if (IsBitSet(value, checkbit))
-    {
-        std::cout << "set.";
-    }
-    else
-    {
-        std::cout << "unset.";
-    }
+    std::cout << "The rightmost set bit of " << value << " is " << GetRightMostSetBit(value) << std::endl;
 
 	system("pause");
 	return 0;
