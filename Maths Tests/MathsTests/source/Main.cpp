@@ -6,9 +6,17 @@
 
 int main()
 {
-    for (unsigned char i = 0; i < 129; i++)
+    unsigned int test = 4294967295;
+
+    std::cout << "The leftmost bit of " << test << " is ";
+
+    if (IsLeftMostBitSet(test))
     {
-        PrintBinary(i);
+        std::cout << "set.";
+    }
+    else
+    {
+        std::cout << "unset.";
     }
 
 	system("pause");

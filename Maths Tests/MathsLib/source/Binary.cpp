@@ -4,7 +4,7 @@
 
 bool IsLeftMostBitSet(unsigned int value)
 {
-    return true;
+    return ((UINT_MAX - (UINT_MAX >> 1) & value) > 0);
 }
 
 bool IsRightMostBitSet(unsigned int value)
@@ -23,7 +23,7 @@ int GetRightMostSetBit(unsigned int value)
 }
 
 // prints a number converted to binary
-void PrintBinary(unsigned char value)
+void PrintBinary(unsigned int value)
 {
     std::cout << toBinary(value) << std::endl;
 }
