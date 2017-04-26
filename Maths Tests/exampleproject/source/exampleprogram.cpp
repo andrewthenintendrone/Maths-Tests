@@ -89,13 +89,14 @@ bool exampleprogram::startup()
 	srand((int)time(NULL));
 
     // set background to black
-    setBackgroundColour(0, 0, 0, 1);
+    m_brightness = 0;
+    setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
 
     // create 2d renderer for text etc
     m_2dRenderer = new aie::Renderer2D();
 
     // open a font
-    m_font = new aie::Font("./resources/font/consolas.ttf", 16);
+    m_font = new aie::Font("./resources/font/Roboto-Regular.ttf", 20);
 
 	// initialise gizmo primitive counts
 	Gizmos::create(1000000, 1000000, 1000000, 1000000);
@@ -234,6 +235,35 @@ void exampleprogram::update(float deltaTime)
         randomizeOrbits();
     }
 
+    // change background brightness with 1 and 2 keys
+    if (input->isKeyDown(aie::INPUT_KEY_1))
+    {
+        if (m_brightness > 0)
+        {
+            m_brightness -= (deltaTime);
+        }
+        else
+        {
+            m_brightness = 0;
+        }
+
+        setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
+    }
+
+    if (input->isKeyDown(aie::INPUT_KEY_2))
+    {
+        if (m_brightness < 1)
+        {
+            m_brightness += (deltaTime);
+        }
+        else
+        {
+            m_brightness = 1;
+        }
+
+        setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
+    }
+
     // rotate all GameObjects and their orbit transforms
     if (m_independantMotion == true)
     {
@@ -259,27 +289,26 @@ void exampleprogram::draw() {
 	// wipe the screen to the background colour
 	clearScreen();
 
-	// update perspective in case window resized
-	m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f,
-		getWindowWidth() / (float)getWindowHeight(),
-		0.1f, 1000.f);
-
-    // draw 2D elements
-
-    // time
+    // render 2D elements
     clearScreen();
     m_2dRenderer->setCameraPos(0, 0);
     m_2dRenderer->begin();
-    m_2dRenderer->setRenderColour(1, 1, 1, 1);
+    m_2dRenderer->setRenderColour(1 - m_brightness, 1 - m_brightness, 1 - m_brightness, 1);
 
     m_2dRenderer->drawText(m_font, "Space Bar: toggle independant motion", 100, (float)getWindowHeight() - 50);
     m_2dRenderer->drawText(m_font, "Q key: randomize center object color palette", 100, (float)getWindowHeight() - 70);
     m_2dRenderer->drawText(m_font, "W key: randomize other objects color palettes", 100, (float)getWindowHeight() - 90);
     m_2dRenderer->drawText(m_font, "E key: randomize orbits", 100, (float)getWindowHeight() - 110);
-    m_2dRenderer->drawText(m_font, "ESC: exit example", 100, (float)getWindowHeight() - 150);
+    m_2dRenderer->drawText(m_font, "1 and 2 keys: change background brightness", 100, (float)getWindowHeight() - 130);
+    m_2dRenderer->drawText(m_font, "ESC: exit example", 100, (float)getWindowHeight() - 170);
 
     // stop drawing 2D elements
     m_2dRenderer->end();
+
+    // update perspective in case window resized
+    m_projectionMatrix = glm::perspective(glm::pi<float>() * 0.25f,
+        getWindowWidth() / (float)getWindowHeight(),
+        0.1f, 1000.f);
 
     // draw 3D elements
     for (unsigned int i = 0; i < m_gameobjects.size(); i++)

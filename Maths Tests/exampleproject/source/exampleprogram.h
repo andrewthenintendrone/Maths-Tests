@@ -23,12 +23,12 @@ public:
     void randomizeCenterPalette();
     void randomizeOtherPalettes();
     void randomizeOrbits();
-    void resizeOrbits(const float& ammount);
 
     std::vector<AFMaths::Transform>m_orbitTransforms;
 	std::vector<AFMaths::GameObject>m_gameobjects;
     std::vector<AFMaths::Vector3>m_orbitSpeeds;
     std::vector<AFMaths::Vector3>m_gameobjectRotationSpeeds;
+    float m_brightness;
 
     bool m_independantMotion = true;
 
