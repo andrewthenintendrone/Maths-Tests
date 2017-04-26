@@ -12,11 +12,13 @@ using aie::Gizmos;
 
 using namespace AFMaths;
 
-exampleprogram::exampleprogram() {
+exampleprogram::exampleprogram()
+{
 
 }
 
-exampleprogram::~exampleprogram() {
+exampleprogram::~exampleprogram()
+{
 
 }
 
@@ -80,23 +82,14 @@ void exampleprogram::randomizeOrbits()
     }
 }
 
-// resizes all the orbits 
-void exampleprogram::resizeOrbits(const float& ammount)
+bool exampleprogram::startup()
 {
-    for (unsigned int i = 1; i < m_gameobjects.size(); i++)
-    {
-        m_gameobjects[i].transform.scaleAll(Vector3(ammount));
-    }
-}
-
-bool exampleprogram::startup() {
 
 	// set RNG seed
 	srand((int)time(NULL));
 
-    // set background to grey
-	setBackgroundColour(30.0f / 255.0f, 30.0f / 255.0f, 30.0f / 255.0f, 1);
-    //setBackgroundColour(0, 0, 0, 1);
+    // set background to black
+    setBackgroundColour(0, 0, 0, 1);
 
     // create 2d renderer for text etc
     m_2dRenderer = new aie::Renderer2D();
@@ -158,6 +151,7 @@ bool exampleprogram::startup() {
         m_gameobjectRotationSpeeds.push_back(Vector3(0));
     }
 
+    // randomize orbits and colors of othr GameObjects
     randomizeOrbits();
     randomizeOtherPalettes();
 
@@ -195,20 +189,17 @@ bool exampleprogram::startup() {
 	return true;
 }
 
-void exampleprogram::shutdown() {
+void exampleprogram::shutdown()
+{
 
 	Gizmos::destroy();
 }
 
-void exampleprogram::update(float deltaTime) {
-    //deltaTime /= 10;
+void exampleprogram::update(float deltaTime)
+{
 
 	// query time since application started
 	float time = getTime();
-
-	// rotate camera
-	//m_viewMatrix = glm::lookAt(vec3(glm::sin(time) * 5, 2.5, glm::cos(time) * 5),
-		//vec3(0), vec3(0, 1, 0));
 
 	// wipe the gizmos clean for this frame
 	Gizmos::clear();
@@ -280,8 +271,6 @@ void exampleprogram::draw() {
     m_2dRenderer->setCameraPos(0, 0);
     m_2dRenderer->begin();
     m_2dRenderer->setRenderColour(1, 1, 1, 1);
-    //char time[32];
-    //sprintf_s(time, 32, "TIME: %i", (int)getTime());
 
     m_2dRenderer->drawText(m_font, "Space Bar: toggle independant motion", 100, (float)getWindowHeight() - 50);
     m_2dRenderer->drawText(m_font, "Q key: randomize center object color palette", 100, (float)getWindowHeight() - 70);
@@ -303,18 +292,18 @@ void exampleprogram::draw() {
                 m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].z].toGLM3(),
                 m_gameobjects[i].colors[j].toGLM());
 
-            
+            // draw edges in black
             /*Gizmos::addLine(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].x].toGLM3(),
             m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].y].toGLM3(),
-            red.toGLM());
+            glm::vec4(0, 1, 0, 1));
 
             Gizmos::addLine(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].y].toGLM3(),
             m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].z].toGLM3(),
-            red.toGLM());
+            glm::vec4(0, 1, 0, 1));
 
             Gizmos::addLine(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].z].toGLM3(),
             m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].x].toGLM3(),
-            red.toGLM());*/
+            glm::vec4(0, 1, 0, 1));*/
         }
     }
 
