@@ -14,7 +14,15 @@ bool IsRightMostBitSet(unsigned int value)
 
 bool IsBitSet(unsigned int value, unsigned char bit_to_check)
 {
-    return true;
+    // if the bit to check is more than the ammount of bits in an unsigned int return false
+    if (bit_to_check >= sizeof(unsigned int) * CHAR_BIT)
+    {
+        return false;
+    }
+    else
+    {
+        return (((1 << bit_to_check) & value) > 0);
+    }
 }
 
 int GetRightMostSetBit(unsigned int value)
