@@ -53,7 +53,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\build\</IntDir>
+    <IntDir>$(ProjectDir)\build\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)\dependencies\glm\;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
     <TargetName>$(ProjectName)_DEBUG</TargetName>
@@ -61,7 +61,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)\bin\</OutDir>
-    <IntDir>$(ProjectDir)\build\</IntDir>
+    <IntDir>$(ProjectDir)\build\$(Configuration)\</IntDir>
     <IncludePath>$(SolutionDir)\dependencies\glm\;$(IncludePath)</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
   </PropertyGroup>
