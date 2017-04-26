@@ -6,10 +6,10 @@
 
 int main()
 {
-	Matrix2 mat(1, 2, 3, 6);
-	Matrix2 mat2(1, 2, 3, 4);
-
-    std::cout << mat * mat2 << std::endl;
+    for (unsigned char i = 0; i < 129; i++)
+    {
+        PrintBinary(i);
+    }
 
 	system("pause");
 	return 0;

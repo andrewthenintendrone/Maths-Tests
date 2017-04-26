@@ -1,4 +1,5 @@
 #include "Binary.h"
+#include <limits>
 
 bool IsLeftMostBitSet(unsigned int value)
 {
