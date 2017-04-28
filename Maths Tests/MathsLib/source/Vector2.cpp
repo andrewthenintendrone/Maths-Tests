@@ -61,6 +61,17 @@ namespace AFMaths
         return sum;
     }
 
+    // returns the cross product of vectors
+    Vector2 Vector2::cross(Vector2& rhs)
+    {
+        Vector2 temp;
+
+        temp.x = x * rhs.y - y * rhs.x;
+        temp.y = y * rhs.x - x * rhs.y;
+
+        return temp;
+    }
+
     // returns the magnitude of the vector
     float Vector2::magnitude()
     {
@@ -151,7 +162,7 @@ namespace AFMaths
         return stream;
     }
 
-    // returns a pointer
+    // returns a pointer to a float array
     Vector2::operator float* ()
     {
         return &x;

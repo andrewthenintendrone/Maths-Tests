@@ -56,6 +56,7 @@ namespace AFMaths
         }
     }
 
+    // destructor
     Matrix3::~Matrix3()
     {
 
@@ -145,10 +146,10 @@ namespace AFMaths
         return stream;
     }
 
-    // * operator
+    // returns a pointer to a float array
     Matrix3::operator float* ()
     {
-        return &mm[0][0];
+        return &m[0];
     }
 
     // [] operator that returns vector

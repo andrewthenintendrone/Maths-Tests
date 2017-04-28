@@ -32,6 +32,7 @@ namespace AFMaths
 
         // functions
         float dot(Vector2& rhs);
+        Vector2 cross(Vector2& rhs);
         float magnitude();
         float squaremagnitude();
         void normalise();

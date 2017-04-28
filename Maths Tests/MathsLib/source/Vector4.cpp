@@ -86,6 +86,7 @@ namespace AFMaths
         return sum;
     }
 
+    // returns the cross product of vectors
     Vector4 Vector4::cross(Vector4& rhs)
     {
         Vector4 temp;
@@ -206,7 +207,7 @@ namespace AFMaths
         return stream;
     }
 
-    // returns a pointer
+    // returns a pointer to a float array
     Vector4::operator float* ()
     {
         return &x;

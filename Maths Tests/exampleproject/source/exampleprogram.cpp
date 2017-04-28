@@ -115,18 +115,22 @@ bool exampleprogram::startup()
     // assign default colors to faces
     for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
     {
+        // red
         if (i < 16)
         {
             m_gameobjects[0].colors[i] = Vector4(254, 32, 21, 255) / 255.0f;
         }
+        // yellow
         else if (i < 32)
         {
             m_gameobjects[0].colors[i] = Vector4(255, 192, 1, 255) / 255.0f;
         }
+        // green
         else if (i < 80)
         {
             m_gameobjects[0].colors[i] = Vector4(6, 147, 48, 255) / 255.0f;
         }
+        // blue
         else if (i < 128)
         {
             m_gameobjects[0].colors[i] = Vector4(1, 29, 169, 255) / 255.0f;

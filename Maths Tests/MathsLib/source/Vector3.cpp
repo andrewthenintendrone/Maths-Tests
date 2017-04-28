@@ -73,6 +73,7 @@ namespace AFMaths
         return sum;
     }
 
+    // returns the cross product of vectors
     Vector3 Vector3::cross(Vector3& rhs)
     {
         Vector3 temp;
@@ -112,20 +113,6 @@ namespace AFMaths
     {
         Vector3 temp(*this);
         temp.normalise();
-        return temp;
-    }
-
-    // returns the vector normalized by a certain percentage
-    Vector3 Vector3::semiNormalized(float ammount)
-    {
-        float mag = magnitude() * fabs(ammount);
-        Vector3 temp(this->normalized());
-
-        for (unsigned int i = 0; i < 3; i++)
-        {
-            temp.v[i] *= mag;
-        }
-
         return temp;
     }
 
@@ -200,7 +187,7 @@ namespace AFMaths
         return stream;
     }
 
-    // returns a pointer
+    // returns a pointer to a float array
     Vector3::operator float* ()
     {
         return &x;
