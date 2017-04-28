@@ -117,19 +117,19 @@ bool exampleprogram::startup()
     {
         if (i < 16)
         {
-            m_gameobjects[0].colors[i] = Vector4(1, 0, 0, 1);
+            m_gameobjects[0].colors[i] = Vector4(254, 32, 21, 255) / 255.0f;
         }
         else if (i < 32)
         {
-            m_gameobjects[0].colors[i] = Vector4(1, 1, 0, 1);
+            m_gameobjects[0].colors[i] = Vector4(255, 192, 1, 255) / 255.0f;
         }
         else if (i < 80)
         {
-            m_gameobjects[0].colors[i] = Vector4(0, 1, 0, 1);
+            m_gameobjects[0].colors[i] = Vector4(6, 147, 48, 255) / 255.0f;
         }
         else if (i < 128)
         {
-            m_gameobjects[0].colors[i] = Vector4(0, 0, 1, 1);
+            m_gameobjects[0].colors[i] = Vector4(1, 29, 169, 255) / 255.0f;
         }
     }
     m_orbitSpeeds.push_back(0);
