@@ -28,35 +28,26 @@ void exampleprogram::randomizeCenterPalette()
     // generate 4 random colors
     Vector4 randomColor1(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
     Vector4 randomColor2(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
-    /*Vector4 randomColor3(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
-    Vector4 randomColor4(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);*/
+    Vector4 randomColor3(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
+    Vector4 randomColor4(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
     // apply random colors to faces
     for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
     {
-        /*if (i < 16)
-        {
-            m_gameobjects[0].colors[i] = Vector4(254, 32, 21, 255) / 255.0f;
-        }
-        else if (i < 32)
-        {
-            m_gameobjects[0].colors[i] = Vector4(255, 192, 1, 255) / 255.0f;
-        }
-        else if (i < 80)
-        {
-            m_gameobjects[0].colors[i] = Vector4(6, 147, 48, 255) / 255.0f;
-        }
-        else if (i < 128)
-        {
-            m_gameobjects[0].colors[i] = Vector4(1, 29, 169, 255) / 255.0f;
-        }*/
-
-        if (i % 2 == 0)
+        if (i < 16)
         {
             m_gameobjects[0].colors[i] = randomColor1;
         }
-        else
+        else if (i < 32)
         {
             m_gameobjects[0].colors[i] = randomColor2;
+        }
+        else if (i < 80)
+        {
+            m_gameobjects[0].colors[i] = randomColor3;
+        }
+        else if (i < 128)
+        {
+            m_gameobjects[0].colors[i] = randomColor4;
         }
     }
 
@@ -120,33 +111,32 @@ bool exampleprogram::startup()
     // set up center GameObject
     m_orbitTransforms.push_back(Transform());
     m_gameobjects.push_back(GameObject());
-    m_gameobjects[0].loadModelOBJ("./resources/models/cat.obj");
+    m_gameobjects[0].loadModelOBJ("./resources/models/n64.obj");
 
     // assign default colors to faces
-    //for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
-    //{
-    //    // red
-    //    if (i < 16)
-    //    {
-    //        m_gameobjects[0].colors[i] = Vector4(254, 32, 21, 255) / 255.0f;
-    //    }
-    //    // yellow
-    //    else if (i < 32)
-    //    {
-    //        m_gameobjects[0].colors[i] = Vector4(255, 192, 1, 255) / 255.0f;
-    //    }
-    //    // green
-    //    else if (i < 80)
-    //    {
-    //        m_gameobjects[0].colors[i] = Vector4(6, 147, 48, 255) / 255.0f;
-    //    }
-    //    // blue
-    //    else if (i < 128)
-    //    {
-    //        m_gameobjects[0].colors[i] = Vector4(1, 29, 169, 255) / 255.0f;
-    //    }
-    //}
-    randomizeCenterPalette();
+    for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
+    {
+        // red
+        if (i < 16)
+        {
+            m_gameobjects[0].colors[i] = Vector4(254, 32, 21, 255) / 255.0f;
+        }
+        // yellow
+        else if (i < 32)
+        {
+            m_gameobjects[0].colors[i] = Vector4(255, 192, 1, 255) / 255.0f;
+        }
+        // green
+        else if (i < 80)
+        {
+            m_gameobjects[0].colors[i] = Vector4(6, 147, 48, 255) / 255.0f;
+        }
+        // blue
+        else if (i < 128)
+        {
+            m_gameobjects[0].colors[i] = Vector4(1, 29, 169, 255) / 255.0f;
+        }
+    }
     m_orbitSpeeds.push_back(0);
     m_gameobjectRotationSpeeds.push_back(Vector3(0, 1.5f, 0));
 	m_gameobjects[0].transform.setScaleAll(Vector3(4.0f));
@@ -329,14 +319,6 @@ void exampleprogram::draw() {
     for (unsigned int i = 0; i < m_gameobjects.size(); i++)
     {
         m_gameobjects[i].updateVerts();
-        if (i != m_gameobjects.size() - 1)
-        {
-            Gizmos::addLine(m_gameobjects[i].transform.m_globalTransform[3].toGLM3(), m_gameobjects[i + 1].transform.m_globalTransform[3].toGLM3(), glm::vec4(0, 1, 0, 1));
-        }
-        else
-        {
-            Gizmos::addLine(m_gameobjects[i].transform.m_globalTransform[3].toGLM3(), m_gameobjects[0].transform.m_globalTransform[3].toGLM3(), glm::vec4(0, 1, 0, 1));
-        }
         for (unsigned int j = 0; j < m_gameobjects[i].faces.size(); j++)
         {
             Gizmos::addTri(m_gameobjects[i].transformedVertices[(int)m_gameobjects[i].faces[j].x].toGLM3(),
