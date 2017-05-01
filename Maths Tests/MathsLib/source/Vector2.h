@@ -6,6 +6,9 @@
 
 namespace AFMaths
 {
+    class Vector3;
+    class Vector4;
+
     class Vector2
     {
     public:
@@ -27,7 +30,9 @@ namespace AFMaths
         Vector2();
         Vector2(const float& value);
         Vector2(float newX, float newY);
-        Vector2(const Vector2& vector);
+        Vector2(const Vector2& newVector);
+        Vector2(const Vector3& newVector);
+        Vector2(const Vector4& newVector);
         ~Vector2();
 
         // functions

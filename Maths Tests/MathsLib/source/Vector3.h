@@ -1,12 +1,14 @@
 #pragma once
 #include <math.h>
 #include <iostream>
-#include "Vector2.h"
 #include <glm\glm.hpp>
 #include <glm\ext.hpp>
 
 namespace AFMaths
 {
+    class Vector2;
+    class Vector4;
+
     class Vector3
     {
     public:
@@ -35,8 +37,9 @@ namespace AFMaths
         Vector3();
         Vector3(const float& value);
         Vector3(float newX, float newY, float newZ);
-        Vector3(const Vector3& vector);
-        Vector3(const Vector2& vector);
+        Vector3(const Vector2& newVector);
+        Vector3(const Vector3& newVector);
+        Vector3(const Vector4& newVector);
         ~Vector3();
 
         // functions

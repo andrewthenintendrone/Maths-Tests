@@ -1,3 +1,5 @@
+#include "Vector2.h"
+#include "Vector3.h"
 #include "Vector4.h"
 
 namespace AFMaths
@@ -34,33 +36,30 @@ namespace AFMaths
     }
 
     // construct with a vector
-    Vector4::Vector4(const Vector4& vector)
+    Vector4::Vector4(const Vector2& newVector)
     {
         for (unsigned int i = 0; i < 4; i++)
         {
-            v[i] = vector.v[i];
+            v[i] = newVector.v[i];
         }
     }
 
     // construct with a vector
-    Vector4::Vector4(const Vector3& vector)
+    Vector4::Vector4(const Vector3& newVector)
     {
-        for (unsigned int i = 0; i < 3; i++)
+        for (unsigned int i = 0; i < 4; i++)
         {
-            v[i] = vector.v[i];
+            v[i] = newVector.v[i];
         }
-        w = 0;
     }
 
     // construct with a vector
-    Vector4::Vector4(const Vector2& vector)
+    Vector4::Vector4(const Vector4& newVector)
     {
-        for (unsigned int i = 0; i < 2; i++)
+        for (unsigned int i = 0; i < 4; i++)
         {
-            v[i] = vector.v[i];
+            v[i] = newVector.v[i];
         }
-        z = 0;
-        w = 0;
     }
 
     // destructor
