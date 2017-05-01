@@ -1,5 +1,6 @@
-#include "Matrix4.h"
+#include "Matrix2.h"
 #include "Matrix3.h"
+#include "Matrix4.h"
 #include <math.h>
 
 namespace AFMaths
@@ -54,6 +55,32 @@ namespace AFMaths
         vecs[1] = newAxis2;
         vecs[2] = newAxis3;
         vecs[3] = newAxis4;
+    }
+
+    // construct with another Matrix
+    Matrix4::Matrix4(const Matrix2& newMatrix)
+    {
+        *this = Matrix4(0);
+        for (unsigned int i = 0; i < 2; i++)
+        {
+            for (unsigned int j = 0; j < 2; j++)
+            {
+                mm[i][j] = newMatrix.mm[i][j];
+            }
+        }
+    }
+
+    // construct with another Matrix
+    Matrix4::Matrix4(const Matrix3& newMatrix)
+    {
+        *this = Matrix4(0);
+        for (unsigned int i = 0; i < 3; i++)
+        {
+            for (unsigned int j = 0; j < 3; j++)
+            {
+                mm[i][j] = newMatrix.mm[i][j];
+            }
+        }
     }
 
     // construct with another Matrix

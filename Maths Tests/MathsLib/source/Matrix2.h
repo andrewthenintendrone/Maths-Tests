@@ -2,6 +2,9 @@
 #include <iostream>
 #include "Vector2.h"
 
+class Matrix3;
+class Matrix4;
+
 namespace AFMaths
 {
     class Matrix2
@@ -37,6 +40,8 @@ namespace AFMaths
         Matrix2(const float& newx1, const float& newx2, const float& newy1, const float& newy2);
         Matrix2(Vector2& newAxis1, Vector2& newAxis2);
         Matrix2(const Matrix2& newMatrix);
+        Matrix2(const Matrix3& newMatrix);
+        Matrix2(const Matrix4& newMatrix);
         ~Matrix2();
 
         // functions
