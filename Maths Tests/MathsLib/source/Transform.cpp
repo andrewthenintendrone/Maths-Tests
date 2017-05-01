@@ -22,7 +22,6 @@ namespace AFMaths
     // updates m_globalTransform for this Transform and its children
     void Transform::updateGlobalTransform()
     {
-
         m_localTransform = m_position * m_rotation * m_scale;
         if (m_parent != nullptr)
         {
