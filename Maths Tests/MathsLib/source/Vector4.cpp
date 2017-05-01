@@ -225,33 +225,32 @@ namespace AFMaths
     }
 
     // sets vector with a vector
-    void Vector4::operator = (const Vector4& rhs)
+    void Vector4::operator = (const Vector2& newVector)
+    {
+        *this = Vector4::Zero();
+        for (unsigned int i = 0; i < 2; i++)
+        {
+            v[i] = newVector.v[i];
+        }
+    }
+
+    // sets vector with a vector
+    void Vector4::operator = (const Vector3& newVector)
+    {
+        *this = Vector4::Zero();
+        for (unsigned int i = 0; i < 3; i++)
+        {
+            v[i] = newVector.v[i];
+        }
+    }
+
+    // sets vector with a vector
+    void Vector4::operator = (const Vector4& newVector)
     {
         for (unsigned int i = 0; i < 4; i++)
         {
-            v[i] = rhs.v[i];
+            v[i] = newVector.v[i];
         }
-    }
-
-    // sets vector with a vector
-    void Vector4::operator = (const Vector3& rhs)
-    {
-        for (unsigned int i = 0; i < 3; i++)
-        {
-            v[i] = rhs.v[i];
-        }
-        w = 0;
-    }
-
-    // sets vector with a vector
-    void Vector4::operator = (const Vector2& rhs)
-    {
-        for (unsigned int i = 0; i < 2; i++)
-        {
-            v[i] = rhs.v[i];
-        }
-        z = 0;
-        w = 0;
     }
 
     // + operator with a vector

@@ -65,8 +65,9 @@ namespace AFMaths
         operator float *();
         float& operator [] (const int& index);
         bool operator == (const Vector3& rhs);
-        void operator = (const Vector3& rhs);
-        void operator = (const Vector2& rhs);
+        void operator = (const Vector2& newVector);
+        void operator = (const Vector3& newVector);
+        void operator = (const Vector4& newVector);
         Vector3 operator + (const Vector3& rhs);
         void operator += (const Vector3& rhs);
         Vector3 operator - (const Vector3& rhs);

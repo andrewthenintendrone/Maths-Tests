@@ -218,22 +218,31 @@ namespace AFMaths
     }
 
     // sets vector with a vector
-    void Vector3::operator = (const Vector3& rhs)
+    void Vector3::operator = (const Vector2& newVector)
     {
-        for (unsigned int i = 0; i < 3; i++)
+        *this = Vector3::Zero();
+        for (unsigned int i = 0; i < 2; i++)
         {
-            v[i] = rhs.v[i];
+            v[i] = newVector.v[i];
         }
     }
 
     // sets vector with a vector
-    void Vector3::operator = (const Vector2& rhs)
+    void Vector3::operator = (const Vector3& newVector)
     {
-        for (unsigned int i = 0; i < 2; i++)
+        for (unsigned int i = 0; i < 3; i++)
         {
-            v[i] = rhs.v[i];
+            v[i] = newVector.v[i];
         }
-        z = 0;
+    }
+
+    // sets vector with a vector
+    void Vector3::operator = (const Vector4& newVector)
+    {
+        for (unsigned int i = 0; i < 3; i++)
+        {
+            v[i] = newVector.v[i];
+        }
     }
 
     // + operator with a vector
