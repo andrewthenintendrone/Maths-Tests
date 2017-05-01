@@ -2,11 +2,11 @@
 #include <iostream>
 #include "Vector2.h"
 
-class Matrix3;
-class Matrix4;
-
 namespace AFMaths
 {
+    class Matrix3;
+    class Matrix4;
+
     class Matrix2
     {
     public:
