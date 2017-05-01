@@ -182,6 +182,31 @@ namespace AFMaths
         }
     }
 
+    // = operator with a matrix
+    void Matrix2::operator = (const Matrix3& newMatrix)
+    {
+        for (unsigned int i = 0; i < 2; i++)
+        {
+            for (unsigned int j = 0; j < 2; j++)
+            {
+                mm[i][j] = newMatrix.mm[i][j];
+            }
+        }
+    }
+
+    // = operator with a matrix
+    void Matrix2::operator = (const Matrix4& newMatrix)
+    {
+        for (unsigned int i = 0; i < 2; i++)
+        {
+            for (unsigned int j = 0; j < 2; j++)
+            {
+                mm[i][j] = newMatrix.mm[i][j];
+            }
+        }
+    }
+
+
     // + operator with a matrix
     Matrix2 Matrix2::operator + (const Matrix2& rhs)
     {
