@@ -239,13 +239,17 @@ void exampleprogram::update(float deltaTime)
 	aie::Input* input = aie::Input::getInstance();
 
     // exit if escape is pressed
-    if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
+    if (input->wasKeyPressed(aie::INPUT_KEY_ESCAPE))
     {
         if (m_exiting == false)
         {
             m_exitMusic->setLooping(false);
             m_exitMusic->play();
             m_exiting = true;
+        }
+        else
+        {
+            quit();
         }
     }
 
