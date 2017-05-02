@@ -1,10 +1,4 @@
 #include "exampleprogram.h"
-#include "Gizmos.h"
-#include "Input.h"
-#include "font.h"
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-#include <string>
 
 using glm::vec3;
 using glm::vec4;

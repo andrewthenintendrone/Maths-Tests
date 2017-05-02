@@ -1,8 +1,11 @@
 #pragma once
 
 #include "Application.h"
+#include "Gizmos.h"
 #include "Renderer2D.h"
 #include "Audio.h"
+#include "Input.h"
+#include "Font.h"
 #include <Texture.h>
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
@@ -10,6 +13,7 @@
 #include <MathsLib.h>
 #include <random>
 #include <chrono>
+#include <string>
 
 
 class exampleprogram : public aie::Application {
