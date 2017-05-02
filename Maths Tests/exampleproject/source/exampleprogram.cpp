@@ -4,6 +4,7 @@
 #include "font.h"
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include <string>
 
 using glm::vec3;
 using glm::vec4;
@@ -20,6 +21,29 @@ exampleprogram::exampleprogram()
 exampleprogram::~exampleprogram()
 {
 
+}
+
+// loads 2D elements
+void exampleprogram::setUp2D()
+{
+    // create 2d renderer
+    m_2dRenderer = new aie::Renderer2D;
+
+    // load font
+    m_font = new aie::Font("./resources/font/Roboto-Regular.ttf", 20);
+
+    // load exit image
+    m_exitTexture = new aie::Texture("./resources/textures/tbc.png");
+
+    // put exit texture on the right side of the screen
+    m_exitTexturePositionX = (float)getWindowWidth();
+}
+
+// loads audio elements
+void exampleprogram::setUpAudio()
+{
+    m_exitMusic = new aie::Audio("./resources/audio/roundabout.wav");
+    m_exitMusic->setLooping(false);
 }
 
 // creates the RNG engine and seeds it
@@ -63,8 +87,6 @@ void exampleprogram::randomizeCenterPalette()
             m_gameobjects[0].colors[i] = randomColor4;
         }
     }
-
-
 }
 
 // randomizes the palette of the other GameObjects
@@ -98,8 +120,59 @@ void exampleprogram::randomizeOrbits()
     }
 }
 
+// exits
+void exampleprogram::exit()
+{
+    // freeze all objects
+    for (unsigned int i = 0; i < m_gameobjectRotationSpeeds.size(); i++)
+    {
+        m_gameobjectRotationSpeeds[i] = Vector3(0);
+    }
+    for (unsigned int i = 0; i < m_orbitSpeeds.size(); i++)
+    {
+        m_orbitSpeeds[i] = Vector3(0);
+    }
+    // create distribution from 0 to 4
+    std::uniform_int_distribution<int> range(1, 4);
+    // create palletes
+    Vector4 colors[5] = { Vector4(179, 129, 56, 255), Vector4(211, 145, 43, 255), Vector4(210, 127, 41, 255), Vector4(217, 95, 27, 255), Vector4(160, 32, 26, 255) };
+    // color all objects
+    for (unsigned int i = 1; i < m_gameobjects.size(); i++)
+    {
+        Vector3 baseColor = colors[range(m_prng)];
+        m_gameobjects[i].setColorPallete(baseColor.r, baseColor.r, baseColor.g, baseColor.g, baseColor.b, baseColor.b, 255, 255);
+        m_gameobjects[i].setColorsRandom(m_prng);
+    }
+
+    // color center object
+    for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
+    {
+        if (i < 16)
+        {
+            m_gameobjects[0].colors[i] = colors[0] / 255.0f;
+        }
+        else if (i < 32)
+        {
+            m_gameobjects[0].colors[i] = colors[1] / 255.0f;
+        }
+        else if (i < 80)
+        {
+            m_gameobjects[0].colors[i] = colors[2] / 255.0f;
+        }
+        else if (i < 128)
+        {
+            m_gameobjects[0].colors[i] = colors[3] / 255.0f;
+        }
+    }
+}
+
 bool exampleprogram::startup()
 {
+    // set up 2D elements
+    setUp2D();
+
+    // set up audio elements
+    setUpAudio();
 
 	// set up RNG
     setUpRNG();
@@ -107,12 +180,6 @@ bool exampleprogram::startup()
     // set background to black
     m_brightness = 0;
     setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
-
-    // create 2d renderer for text etc
-    m_2dRenderer = new aie::Renderer2D();
-
-    // open a font
-    m_font = new aie::Font("./resources/font/Roboto-Regular.ttf", 20);
 
 	// initialise gizmo primitive counts
 	Gizmos::create(1000000, 1000000, 1000000, 1000000);
@@ -157,15 +224,27 @@ bool exampleprogram::startup()
 	m_gameobjects[0].transform.setScaleAll(Vector3(4.0f));
 
     // load model into a temporary GameObject instead of reading the file many times
-    GameObject temporaryGameObject;
-    temporaryGameObject.loadModelOBJ("./resources/models/sphere.obj");
+    /*GameObject temporaryGameObject;
+    temporaryGameObject.loadModelOBJ("./resources/models/sphere.obj");*/
+
+    // create letter distribution
+    std::uniform_int_distribution<int> letters(65, 90);
 
     // create gameobjects and orbit transforms
     for (unsigned int i = 1; i < 101; i++)
     {
         // push back a new orbit transform and a new copy of the temporary GameObject
         m_orbitTransforms.push_back(Transform());
-        m_gameobjects.push_back(GameObject(temporaryGameObject));
+        m_gameobjects.push_back(GameObject());
+
+        std::string file = "./resources/models/letters/";
+        file.push_back((char)letters(m_prng));
+        file.append (".obj");
+
+        std::cout << file;
+
+        // loads random letter for model
+        m_gameobjects[i].loadModelOBJ(file);
 
         // push back default rotations of 0
         m_orbitSpeeds.push_back(Vector3(0));
@@ -214,7 +293,10 @@ bool exampleprogram::startup()
 
 void exampleprogram::shutdown()
 {
-
+    delete m_2dRenderer;
+    delete m_font;
+    delete m_exitTexture;
+    delete m_exitMusic;
 	Gizmos::destroy();
 }
 
@@ -230,8 +312,39 @@ void exampleprogram::update(float deltaTime)
 	aie::Input* input = aie::Input::getInstance();
 
     // quit if we press escape
-	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
-		quit();
+    if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
+    {
+        if (m_exiting == false)
+        {
+            m_exitMusic->play();
+            m_exiting = true;
+        }
+    }
+
+    // if exiting count down
+    if (m_exiting == true)
+    {
+        if (m_exittimer > 0)
+        {
+            m_exittimer -= deltaTime;
+        }
+        else
+        {
+            if (m_exitTexturePositionX > 100.0f)
+            {
+                m_exitTexturePositionX -= (getWindowWidth() * 4.0f * deltaTime);
+                if (m_exitTexturePositionX < 100.0f)
+                {
+                    m_exitTexturePositionX = 100.0f;
+                    exit();
+                }
+            }
+        }
+        if (m_exitMusic->getIsPlaying() == false)
+        {
+            quit();
+        }
+    }
 
     // toggle whether all the gameobjects rotate independantly or as a group with the space bar
     if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
@@ -317,12 +430,19 @@ void exampleprogram::draw() {
     m_2dRenderer->begin();
     m_2dRenderer->setRenderColour(1 - m_brightness, 1 - m_brightness, 1 - m_brightness, 1);
 
-    m_2dRenderer->drawText(m_font, "Space Bar: toggle independant motion", 100, (float)getWindowHeight() - 50);
-    m_2dRenderer->drawText(m_font, "Q key: randomize center object color palette", 100, (float)getWindowHeight() - 70);
-    m_2dRenderer->drawText(m_font, "W key: randomize other objects color palettes", 100, (float)getWindowHeight() - 90);
-    m_2dRenderer->drawText(m_font, "E key: randomize orbits", 100, (float)getWindowHeight() - 110);
-    m_2dRenderer->drawText(m_font, "1 and 2 keys: change background brightness", 100, (float)getWindowHeight() - 130);
-    m_2dRenderer->drawText(m_font, "ESC: exit example", 100, (float)getWindowHeight() - 170);
+    if (m_exiting)
+    {
+        m_2dRenderer->drawSprite(m_exitTexture, m_exitTexturePositionX, 100.0f, 0, 0, 0, 0, 0, 0);
+    }
+    else
+    {
+        m_2dRenderer->drawText(m_font, "Space Bar: toggle independant motion", 100, (float)getWindowHeight() - 50);
+        m_2dRenderer->drawText(m_font, "Q key: randomize center object color palette", 100, (float)getWindowHeight() - 70);
+        m_2dRenderer->drawText(m_font, "W key: randomize other objects color palettes", 100, (float)getWindowHeight() - 90);
+        m_2dRenderer->drawText(m_font, "E key: randomize orbits", 100, (float)getWindowHeight() - 110);
+        m_2dRenderer->drawText(m_font, "1 and 2 keys: change background brightness", 100, (float)getWindowHeight() - 130);
+        m_2dRenderer->drawText(m_font, "ESC: exit example", 100, (float)getWindowHeight() - 170);
+    }
 
     // stop drawing 2D elements
     m_2dRenderer->end();

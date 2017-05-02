@@ -2,6 +2,7 @@
 
 #include "Application.h"
 #include "Renderer2D.h"
+#include "Audio.h"
 #include <Texture.h>
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
@@ -9,6 +10,7 @@
 #include <MathsLib.h>
 #include <random>
 #include <chrono>
+
 
 class exampleprogram : public aie::Application {
 public:
@@ -22,16 +24,23 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+    void setUp2D();
+    void setUpAudio();
     void setUpRNG();
     void randomizeCenterPalette();
     void randomizeOtherPalettes();
     void randomizeOrbits();
+    void exit();
 
     std::vector<AFMaths::Transform>m_orbitTransforms;
 	std::vector<AFMaths::GameObject>m_gameobjects;
     std::vector<AFMaths::Vector3>m_orbitSpeeds;
     std::vector<AFMaths::Vector3>m_gameobjectRotationSpeeds;
     float m_brightness;
+
+    bool m_exiting = false;
+    float m_exittimer = 3.1f;
+    float m_exitTexturePositionX;
 
     bool m_independantMotion = true;
     std::default_random_engine m_prng;
@@ -40,6 +49,8 @@ protected:
 
     aie::Renderer2D*	m_2dRenderer;
     aie::Font*			m_font;
-	glm::mat4	m_viewMatrix;
-	glm::mat4	m_projectionMatrix;
+    aie::Texture*       m_exitTexture;
+    aie::Audio*         m_exitMusic;
+	glm::mat4	        m_viewMatrix;
+	glm::mat4       	m_projectionMatrix;
 };
