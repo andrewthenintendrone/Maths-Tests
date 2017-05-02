@@ -22,14 +22,27 @@ exampleprogram::~exampleprogram()
 
 }
 
+// creates the RNG engine and seeds it
+void exampleprogram::setUpRNG()
+{
+    // generate seed from time since epoch
+    unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
+    // apply seed to rng engine
+    m_prng = std::default_random_engine(seed);
+}
+
 // randomizes the palette of the center GameObject
 void exampleprogram::randomizeCenterPalette()
 {
+    // create a distribution between 0 and 1
+    std::uniform_real_distribution<float> range(0.0f, 1.0f);
+
     // generate 4 random colors
-    Vector4 randomColor1(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
-    Vector4 randomColor2(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
-    Vector4 randomColor3(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
-    Vector4 randomColor4(rand() % 256 / 255.0f, rand() % 256 / 255.0f, rand() % 256 / 255.0f, 1);
+    Vector4 randomColor1(range(m_prng), range(m_prng), range(m_prng), 1);
+    Vector4 randomColor2(range(m_prng), range(m_prng), range(m_prng), 1);
+    Vector4 randomColor3(range(m_prng), range(m_prng), range(m_prng), 1);
+    Vector4 randomColor4(range(m_prng), range(m_prng), range(m_prng), 1);
+
     // apply random colors to faces
     for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
     {
@@ -57,10 +70,13 @@ void exampleprogram::randomizeCenterPalette()
 // randomizes the palette of the other GameObjects
 void exampleprogram::randomizeOtherPalettes()
 {
+    // create a distribution between 0 and 255
+    std::uniform_int_distribution<int> range(0, 255);
+
     for (unsigned int i = 1; i < m_gameobjects.size(); i++)
     {
         // choose a random base color for the current GameObject
-        Vector3 baseColor((float)(rand() % 256), (float)(rand() % 256), (float)(rand() % 256));
+        Vector3 baseColor(range(m_prng), range(m_prng), range(m_prng));
         // set the GameObjects pallete close to the base color
         m_gameobjects[i].setColorPallete(baseColor.x - 32, baseColor.x + 32, baseColor.y - 32, baseColor.y + 32, baseColor.z - 32, baseColor.z + 32, 255, 255);
         m_gameobjects[i].setColorsRandom();
@@ -70,24 +86,23 @@ void exampleprogram::randomizeOtherPalettes()
 // randomizes the orbit speeds and rotation speeds for all the orbiting objects
 void exampleprogram::randomizeOrbits()
 {
+    // create a distribution between -2 and 2
+    std::uniform_real_distribution<float> range(-2.0f, 2.0f);
+
     for (unsigned int i = 1; i < m_orbitSpeeds.size(); i++)
     {
         // push back a new orbit speed with random float values from -2 to 2
-        m_orbitSpeeds[i] = Vector3(-2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
-            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
-            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)));
+        m_orbitSpeeds[i] = Vector3(range(m_prng), range(m_prng), range(m_prng));
         // push back a new gameobject rotation speed with random float values from -2 to 2
-        m_gameobjectRotationSpeeds[i] = Vector3(-2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
-            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)),
-            -2.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 4)));
+        m_gameobjectRotationSpeeds[i] = Vector3(range(m_prng), range(m_prng), range(m_prng));
     }
 }
 
 bool exampleprogram::startup()
 {
 
-	// set RNG seed
-	srand((int)time(NULL));
+	// set up RNG
+    setUpRNG();
 
     // set background to black
     m_brightness = 0;
@@ -164,15 +179,17 @@ bool exampleprogram::startup()
     // position and parent each gameobject to it's orbit
     for (unsigned int i = 1; i < 101; i++)
     {
-        // scale the gameobject somewhere between 0.1 and 0.25
-        //m_gameobjects[i].transform.setScaleAll(Vector3(0.1f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 0.15f))) / 4.0f);
         m_gameobjects[i].transform.setScaleAll(Vector3(0.1f));
         // create a temporary start position
         Vector3 startPosition(1.0f);
+
+        // create a distribution of either 1 or 2
+        std::uniform_int_distribution<int> range(1, 2);
+
         // randomly negate each value of the start position
         for (unsigned int j = 0; j < 3; j++)
         {
-            if (rand() % 2 == 0)
+            if (range(m_prng) % 2 == 0)
             {
                 startPosition[j] -= (2 * startPosition[j]);
             }

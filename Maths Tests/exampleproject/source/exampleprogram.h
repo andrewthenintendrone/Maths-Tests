@@ -7,6 +7,8 @@
 #include <glm/vec3.hpp>
 #include <vector>
 #include <MathsLib.h>
+#include <random>
+#include <chrono>
 
 class exampleprogram : public aie::Application {
 public:
@@ -20,6 +22,7 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+    void setUpRNG();
     void randomizeCenterPalette();
     void randomizeOtherPalettes();
     void randomizeOrbits();
@@ -31,6 +34,7 @@ public:
     float m_brightness;
 
     bool m_independantMotion = true;
+    std::default_random_engine m_prng;
 
 protected:
 
