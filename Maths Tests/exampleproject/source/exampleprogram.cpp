@@ -17,37 +17,6 @@ exampleprogram::~exampleprogram()
 
 }
 
-// loads 2D elements
-void exampleprogram::setUp2D()
-{
-    // create 2d renderer
-    m_2dRenderer = new aie::Renderer2D;
-
-    // load font
-    m_font = new aie::Font("./resources/font/Roboto-Regular.ttf", 20);
-
-    // load exit image
-    m_exitTexture = new aie::Texture("./resources/textures/tbc.png");
-
-    // put exit texture on the right side of the screen
-    m_exitTexturePositionX = (float)getWindowWidth();
-}
-
-// loads audio elements
-void exampleprogram::setUpAudio()
-{
-    m_exitMusic = new aie::Audio("./resources/audio/roundabout.wav");
-}
-
-// creates the RNG engine and seeds it
-void exampleprogram::setUpRNG()
-{
-    // generate seed from time since epoch
-    unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
-    // apply seed to rng engine
-    m_prng = std::default_random_engine(seed);
-}
-
 // randomizes the palette of the center GameObject
 void exampleprogram::colorCenterObject(Vector4& color1, Vector4& color2, Vector4& color3, Vector4& color4)
 {
@@ -118,139 +87,129 @@ void exampleprogram::exit()
     }
     // create distribution from 0 to 4
     std::uniform_int_distribution<int> range(1, 4);
-    // create palletes
-    Vector4 colors[5] = { Vector4(179, 129, 56, 255), Vector4(211, 145, 43, 255), Vector4(210, 127, 41, 255), Vector4(217, 95, 27, 255), Vector4(160, 32, 26, 255) };
-    // color all objects
+
+    // create some colors
+    Vector4 exitColors[5] = { Vector4(179, 129, 56, 255), Vector4(211, 145, 43, 255), Vector4(210, 127, 41, 255), Vector4(217, 95, 27, 255), Vector4(160, 32, 26, 255) };
+    
+    // color all objects using one of the colors
     for (unsigned int i = 1; i < m_gameobjects.size(); i++)
     {
-        Vector3 baseColor = colors[range(m_prng)];
+        Vector3 baseColor = exitColors[range(m_prng)];
         m_gameobjects[i].setColorPallete(baseColor.r, baseColor.r, baseColor.g, baseColor.g, baseColor.b, baseColor.b, 255, 255);
         m_gameobjects[i].setColorsRandom(m_prng);
     }
 
-    // color center object
+    // set the center GameObjects colors
     for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
     {
         if (i < 16)
         {
-            m_gameobjects[0].colors[i] = colors[0] / 255.0f;
+            m_gameobjects[0].colors[i] = exitColors[0] / 255.0f;
         }
         else if (i < 32)
         {
-            m_gameobjects[0].colors[i] = colors[1] / 255.0f;
+            m_gameobjects[0].colors[i] = exitColors[1] / 255.0f;
         }
         else if (i < 80)
         {
-            m_gameobjects[0].colors[i] = colors[2] / 255.0f;
+            m_gameobjects[0].colors[i] = exitColors[2] / 255.0f;
         }
         else if (i < 128)
         {
-            m_gameobjects[0].colors[i] = colors[3] / 255.0f;
+            m_gameobjects[0].colors[i] = exitColors[3] / 255.0f;
         }
     }
 }
 
 bool exampleprogram::startup()
 {
-    // set up 2D elements
-    setUp2D();
+    // load resources
+    m_2dRenderer = new aie::Renderer2D;
+    m_font = new aie::Font("./resources/font/Roboto-Regular.ttf", 20);
+    m_exitTexture = new aie::Texture("./resources/textures/tobecontinued.png");
+    m_exitTexturePositionX = (float)getWindowWidth();
+    m_exitMusic = new aie::Audio("./resources/audio/roundabout.wav");
 
-    // set up audio elements
-    setUpAudio();
+    // seed rng
+    unsigned seed = (unsigned int)std::chrono::system_clock::now().time_since_epoch().count();
+    m_prng = std::default_random_engine(seed);
 
-	// set up RNG
-    setUpRNG();
+    // initialise gizmo primitive counts
+    Gizmos::create(1000000, 1000000, 1000000, 1000000);
 
-    // set background to black
+    // set background color
     m_brightness = 0;
     setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
 
-	// initialise gizmo primitive counts
-	Gizmos::create(1000000, 1000000, 1000000, 1000000);
-
-	// position camera
+	// set up view and projection matrices
 	m_viewMatrix = glm::lookAt(vec3(0, 10, 20), vec3(0), vec3(0, 1, 0));
 	m_projectionMatrix = glm::perspective(5.0f,
 		getWindowWidth() / (float)getWindowHeight(),
 		0.1f, 1000.f);
 
-    // set up center GameObject
+    // create center orbit transform and GameObject
     m_orbitTransforms.push_back(Transform());
     m_gameobjects.push_back(GameObject());
     m_gameobjects[0].loadModelOBJ("./resources/models/n64.obj");
 
-    // assign default colors to faces
+    // assign default colors to center GameObjects faces
     Vector4 red(254.0f, 32.0f, 21.0f, 255.0f);
     Vector4 yellow(255.0f, 192.0f, 1.0f, 255.0f);
     Vector4 green(6.0f, 147.0f, 48.0f, 255.0f);
     Vector4 blue(1.0f, 29.0f, 169.0f, 255.0f);
-
     colorCenterObject(red, yellow, green, blue);
 
+    // set rotation speed, and scale of center GameObject
     m_orbitSpeeds.push_back(0);
     m_gameobjectRotationSpeeds.push_back(Vector3(0, 1.5f, 0));
 	m_gameobjects[0].transform.setScaleAll(Vector3(4.0f));
 
-    // load model into a temporary GameObject instead of reading the file many times
-    /*GameObject temporaryGameObject;
-    temporaryGameObject.loadModelOBJ("./resources/models/sphere.obj");*/
+    // create a distribution between A-Z
+    std::uniform_int_distribution<int> letters((int)'A', (int)'Z');
 
-    // create letter distribution
-    std::uniform_int_distribution<int> letters(65, 90);
-
-    // create gameobjects and orbit transforms
+    // create the rest of the GameObjects
     for (unsigned int i = 1; i < 101; i++)
     {
-        // push back a new orbit transform and a new copy of the temporary GameObject
+        // push back a GameObject along with a Transform to orbit around
         m_orbitTransforms.push_back(Transform());
         m_gameobjects.push_back(GameObject());
 
+        // pick a random letter and load that model
         std::string file = "./resources/models/letters/";
         file.push_back((char)letters(m_prng));
         file.append (".obj");
-
-        std::cout << file;
-
-        // loads random letter for model
         m_gameobjects[i].loadModelOBJ(file);
 
         // push back default rotations of 0
-        m_orbitSpeeds.push_back(Vector3(0));
-        m_gameobjectRotationSpeeds.push_back(Vector3(0));
+        m_orbitSpeeds.push_back(Vector3());
+        m_gameobjectRotationSpeeds.push_back(Vector3());
     }
 
-    // randomize orbits and colors of othr GameObjects
+    // randomize orbits and colors of other GameObjects
     randomizeOrbits();
     randomizeOtherPalettes();
 
-    // position and parent each gameobject to it's orbit
+    // further set up GameObjects and orbits
     for (unsigned int i = 1; i < 101; i++)
     {
+        // set GameObject scale to 0.1
         m_gameobjects[i].transform.setScaleAll(Vector3(0.1f));
-        // create a temporary start position
-        Vector3 startPosition(1.0f);
 
         // create a distribution of either 1 or 2
         std::uniform_int_distribution<int> range(1, 2);
 
-        // randomly negate each value of the start position
-        for (unsigned int j = 0; j < 3; j++)
-        {
-            if (range(m_prng) % 2 == 0)
-            {
-                startPosition[j] -= (2 * startPosition[j]);
-            }
-        }
-        // translate the gameobject to its start position
-        m_gameobjects[i].transform.translateAll(startPosition);
-        // parent the gameobject to its orbit transform
+        // place the GameObject at a new position with each value being either positive or negative 1
+        m_gameobjects[i].transform.translateAll(Vector3(((range(m_prng) % 2 == 0) ? -1.0f : 1.0f),
+            ((range(m_prng) % 2 == 0) ? -1.0f : 1.0f),
+            ((range(m_prng) % 2 == 0) ? -1.0f : 1.0f)));
+
+        // parent the gameobject to its orbit
         m_gameobjects[i].transform.setParent(&m_orbitTransforms[i]);
     }
 
-	// parent n64 to the first orbit transform
     m_gameobjects[0].transform.setParent(&m_orbitTransforms[0]);
 
-	// parent all orbit transforms to the n64
+	// parent all orbit transforms to the center GameObjects Transform
 	for (unsigned int i = 1; i < m_orbitTransforms.size(); i++)
 	{
 		m_orbitTransforms[i].setParent(&m_gameobjects[0].transform);
@@ -270,13 +229,13 @@ void exampleprogram::shutdown()
 
 void exampleprogram::update(float deltaTime)
 {
-
 	// query time since application started
 	float time = getTime();
 
 	// wipe the gizmos clean for this frame
 	Gizmos::clear();
 
+    // check input
 	aie::Input* input = aie::Input::getInstance();
 
     // exit if escape is pressed
@@ -290,7 +249,7 @@ void exampleprogram::update(float deltaTime)
         }
     }
 
-    // if exiting count down
+    // when exiting no other commands work
     if (m_exiting == true)
     {
         if (m_exittimer > 0)
@@ -360,7 +319,6 @@ void exampleprogram::update(float deltaTime)
             {
                 m_brightness = 0;
             }
-
             setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
         }
 
@@ -374,7 +332,6 @@ void exampleprogram::update(float deltaTime)
             {
                 m_brightness = 1;
             }
-
             setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
         }
     }
