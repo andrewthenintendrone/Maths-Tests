@@ -6,7 +6,7 @@ namespace AFMaths
     GameObject::GameObject()
     {
         minColorValues = Vector4(255);
-        colorDifferences = Vector4(1);
+        maxColorValues = Vector4(255);
     }
 
     // GameObject copy constructor
@@ -18,25 +18,28 @@ namespace AFMaths
         faces = rhs.faces;
         colors = rhs.colors;
         minColorValues = rhs.minColorValues;
-        colorDifferences = rhs.colorDifferences;
+        maxColorValues = rhs.maxColorValues;
     }
 
     // set the minimum and maximum color values for random color generation
     void GameObject::setColorPallete(const float& newMinR, const float& newMaxR, const float& newMinG, const float& newMaxG, const float& newMinB, const float& newMaxB, const float& newMinA, const float& newMaxA)
     {
         minColorValues = Vector4(newMinR, newMinG, newMinB, newMinA);
-        colorDifferences = Vector4(newMaxR - newMinR + 1, newMaxG - newMinG + 1, newMaxB - newMinB + 1, newMaxA - newMinA + 1);
+        maxColorValues = Vector4(newMaxR, newMaxG, newMaxB, newMaxA);
     }
 
     // sets every color randomly using the minimum values and the difference
-    void GameObject::setColorsRandom()
+    void GameObject::setColorsRandom(std::default_random_engine(rng))
     {
+        // create ranges
+        std::uniform_real_distribution<float> range_R(minColorValues.r, maxColorValues.r);
+        std::uniform_real_distribution<float> range_G(minColorValues.g, maxColorValues.g);
+        std::uniform_real_distribution<float> range_B(minColorValues.b, maxColorValues.b);
+        std::uniform_real_distribution<float> range_A(minColorValues.a, maxColorValues.a);
+
         for (unsigned int currentColor = 0; currentColor < colors.size(); currentColor++)
         {
-            colors[currentColor] = Vector4((minColorValues.r + rand() % (int)colorDifferences.r) / 255.0f,
-                (minColorValues.g + rand() % (int)colorDifferences.g) / 255.0f,
-                (minColorValues.b + rand() % (int)colorDifferences.b) / 255.0f,
-                1.0f);
+            colors[currentColor] = Vector4(range_R(rng), range_G(rng), range_B(rng), range_A(rng)) / 255.0f;;
         }
     }
 
@@ -88,27 +91,6 @@ namespace AFMaths
             // copy the vertices into transformed vertices
             transformedVertices = vertices;
         }
-    }
-
-    // generates a random set of vertices and faces which often looks bad
-    GameObject GameObject::generateRandom()
-    {
-        GameObject temp;
-        // push back 20 random vertices with coordinates inside a range
-        for (int i = 0; i < 20; i++)
-        {
-            Vector3 vertex((rand() % 500 - 250) / 100.0f, (rand() % 500 - 250) / 100.0f, (rand() % 500 - 250) / 100.0f);
-            temp.vertices.push_back(vertex);
-        }
-        // push back 5 faces connecting random vertices
-        for (int i = 0; i < 5; i++)
-        {
-            temp.faces.push_back(Vector3());
-            temp.faces[i].x = (float)(rand() % 20);
-            temp.faces[i].y = (float)(rand() % 20);
-            temp.faces[i].z = (float)(rand() % 20);
-        }
-        return temp;
     }
 
     // transforms each vert by the global transform and stores them in transformedVertices

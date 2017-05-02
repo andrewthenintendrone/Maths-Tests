@@ -5,6 +5,7 @@
 #include "Matrix4.h"
 #include "Transform.h"
 #include <vector>
+#include <random>
 
 namespace AFMaths
 {
@@ -24,7 +25,7 @@ namespace AFMaths
         // minimum r, g, b, and alpha values to use when generating colors
         Vector4 minColorValues;
         // difference between maximum and minimum values to use for color generation
-        Vector4 colorDifferences;
+        Vector4 maxColorValues;
 
 
         GameObject();
@@ -32,9 +33,8 @@ namespace AFMaths
         virtual ~GameObject() {};
 
         void setColorPallete(const float& newMinR, const float& newMaxR, const float& newMinG, const float& newMaxG, const float& newMinB, const float& newMaxB, const float& newMinA, const float& newMaxA);
-        void setColorsRandom();
+        void setColorsRandom(std::default_random_engine rng);
         void loadModelOBJ(std::string fileName);
-        static GameObject generateRandom();
         void updateVerts();
     };
 }

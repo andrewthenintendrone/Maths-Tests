@@ -76,10 +76,10 @@ void exampleprogram::randomizeOtherPalettes()
     for (unsigned int i = 1; i < m_gameobjects.size(); i++)
     {
         // choose a random base color for the current GameObject
-        Vector3 baseColor(range(m_prng), range(m_prng), range(m_prng));
+        Vector3 baseColor = Vector3((float)range(m_prng), (float)range(m_prng), (float)range(m_prng));
         // set the GameObjects pallete close to the base color
         m_gameobjects[i].setColorPallete(baseColor.x - 32, baseColor.x + 32, baseColor.y - 32, baseColor.y + 32, baseColor.z - 32, baseColor.z + 32, 255, 255);
-        m_gameobjects[i].setColorsRandom();
+        m_gameobjects[i].setColorsRandom(m_prng);
     }
 }
 
