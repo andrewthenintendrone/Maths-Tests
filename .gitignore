@@ -104,6 +104,7 @@ artifacts/
 *.scc
 *.obj
 !Maths Tests/exampleproject/resources/resources/models/*.obj
+!Maths Tests/exampleproject/resources/resources/models/letters/*.obj
 
 # Chutzpah Test files
 _Chutzpah*
