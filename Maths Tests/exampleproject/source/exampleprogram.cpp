@@ -49,35 +49,26 @@ void exampleprogram::setUpRNG()
 }
 
 // randomizes the palette of the center GameObject
-void exampleprogram::randomizeCenterPalette()
+void exampleprogram::colorCenterObject(Vector4& color1, Vector4& color2, Vector4& color3, Vector4& color4)
 {
-    // create a distribution between 0 and 1
-    std::uniform_real_distribution<float> range(0.0f, 1.0f);
-
-    // generate 4 random colors
-    Vector4 randomColor1(range(m_prng), range(m_prng), range(m_prng), 1);
-    Vector4 randomColor2(range(m_prng), range(m_prng), range(m_prng), 1);
-    Vector4 randomColor3(range(m_prng), range(m_prng), range(m_prng), 1);
-    Vector4 randomColor4(range(m_prng), range(m_prng), range(m_prng), 1);
-
     // apply random colors to faces
     for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
     {
         if (i < 16)
         {
-            m_gameobjects[0].colors[i] = randomColor1;
+            m_gameobjects[0].colors[i] = color1 / 255.0f;
         }
         else if (i < 32)
         {
-            m_gameobjects[0].colors[i] = randomColor2;
+            m_gameobjects[0].colors[i] = color2 / 255.0f;
         }
         else if (i < 80)
         {
-            m_gameobjects[0].colors[i] = randomColor3;
+            m_gameobjects[0].colors[i] = color3 / 255.0f;
         }
         else if (i < 128)
         {
-            m_gameobjects[0].colors[i] = randomColor4;
+            m_gameobjects[0].colors[i] = color4 / 255.0f;
         }
     }
 }
@@ -189,29 +180,13 @@ bool exampleprogram::startup()
     m_gameobjects[0].loadModelOBJ("./resources/models/n64.obj");
 
     // assign default colors to faces
-    for (unsigned int i = 0; i < m_gameobjects[0].colors.size(); i++)
-    {
-        // red
-        if (i < 16)
-        {
-            m_gameobjects[0].colors[i] = Vector4(254, 32, 21, 255) / 255.0f;
-        }
-        // yellow
-        else if (i < 32)
-        {
-            m_gameobjects[0].colors[i] = Vector4(255, 192, 1, 255) / 255.0f;
-        }
-        // green
-        else if (i < 80)
-        {
-            m_gameobjects[0].colors[i] = Vector4(6, 147, 48, 255) / 255.0f;
-        }
-        // blue
-        else if (i < 128)
-        {
-            m_gameobjects[0].colors[i] = Vector4(1, 29, 169, 255) / 255.0f;
-        }
-    }
+    Vector4 red(254.0f, 32.0f, 21.0f, 255.0f);
+    Vector4 yellow(255.0f, 192.0f, 1.0f, 255.0f);
+    Vector4 green(6.0f, 147.0f, 48.0f, 255.0f);
+    Vector4 blue(1.0f, 29.0f, 169.0f, 255.0f);
+
+    colorCenterObject(red, yellow, green, blue);
+
     m_orbitSpeeds.push_back(0);
     m_gameobjectRotationSpeeds.push_back(Vector3(0, 1.5f, 0));
 	m_gameobjects[0].transform.setScaleAll(Vector3(4.0f));
@@ -350,7 +325,16 @@ void exampleprogram::update(float deltaTime)
         // randomize the center objects palette with Q
         if (input->wasKeyPressed(aie::INPUT_KEY_Q))
         {
-            randomizeCenterPalette();
+            // create a distribution between 0 and 1
+            std::uniform_int_distribution<int> range(0, 255);
+
+            // generate 4 random colors
+            Vector4 randomColor1((float)range(m_prng), (float)range(m_prng), (float)range(m_prng), 255.0f);
+            Vector4 randomColor2((float)range(m_prng), (float)range(m_prng), (float)range(m_prng), 255.0f);
+            Vector4 randomColor3((float)range(m_prng), (float)range(m_prng), (float)range(m_prng), 255.0f);
+            Vector4 randomColor4((float)range(m_prng), (float)range(m_prng), (float)range(m_prng), 255.0f);
+
+            colorCenterObject(randomColor1, randomColor2, randomColor3, randomColor4);
         }
 
         // randomize the other objects palettes with W

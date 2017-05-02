@@ -31,7 +31,7 @@ public:
     void setUp2D();
     void setUpAudio();
     void setUpRNG();
-    void randomizeCenterPalette();
+    void colorCenterObject(AFMaths::Vector4& color1, AFMaths::Vector4& color2, AFMaths::Vector4& color3, AFMaths::Vector4& color4);
     void randomizeOtherPalettes();
     void randomizeOrbits();
     void exit();
