@@ -43,7 +43,6 @@ void exampleprogram::setUp2D()
 void exampleprogram::setUpAudio()
 {
     m_exitMusic = new aie::Audio("./resources/audio/roundabout.wav");
-    m_exitMusic->setLooping(false);
 }
 
 // creates the RNG engine and seeds it
@@ -311,11 +310,12 @@ void exampleprogram::update(float deltaTime)
 
 	aie::Input* input = aie::Input::getInstance();
 
-    // quit if we press escape
+    // exit if escape is pressed
     if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
     {
         if (m_exiting == false)
         {
+            m_exitMusic->setLooping(false);
             m_exitMusic->play();
             m_exiting = true;
         }
@@ -332,7 +332,7 @@ void exampleprogram::update(float deltaTime)
         {
             if (m_exitTexturePositionX > 100.0f)
             {
-                m_exitTexturePositionX -= (getWindowWidth() * 4.0f * deltaTime);
+                m_exitTexturePositionX -= (getWindowWidth() * 3.0f * deltaTime);
                 if (m_exitTexturePositionX < 100.0f)
                 {
                     m_exitTexturePositionX = 100.0f;
@@ -345,58 +345,60 @@ void exampleprogram::update(float deltaTime)
             quit();
         }
     }
-
-    // toggle whether all the gameobjects rotate independantly or as a group with the space bar
-    if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
+    else
     {
-        m_independantMotion = !m_independantMotion;
-    }
-
-    // randomize the center objects palette with Q
-    if (input->wasKeyPressed(aie::INPUT_KEY_Q))
-    {
-        randomizeCenterPalette();
-    }
-
-    // randomize the other objects palettes with W
-    if (input->wasKeyPressed(aie::INPUT_KEY_W))
-    {
-        randomizeOtherPalettes();
-    }
-
-    // randomize all the orbits with E
-    if (input->wasKeyPressed(aie::INPUT_KEY_E))
-    {
-        randomizeOrbits();
-    }
-
-    // change background brightness with 1 and 2 keys
-    if (input->isKeyDown(aie::INPUT_KEY_1))
-    {
-        if (m_brightness > 0)
+        // toggle whether all the gameobjects rotate independantly or as a group with the space bar
+        if (input->wasKeyPressed(aie::INPUT_KEY_SPACE))
         {
-            m_brightness -= (deltaTime);
-        }
-        else
-        {
-            m_brightness = 0;
+            m_independantMotion = !m_independantMotion;
         }
 
-        setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
-    }
-
-    if (input->isKeyDown(aie::INPUT_KEY_2))
-    {
-        if (m_brightness < 1)
+        // randomize the center objects palette with Q
+        if (input->wasKeyPressed(aie::INPUT_KEY_Q))
         {
-            m_brightness += (deltaTime);
-        }
-        else
-        {
-            m_brightness = 1;
+            randomizeCenterPalette();
         }
 
-        setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
+        // randomize the other objects palettes with W
+        if (input->wasKeyPressed(aie::INPUT_KEY_W))
+        {
+            randomizeOtherPalettes();
+        }
+
+        // randomize all the orbits with E
+        if (input->wasKeyPressed(aie::INPUT_KEY_E))
+        {
+            randomizeOrbits();
+        }
+
+        // change background brightness with 1 and 2 keys
+        if (input->isKeyDown(aie::INPUT_KEY_1))
+        {
+            if (m_brightness > 0)
+            {
+                m_brightness -= (deltaTime);
+            }
+            else
+            {
+                m_brightness = 0;
+            }
+
+            setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
+        }
+
+        if (input->isKeyDown(aie::INPUT_KEY_2))
+        {
+            if (m_brightness < 1)
+            {
+                m_brightness += (deltaTime);
+            }
+            else
+            {
+                m_brightness = 1;
+            }
+
+            setBackgroundColour(m_brightness, m_brightness, m_brightness, 1);
+        }
     }
 
     // rotate all GameObjects and their orbit transforms
