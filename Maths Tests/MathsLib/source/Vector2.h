@@ -70,5 +70,36 @@ namespace AFMaths
         friend Vector2 operator * (const float& scalar, Vector2& vector);
         Vector2 operator / (const float& scalar);
         void operator /= (const float& scalar);
+
+        // swizzling
+        Vector2 GetXX();
+        Vector2 GetYX();
+        Vector2 GetYY();
+
+        Vector3 GetXXX();
+        Vector3 GetXXY();
+        Vector3 GetXYX();
+        Vector3 GetXYY();
+        Vector3 GetYXX();
+        Vector3 GetYXY();
+        Vector3 GetYYX();
+        Vector3 GetYYY();
+
+        Vector4 GetXXXX();
+        Vector4 GetXXXY();
+        Vector4 GetXXYX();
+        Vector4 GetXXYY();
+        Vector4 GetXYXX();
+        Vector4 GetXYXY();
+        Vector4 GetXYYX();
+        Vector4 GetXYYY();
+        Vector4 GetYXXX();
+        Vector4 GetYXXY();
+        Vector4 GetYXYX();
+        Vector4 GetYXYY();
+        Vector4 GetYYXX();
+        Vector4 GetYYXY();
+        Vector4 GetYYYX();
+        Vector4 GetYYYY();
     };
 }

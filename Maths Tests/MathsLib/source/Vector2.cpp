@@ -319,4 +319,169 @@ namespace AFMaths
         }
     }
 
+    /*##################################################
+    swizzling
+    ##################################################*/
+
+    // returns Vector2(x, x)
+    Vector2 Vector2::GetXX()
+    {
+        return Vector2(x, x);
+    }
+
+    // returns Vector2(y, x)
+    Vector2 Vector2::GetYX()
+    {
+        return Vector2(y, x);
+    }
+
+    // returns Vector2(y, y)
+    Vector2 Vector2::GetYY()
+    {
+        return Vector2(y, y);
+    }
+
+    // returns Vector3(x, x, x)
+    Vector3 Vector2::GetXXX()
+    {
+        return Vector3(x, x, x);
+    }
+
+    // returns Vector3(x, x, y)
+    Vector3 Vector2::GetXXY()
+    {
+        return Vector3(x, x, y);
+    }
+
+    // returns Vector3(x, y, x)
+    Vector3 Vector2::GetXYX()
+    {
+        return Vector3(x, y, x);
+    }
+
+    // returns Vector3(x, y, y)
+    Vector3 Vector2::GetXYY()
+    {
+        return Vector3(x, y, y);
+    }
+
+    // returns Vector3(y, x, x)
+    Vector3 Vector2::GetYXX()
+    {
+        return Vector3(y, x, x);
+    }
+
+    // returns Vector3(y, x, y)
+    Vector3 Vector2::GetYXY()
+    {
+        return Vector3(y, x, y);
+    }
+
+    // returns Vector3(y, y, x)
+    Vector3 Vector2::GetYYX()
+    {
+        return Vector3(y, y, x);
+    }
+
+    // returns Vector3(y, y, y)
+    Vector3 Vector2::GetYYY()
+    {
+        return Vector3(y, y, y);
+    }
+
+    // returns Vector4(x, x, x, x)
+    Vector4 Vector2::GetXXXX()
+    {
+        return Vector4(x, x, x, x);
+    }
+
+    // returns Vector4(x, x, x, y)
+    Vector4 Vector2::GetXXXY()
+    {
+        return Vector4(x, x, x, y);
+    }
+
+    // returns Vector4(x, x, y, x)
+    Vector4 Vector2::GetXXYX()
+    {
+        return Vector4(x, x, y, x);
+    }
+
+    // returns Vector4(x, x, y, y)
+    Vector4 Vector2::GetXXYY()
+    {
+        return Vector4(x, x, y, y);
+    }
+
+    // returns Vector4(x, y, x, x)
+    Vector4 Vector2::GetXYXX()
+    {
+        return Vector4(x, y, x, x);
+    }
+
+    // returns Vector4(x, y, x, y)
+    Vector4 Vector2::GetXYXY()
+    {
+        return Vector4(x, y, x, y);
+    }
+
+    // returns Vector4(x, y, y, x)
+    Vector4 Vector2::GetXYYX()
+    {
+        return Vector4(x, y, y, x);
+    }
+
+    // returns Vector4(x, y, y, y)
+    Vector4 Vector2::GetXYYY()
+    {
+        return Vector4(x, y, y, y);
+    }
+
+    // returns Vector4(y, x, x, x)
+    Vector4 Vector2::GetYXXX()
+    {
+        return Vector4(y, x, x, x);
+    }
+
+    // returns Vector4(y, x, x, y)
+    Vector4 Vector2::GetYXXY()
+    {
+        return Vector4(y, x, x, y);
+    }
+
+    // returns Vector4(y, x, y, x)
+    Vector4 Vector2::GetYXYX()
+    {
+        return Vector4(y, x, y, x);
+    }
+
+    // returns Vector4(y, x, y, y)
+    Vector4 Vector2::GetYXYY()
+    {
+        return Vector4(y, x, y, y);
+    }
+
+    // returns Vector4(y, y, x, x)
+    Vector4 Vector2::GetYYXX()
+    {
+        return Vector4(y, y, x, x);
+    }
+
+    // returns Vector4(y, y, x, y)
+    Vector4 Vector2::GetYYXY()
+    {
+        return Vector4(y, y, x, y);
+    }
+
+    // returns Vector4(y, y, y, x)
+    Vector4 Vector2::GetYYYX()
+    {
+        return Vector4(y, y, y, x);
+    }
+
+    // returns Vector4(y, y, y, y)
+    Vector4 Vector2::GetYYYY()
+    {
+        return Vector4(y, y, y, y);
+    }
 }
