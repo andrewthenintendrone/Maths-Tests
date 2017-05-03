@@ -41,7 +41,7 @@ public:
     float m_brightness;
 
     bool m_exiting = false;
-    float m_exittimer = 3.1f;
+    float m_exittimer = 3.39f;
     float m_exitTexturePositionX;
     int m_facecount;
 

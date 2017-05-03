@@ -276,7 +276,7 @@ void exampleprogram::update(float deltaTime)
         {
             if (m_exitTexturePositionX > getWindowWidth() / 1920.0f * 100.0f)
             {
-                m_exitTexturePositionX -= (getWindowWidth() * 3.0f * deltaTime);
+                m_exitTexturePositionX -= (getWindowWidth() * 4.0f * deltaTime);
                 if (m_exitTexturePositionX < getWindowWidth() / 1920.0f * 100.0f)
                 {
                     m_exitTexturePositionX = getWindowWidth() / 1920.0f * 100.0f;
