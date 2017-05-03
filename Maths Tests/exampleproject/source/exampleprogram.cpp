@@ -274,12 +274,12 @@ void exampleprogram::update(float deltaTime)
         }
         else
         {
-            if (m_exitTexturePositionX > 100.0f)
+            if (m_exitTexturePositionX > getWindowWidth() / 1920.0f * 100.0f)
             {
                 m_exitTexturePositionX -= (getWindowWidth() * 3.0f * deltaTime);
-                if (m_exitTexturePositionX < 100.0f)
+                if (m_exitTexturePositionX < getWindowWidth() / 1920.0f * 100.0f)
                 {
-                    m_exitTexturePositionX = 100.0f;
+                    m_exitTexturePositionX = getWindowWidth() / 1920.0f * 100.0f;
                     exit();
                 }
             }
@@ -398,7 +398,7 @@ void exampleprogram::draw() {
 
     if (m_exiting)
     {
-        m_2dRenderer->drawSprite(m_exitTexture, m_exitTexturePositionX, 100.0f, 0, 0, 0, 0, 0, 0);
+        m_2dRenderer->drawSprite(m_exitTexture, m_exitTexturePositionX, getWindowHeight() / 1080.0f * 100.0f, getWindowWidth() / 1920.0f * 486.0f, getWindowHeight() / 1080.0f * 110.0f, 0, 0, 0, 0);
     }
     else
     {
