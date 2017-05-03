@@ -85,8 +85,9 @@ void exampleprogram::exit()
     {
         m_orbitSpeeds[i] = Vector3(0);
     }
+
     // create distribution from 0 to 4
-    std::uniform_int_distribution<int> range(1, 4);
+    std::uniform_int_distribution<int> range(0, 4);
 
     // create some colors
     Vector4 exitColors[5] = { Vector4(179, 129, 56, 255), Vector4(211, 145, 43, 255), Vector4(210, 127, 41, 255), Vector4(217, 95, 27, 255), Vector4(160, 32, 26, 255) };
@@ -119,6 +120,9 @@ void exampleprogram::exit()
             m_gameobjects[0].colors[i] = exitColors[3] / 255.0f;
         }
     }
+
+    // slight zoom
+    m_viewMatrix = glm::lookAt(vec3(0, 9.5f, 19), vec3(0), vec3(0, 1, 0));
 }
 
 bool exampleprogram::startup()
