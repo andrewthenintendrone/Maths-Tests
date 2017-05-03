@@ -27,6 +27,7 @@ public:
 
 	virtual void update(float deltaTime);
 	virtual void draw();
+    int getNumFaces();
 
     void colorCenterObject(AFMaths::Vector4& color1, AFMaths::Vector4& color2, AFMaths::Vector4& color3, AFMaths::Vector4& color4);
     void randomizeOtherPalettes();
@@ -42,6 +43,7 @@ public:
     bool m_exiting = false;
     float m_exittimer = 3.1f;
     float m_exitTexturePositionX;
+    int m_facecount;
 
     bool m_independantMotion = true;
     std::default_random_engine m_prng;

@@ -215,6 +215,14 @@ bool exampleprogram::startup()
 		m_orbitTransforms[i].setParent(&m_gameobjects[0].transform);
 	}
 
+    for (unsigned int i = 0; i < m_gameobjects.size(); i++)
+    {
+        for (unsigned int j = 0; j < m_gameobjects.size(); j++)
+        {
+            m_facecount++;
+        }
+    }
+
 	return true;
 }
 
@@ -360,6 +368,19 @@ void exampleprogram::update(float deltaTime)
     m_orbitTransforms[0].updateGlobalTransform();
 }
 
+int exampleprogram::getNumFaces()
+{
+    unsigned int numFaces = 0;
+    for (unsigned int i = 0; i < m_gameobjects.size(); i++)
+    {
+        for (unsigned int j = 0; j < m_gameobjects[i].faces.size(); j++)
+        {
+            numFaces++;
+        }
+    }
+    return numFaces;
+}
+
 void exampleprogram::draw() {
 
 	// wipe the screen to the background colour
@@ -383,6 +404,9 @@ void exampleprogram::draw() {
         m_2dRenderer->drawText(m_font, "E key: randomize orbits", 100, (float)getWindowHeight() - 110);
         m_2dRenderer->drawText(m_font, "1 and 2 keys: change background brightness", 100, (float)getWindowHeight() - 130);
         m_2dRenderer->drawText(m_font, "ESC: exit example", 100, (float)getWindowHeight() - 170);
+        char faces[32];
+        sprintf_s(faces, 32, "Number of Faces: %i", m_facecount);
+        m_2dRenderer->drawText(m_font, faces, 0.0f, 0.0f, 0.0f);
     }
 
     // stop drawing 2D elements
