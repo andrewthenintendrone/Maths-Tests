@@ -315,7 +315,7 @@ namespace AFMaths
     // += operator with a scalar
     void Matrix2::operator += (const float& scalar)
     {
-        *this = *this * scalar;
+        *this = *this + scalar;
     }
 
     // - operator with a scalar

@@ -29,19 +29,19 @@ namespace AFMaths
         void setScaleZ(const float& newScaleZ);
         void setScaleAll(Vector3& newScale);
 
-        void scaleX(const float& ammount);
-        void scaleY(const float& ammount);
-        void scaleZ(const float& ammount);
+        void scaleX(const float& amount);
+        void scaleY(const float& amount);
+        void scaleZ(const float& amount);
         void scaleAll(Vector3& scaleVector);
 
-        void rotateX(const float& ammount);
-        void rotateY(const float& ammount);
-        void rotateZ(const float& ammount);
+        void rotateX(const float& amount);
+        void rotateY(const float& amount);
+        void rotateZ(const float& amount);
         void rotateAll(Vector3& rotationVector);
 
-        void translateX(const float& ammount);
-        void translateY(const float& ammount);
-        void translateZ(const float& ammount);
+        void translateX(const float& amount);
+        void translateY(const float& amount);
+        void translateZ(const float& amount);
         void translateAll(Vector3& translation);
 
         Transform();

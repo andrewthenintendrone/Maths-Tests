@@ -64,19 +64,19 @@ namespace AFMaths
         }
     }
 
-    void Transform::scaleX(const float& ammount)
+    void Transform::scaleX(const float& amount)
     {
-        m_scale[0][0] += ammount;
+        m_scale[0][0] += amount;
     }
 
-    void Transform::scaleY(const float& ammount)
+    void Transform::scaleY(const float& amount)
     {
-        m_scale[1][1] += ammount;
+        m_scale[1][1] += amount;
     }
 
-    void Transform::scaleZ(const float& ammount)
+    void Transform::scaleZ(const float& amount)
     {
-        m_scale[2][2] += ammount;
+        m_scale[2][2] += amount;
     }
 
     void Transform::scaleAll(Vector3& scaleVector)
@@ -88,26 +88,26 @@ namespace AFMaths
     }
 
     // rotates on the x axis
-    void Transform::rotateX(const float& ammount)
+    void Transform::rotateX(const float& amount)
     {
         Matrix4 rotationMatrix;
-        rotationMatrix.setRotateX(ammount);
+        rotationMatrix.setRotateX(amount);
         m_rotation *= rotationMatrix;
     }
 
     // rotates on the y axis
-    void Transform::rotateY(const float& ammount)
+    void Transform::rotateY(const float& amount)
     {
         Matrix4 rotationMatrix;
-        rotationMatrix.setRotateY(ammount);
+        rotationMatrix.setRotateY(amount);
         m_rotation *= rotationMatrix;
     }
 
     // rotates on the z axis
-    void Transform::rotateZ(const float& ammount)
+    void Transform::rotateZ(const float& amount)
     {
         Matrix4 rotationMatrix;
-        rotationMatrix.setRotateZ(ammount);
+        rotationMatrix.setRotateZ(amount);
         m_rotation *= rotationMatrix;
     }
 
@@ -125,21 +125,21 @@ namespace AFMaths
     }
 
     // translates on the x axis
-    void Transform::translateX(const float& ammount)
+    void Transform::translateX(const float& amount)
     {
-        m_position.vecs[3].x += ammount;
+        m_position.vecs[3].x += amount;
     }
 
     // translates on the y axis
-    void Transform::translateY(const float& ammount)
+    void Transform::translateY(const float& amount)
     {
-        m_position.vecs[3].y += ammount;
+        m_position.vecs[3].y += amount;
     }
 
     // translates on the z axis
-    void Transform::translateZ(const float& ammount)
+    void Transform::translateZ(const float& amount)
     {
-        m_position.vecs[3].z += ammount;
+        m_position.vecs[3].z += amount;
     }
 
     // translates on all axis
