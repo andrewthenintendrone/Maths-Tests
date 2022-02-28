@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-namespace AFMaths
+namespace AMMaths
 {
     // set all colors to be white by default
     GameObject::GameObject()

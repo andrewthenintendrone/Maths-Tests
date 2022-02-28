@@ -3,7 +3,7 @@
 #include "Matrix4.h"
 #include <math.h>
 
-namespace AFMaths
+namespace AMMaths
 {
     /*##################################################
     constructors and destructors

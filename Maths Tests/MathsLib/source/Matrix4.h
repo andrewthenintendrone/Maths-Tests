@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Vector4.h"
 
-namespace AFMaths
+namespace AMMaths
 {
     class Matrix2;
     class Matrix3;

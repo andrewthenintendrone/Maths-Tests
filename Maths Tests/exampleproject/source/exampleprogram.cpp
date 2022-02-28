@@ -5,7 +5,7 @@ using glm::vec4;
 using glm::mat4;
 using aie::Gizmos;
 
-using namespace AFMaths;
+using namespace AMMaths;
 
 exampleprogram::exampleprogram()
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace AFMaths
+namespace AMMaths
 {
     bool IsLeftMostBitSet(unsigned int value);
     bool IsRightMostBitSet(unsigned int value);

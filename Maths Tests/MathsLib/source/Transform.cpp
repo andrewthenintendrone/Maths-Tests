@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-namespace AFMaths
+namespace AMMaths
 {
     Transform::Transform()
     {

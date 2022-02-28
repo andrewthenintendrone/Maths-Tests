@@ -1,7 +1,7 @@
 #pragma once
 #define PI 3.14159f
 
-namespace AFMaths
+namespace AMMaths
 {
     float degreesToRadians(const float& degrees);
 

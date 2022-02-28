@@ -4,7 +4,7 @@
 #include <glm\glm.hpp>
 #include <glm\ext.hpp>
 
-namespace AFMaths
+namespace AMMaths
 {
     class Vector2;
     class Vector4;

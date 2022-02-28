@@ -29,15 +29,15 @@ public:
 	virtual void draw();
     int getNumFaces();
 
-    void colorCenterObject(AFMaths::Vector4& color1, AFMaths::Vector4& color2, AFMaths::Vector4& color3, AFMaths::Vector4& color4);
+    void colorCenterObject(AMMaths::Vector4& color1, AMMaths::Vector4& color2, AMMaths::Vector4& color3, AMMaths::Vector4& color4);
     void randomizeOtherPalettes();
     void randomizeOrbits();
     void exit();
 
-    std::vector<AFMaths::Transform>m_orbitTransforms;
-	std::vector<AFMaths::GameObject>m_gameobjects;
-    std::vector<AFMaths::Vector3>m_orbitSpeeds;
-    std::vector<AFMaths::Vector3>m_gameobjectRotationSpeeds;
+    std::vector<AMMaths::Transform>m_orbitTransforms;
+	std::vector<AMMaths::GameObject>m_gameobjects;
+    std::vector<AMMaths::Vector3>m_orbitSpeeds;
+    std::vector<AMMaths::Vector3>m_gameobjectRotationSpeeds;
     float m_brightness;
 
     bool m_exiting = false;

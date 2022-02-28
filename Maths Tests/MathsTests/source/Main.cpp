@@ -4,7 +4,7 @@
 #include <iostream>
 #include "MathsLib.h"
 
-using namespace AFMaths;
+using namespace AMMaths;
 
 int main()
 {

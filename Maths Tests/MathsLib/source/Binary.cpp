@@ -2,7 +2,7 @@
 #include <limits>
 #include <iostream>
 
-namespace AFMaths
+namespace AMMaths
 {
     // Returns true if the left most(the most significant) bit of value is set and false otherwise
     bool IsLeftMostBitSet(unsigned int value)

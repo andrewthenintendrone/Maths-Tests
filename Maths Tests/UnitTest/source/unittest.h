@@ -4,7 +4,7 @@
 //#include "Vector2.h" etc
 //#include "Matrix4.h" etc
 #include "MathsLib.h"
-using namespace AFMaths;
+using namespace AMMaths;
 
 // TYPEDEFS IF NEEDED
 // typedef glm::vec2 Vector2; etc

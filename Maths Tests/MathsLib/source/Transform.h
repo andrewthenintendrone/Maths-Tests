@@ -6,7 +6,7 @@
 #include "Matrix4.h"
 #include <vector>
 
-namespace AFMaths
+namespace AMMaths
 {
     class Transform
     {

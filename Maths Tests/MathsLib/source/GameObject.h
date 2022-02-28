@@ -7,7 +7,7 @@
 #include <vector>
 #include <random>
 
-namespace AFMaths
+namespace AMMaths
 {
     class GameObject
     {

@@ -1,6 +1,6 @@
 #include "radians.h"
 
-namespace AFMaths
+namespace AMMaths
 {
     float degreesToRadians(const float& degrees)
     {

@@ -2,7 +2,7 @@
 #include "Vector4.h"
 #include "Vector2.h"
 
-namespace AFMaths
+namespace AMMaths
 {
     /*##################################################
     constructors and destructor
